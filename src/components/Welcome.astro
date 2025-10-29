@@ -1,10 +1,13 @@
 ---
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <div id="container">
   <main>
-    <section id="hero">Hello World</section>
-    <Button>Click me</Button>
+    <section id="hero">{t("hero.title")}</section>
+    <Button>{t("button.cta")}</Button>
   </main>
 </div>
