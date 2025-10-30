@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import LocaleSwitcher from "./LocaleSwitcher.astro";
 ---
 
-<header class="absolute top-0 left-0 right-0 z-20">
+<header id="site-header" class="fixed top-0 left-0 right-0 z-20">
   <div
-    class="grid grid-cols-3 justify-items-center w-full"
-    style="background: linear-gradient(358.9deg, rgba(11, 29, 38, 0) 0.82%, #0B1D26 98.94%);"
+    id="header-large"
+    class="grid grid-cols-3 justify-items-center w-full pt-1 relative z-10"
   >
     <div class="flex items-start justify-center gap-x-2 pt-8">
       <Image
@@ -19,7 +19,7 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
         height={24}
         loading="lazy"
       />
-      <p class="text-white text-base font-poppins">+ 351 965 611 642</p>
+      <p class="text-white text-lg font-poppins">+ 351 965 611 642</p>
     </div>
     <div>
       <Image
@@ -40,4 +40,68 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
       </div>
     </div>
   </div>
+
+  <div
+    id="header-small"
+    class="grid grid-cols-2 items-center w-full px-10 absolute inset-0 opacity-0 pointer-events-none"
+  >
+    <div class="flex items-center justify-start gap-x-2">
+      <Image
+        src={logoImg}
+        alt="Imperador Logo"
+        width={200}
+        height={82}
+        loading="lazy"
+      />
+    </div>
+
+    <div class="flex items-center justify-end">
+      <div class="flex items-center justify-end gap-x-6">
+        <Button
+          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[160px] h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
+          >Agendar Visita</Button
+        >
+        <LocaleSwitcher />
+      </div>
+    </div>
+  </div>
 </header>
+<style>
+  #header-large,
+  #header-small {
+    transition: opacity 0.3s ease;
+  }
+</style>
+
+<script>
+  const headerEl = document.getElementById("site-header");
+  const headerLarge = document.getElementById("header-large");
+  const headerSmall = document.getElementById("header-small");
+  const gradientBg =
+    "linear-gradient(358.9deg, rgba(11, 29, 38, 0) 0.82%, #0B1D26 98.94%)";
+  const secondGradientBg =
+    "linear-gradient(358.9deg, rgba(11, 29, 38, 0) 0.82%, #0B1D26 26.59%)";
+
+  function updateHeaderBackground() {
+    if (!headerEl || !headerLarge || !headerSmall) return;
+
+    if (window.scrollY > 50) {
+      headerEl.style.background = secondGradientBg;
+      headerLarge.style.opacity = "0";
+      headerLarge.style.pointerEvents = "none";
+      headerSmall.style.opacity = "1";
+      headerSmall.style.pointerEvents = "auto";
+    } else {
+      headerEl.style.background = gradientBg;
+      headerLarge.style.opacity = "1";
+      headerLarge.style.pointerEvents = "auto";
+      headerSmall.style.opacity = "0";
+      headerSmall.style.pointerEvents = "none";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", updateHeaderBackground, {
+    once: true,
+  });
+  window.addEventListener("scroll", updateHeaderBackground, { passive: true });
+</script>
