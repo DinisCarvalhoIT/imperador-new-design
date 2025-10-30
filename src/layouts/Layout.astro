@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
-import LanguagePicker from "../components/LanguagePicker.astro";
 import { getLangFromUrl } from "../i18n/utils";
+import Header from "@/components/Header/Header.astro";
 const lang = getLangFromUrl(Astro.url);
 ---
 
@@ -15,10 +15,8 @@ const lang = getLangFromUrl(Astro.url);
     <title>Astro Basics</title>
   </head>
   <body>
+    <Header />
     <slot />
-    <footer>
-      <LanguagePicker />
-    </footer>
   </body>
 </html>
 

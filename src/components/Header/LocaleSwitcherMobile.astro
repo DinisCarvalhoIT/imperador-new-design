@@ -1,0 +1,178 @@
+---
+import { useTranslatedPath } from "@/i18n/utils";
+
+const languages = {
+  en: "gb",
+  pt: "pt",
+};
+
+const labels = {
+  en: "EN",
+  pt: "PT",
+};
+
+const currentLang = (Astro.currentLocale === "en" ? "en" : "pt") as "en" | "pt";
+const currentPath = Astro.url.pathname;
+
+// Remove locale prefix if it exists
+const pathWithoutLocale = currentPath.replace(/^\/(en|pt)/, "") || "/";
+
+// Get current path without locale prefix
+const getCurrentPath = () => {
+  const pathSplit = currentPath.split("/");
+  if (pathSplit[1] === "en" || pathSplit[1] === "pt") {
+    pathSplit.splice(1, 1);
+  }
+  return pathSplit.join("/") || "/";
+};
+
+const translatePath = useTranslatedPath(currentLang);
+---
+
+<form class="z-30 md:pr-10 sm:pr-10 pr-4">
+  <div class="relative font-barlow font-medium">
+    <button
+      id="dropdownButton2"
+      type="button"
+      class="flex items-center justify-between gap-x-2 bg-transparent font-montserrat text-sm text-black focus:border-blue-500 focus:ring-blue-500 lg:text-xl"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <div id="selectedLabel2" class="flex items-center">
+        <img
+          src={`/flags/${languages[currentLang]}.svg`}
+          alt={`${labels[currentLang]} flag`}
+          class="w-6 h-6 rounded-full object-cover"
+        />
+      </div>
+      <svg
+        id="dropdownIcon2"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="h-4 w-4 opacity-50 transition-transform duration-300"
+        aria-hidden="true"
+      >
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </button>
+    <div>
+      <ul
+        id="dropdownList2"
+        class="absolute right-0 mt-1 hidden w-[90px] rounded-lg border border-gray-300 bg-white p-1 opacity-0 shadow-lg transition-all duration-300 ease-in-out dark:border-gray-600 dark:bg-gray-700"
+        role="menu"
+      >
+        {
+          Object.entries(languages).map(([lang, flagCode]) => {
+            const langKey = lang as keyof typeof labels;
+            return (
+              <a href={translatePath(getCurrentPath(), lang)}>
+                <li
+                  class="flex cursor-pointer items-center justify-center rounded-lg p-2 text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-600"
+                  data-lang={lang}
+                  role="menuitem"
+                >
+                  <img
+                    src={`/flags/${flagCode}.svg`}
+                    alt={`${labels[langKey]} flag`}
+                    class="w-6 h-6 rounded-full object-cover"
+                  />
+                </li>
+              </a>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
+</form>
+
+<script>
+  const dropdownButton = document.getElementById(
+    "dropdownButton2"
+  ) as HTMLButtonElement;
+  const dropdownList = document.getElementById(
+    "dropdownList2"
+  ) as HTMLUListElement;
+  const dropdownIcon = document.getElementById("dropdownIcon2");
+  const selectedLabel = document.getElementById(
+    "selectedLabel2"
+  ) as HTMLSpanElement;
+
+  if (!dropdownButton || !dropdownList || !dropdownIcon || !selectedLabel) {
+    throw new Error("Dropdown elements not found");
+  }
+
+  const hideDropdown = () => {
+    dropdownList.classList.add("opacity-0", "hidden");
+    dropdownIcon.classList.remove("rotate-180");
+    dropdownButton.setAttribute("aria-expanded", "false");
+  };
+
+  const showDropdown = () => {
+    dropdownList.classList.remove("hidden");
+    // A tiny delay ensures the transition runs after the display property changes
+    setTimeout(() => dropdownList.classList.remove("opacity-0"), 10);
+    dropdownIcon.classList.add("rotate-180");
+    dropdownButton.setAttribute("aria-expanded", "true");
+  };
+
+  dropdownButton.addEventListener("click", () => {
+    if (dropdownList.classList.contains("hidden")) {
+      showDropdown();
+    } else {
+      hideDropdown();
+    }
+  });
+
+  // Hide dropdown when clicking outside
+  document.addEventListener("click", (event) => {
+    if (!dropdownButton.contains(event.target as Node)) {
+      hideDropdown();
+    }
+  });
+
+  // Handle language selection
+  dropdownList.addEventListener("click", (event) => {
+    const targetElement = event.target as Element;
+
+    // Only handle clicks on the link elements, not the list items
+    if (targetElement.tagName === "A" || targetElement.closest("a")) {
+      // Close the dropdown immediately
+      hideDropdown();
+
+      // Let the default link navigation happen
+      return true;
+    }
+  });
+
+  // Handle scroll-based styling changes (similar to LocaleSwitcher)
+  document.addEventListener("scroll", () => {
+    const header = document.getElementById("header-container");
+    const dropdownList = document.getElementById("dropdownList2");
+
+    if (!dropdownList) return;
+
+    const items = dropdownList.querySelectorAll("li");
+
+    if (header?.dataset.scrolled === "true") {
+      // scrolled → adjust styling if needed
+      items.forEach((li) => {
+        // You can add scroll-based styling changes here if needed
+        // For now, keeping the existing styling
+      });
+    } else {
+      // top → adjust styling if needed
+      items.forEach((li) => {
+        // You can add scroll-based styling changes here if needed
+        // For now, keeping the existing styling
+      });
+    }
+  });
+</script>
