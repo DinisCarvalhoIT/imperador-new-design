@@ -39,6 +39,8 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --font-playfairDisplay: "Playfair Display";
+  --font-montserrat: "Montserrat";
 }
 
 :root {
@@ -116,5 +118,14 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .font-playfairDisplay {
+    font-family: var(--font-playfairDisplay);
+  }
+  .font-montserrat {
+    font-family: var(--font-montserrat);
   }
 }

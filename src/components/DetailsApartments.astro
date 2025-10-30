@@ -1,0 +1,18 @@
+---
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section>
+  <div class="flex flex-col gap-2 items-center justify-center">
+    <div
+      class="font-montserrat text-base uppercase text-[#E7C873] font-medium tracking-[6px]"
+    >
+      detalhes apartamentos
+    </div>
+    <div class="font-playfairDisplay text-[58px] leading-[68px]">
+      Diferentes Tipologias  
+    </div>
+  </div>
+</section>
