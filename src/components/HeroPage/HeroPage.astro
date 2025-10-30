@@ -1,13 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import heroImg from "../../../public/HomePage/homePageImage.png";
+import heroImgV2 from "../../../public/HomePage/homePageImagev2.png";
 ---
 
 <section class="w-full h-screen relative">
   <Image
     src={heroImg}
-    alt="Home hero image"   
-    class="w-full h-full object-cover"
+    alt="Home hero image"
+    class="w-full h-full object-cover object-center"
     widths={[640, 960, 1200, 1920, 2560]}
     sizes="100vw"
     loading="eager"
