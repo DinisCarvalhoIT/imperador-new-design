@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import logoImg from "../../../public/HomePage/logoImperador.svg";
+import whatsappIcon from "../../../public/HomePage/whatsapp.svg";
+import { Button } from "@/components/ui/button";
+import LocaleSwitcher from "./LocaleSwitcher.astro";
+---
+
+<header class="absolute top-0 left-0 right-0 z-20">
+  <div
+    class="grid grid-cols-3 justify-items-center w-full"
+    style="background: linear-gradient(358.9deg, rgba(11, 29, 38, 0) 0.82%, #0B1D26 98.94%);"
+  >
+    <div class="flex items-start justify-center gap-x-2 pt-8">
+      <Image
+        src={whatsappIcon}
+        alt="Whatsapp Icon"
+        width={24}
+        height={24}
+        loading="lazy"
+      />
+      <p class="text-white text-base font-poppins">+ 351 965 611 642</p>
+    </div>
+    <div>
+      <Image
+        src={logoImg}
+        alt="Imperador Logo"
+        width={280}
+        height={187}
+        loading="lazy"
+      />
+    </div>
+    <div class="flex items-start justify-center pt-8">
+      <div class="flex items-center justify-center gap-x-6">
+        <Button
+          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[160px] h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
+          >Agendar Visita</Button
+        >
+        <LocaleSwitcher />
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,158 @@
+---
+import { useTranslatedPath } from "@/i18n/utils";
+
+const languages = {
+  en: "gb",
+  pt: "pt",
+};
+
+const labels = {
+  en: "EN",
+  pt: "PT",
+};
+
+const currentLang = (Astro.currentLocale === "en" ? "en" : "pt") as "en" | "pt";
+const currentPath = Astro.url.pathname;
+
+// Remove locale prefix if it exists
+const pathWithoutLocale = currentPath.replace(/^\/(en|pt)/, "") || "/";
+
+// Get current path without locale prefix
+const getCurrentPath = () => {
+  const pathSplit = currentPath.split("/");
+  if (pathSplit[1] === "en" || pathSplit[1] === "pt") {
+    pathSplit.splice(1, 1);
+  }
+  return pathSplit.join("/") || "/";
+};
+
+const translatePath = useTranslatedPath(currentLang);
+---
+
+<script>
+  const dropdownButton = document.getElementById("dropdownButton");
+  const dropdownList = document.getElementById("dropdownList");
+  const dropdownIcon = document.getElementById("dropdownIcon");
+  const selectedLabel = document.getElementById("selectedLabel");
+  if (!dropdownButton || !dropdownList || !selectedLabel || !dropdownIcon) {
+    throw new Error("Dropdown elements not found");
+  }
+
+  dropdownButton.addEventListener("click", () => {
+    dropdownList.classList.toggle("hidden");
+    dropdownList.classList.toggle("opacity-0");
+    dropdownList.classList.toggle("transform");
+    dropdownList.classList.toggle("scale-95");
+    dropdownIcon.classList.toggle("rotate-180");
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!dropdownButton.contains(event.target as Node)) {
+      dropdownList.classList.add("hidden");
+      dropdownList.classList.add("opacity-0");
+      dropdownList.classList.add("transform");
+      dropdownList.classList.add("scale-95");
+      dropdownIcon.classList.remove("rotate-180");
+    }
+  });
+
+  dropdownList.addEventListener("click", (event) => {
+    const targetElement = event.target as Element;
+
+    // Only handle clicks on the link elements, not the list items
+    if (targetElement.tagName === "A" || targetElement.closest("a")) {
+      // Close the dropdown immediately
+      dropdownList.classList.add("hidden");
+      dropdownList.classList.add("opacity-0");
+      dropdownList.classList.add("transform");
+      dropdownList.classList.add("scale-95");
+      dropdownIcon.classList.remove("rotate-180");
+
+      // Let the default link navigation happen
+      return true;
+    }
+  });
+
+  document.addEventListener("scroll", () => {
+    const header = document.getElementById("header-container");
+    const dropdownList = document.getElementById("dropdownList");
+
+    if (!dropdownList) return;
+
+    const items = dropdownList.querySelectorAll("li");
+
+    if (header?.dataset.scrolled === "true") {
+      // scrolled → black borders
+      items.forEach((li) => {
+        li.classList.remove("bg-black");
+        li.classList.remove("border-white");
+        li.classList.add("border-black");
+        li.classList.add("bg-white");
+      });
+    } else {
+      // top → white borders
+      items.forEach((li) => {
+        li.classList.remove("bg-white");
+        li.classList.remove("border-black");
+        li.classList.add("border-white");
+        li.classList.add("bg-black");
+      });
+    }
+  });
+</script>
+<form class="z-30">
+  <div class="relative">
+    <button
+      id="dropdownButton"
+      type="button"
+      class="bg-transparent m-0 font-montserrat text-sm p-2 flex items-center gap-x-1 header-item text-white"
+    >
+      <div id="selectedLabel" class="z-20 md:flex hidden items-center">
+        <img
+          src={`/flags/${languages[currentLang]}.svg`}
+          alt={`${labels[currentLang]} flag`}
+          class="w-6 h-6 rounded-full object-cover"
+        />
+      </div>
+      <svg
+        id="dropdownIcon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-chevron-down h-4 w-4 opacity-100 transition-transform duration-300"
+        aria-hidden="true"
+      >
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </button>
+    <div>
+      <ul
+        id="dropdownList"
+        class="absolute left-2 bg-transparent rounded-lg md:w-full w-[140px] mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium lg:text-xl text-sm"
+      >
+        {
+          Object.entries(languages).map(([lang, flagCode]) => {
+            const langKey = lang as keyof typeof labels;
+            return (
+              <a href={translatePath(getCurrentPath(), lang)}>
+                <li class="p-2 flex items-center justify-center cursor-pointer bg-transparent border border-white hover:bg-gray-100/30">
+                  <img
+                    src={`/flags/${flagCode}.svg`}
+                    alt={`${labels[langKey]} flag`}
+                    class="w-6 h-6 rounded-full object-cover"
+                  />
+                </li>
+              </a>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
+</form>

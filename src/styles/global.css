@@ -41,6 +41,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-playfairDisplay: "Playfair Display";
   --font-montserrat: "Montserrat";
+  --font-poppins: "Poppins";
 }
 
 :root {
@@ -128,4 +129,8 @@
   .font-montserrat {
     font-family: var(--font-montserrat);
   }
+  .font-poppins {
+    font-family: var(--font-poppins);
+  }
+
 }
