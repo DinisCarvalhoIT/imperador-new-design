@@ -19,12 +19,15 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
         height={24}
         loading="lazy"
       />
-      <p class="text-white text-lg font-poppins">+ 351 965 611 642</p>
+      <p class="text-white text-base lg:text-lg font-poppins">
+        + 351 965 611 642
+      </p>
     </div>
     <div>
       <Image
         src={logoImg}
         alt="Imperador Logo"
+        class="w-[200px] h-[115px] lg:w-[280px] lg:h-[137px] transition-all duration-300"
         width={280}
         height={187}
         loading="lazy"
@@ -33,7 +36,7 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
     <div class="flex items-start justify-center pt-8">
       <div class="flex items-center justify-center gap-x-6">
         <Button
-          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[160px] h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
+          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
           >Agendar Visita</Button
         >
         <LocaleSwitcher />
@@ -58,7 +61,7 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
     <div class="flex items-center justify-end">
       <div class="flex items-center justify-end gap-x-6">
         <Button
-          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[160px] h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
+          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
           >Agendar Visita</Button
         >
         <LocaleSwitcher />
