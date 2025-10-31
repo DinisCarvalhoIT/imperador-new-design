@@ -30,87 +30,105 @@ const getCurrentPath = () => {
 };
 
 const translatePath = useTranslatedPath(currentLang);
+
+// Generate unique ID for this instance
+const uniqueId = Math.random().toString(36).substr(2, 9);
 ---
 
-<script>
-  const dropdownButton = document.getElementById("dropdownButton");
-  const dropdownList = document.getElementById("dropdownList");
-  const dropdownIcon = document.getElementById("dropdownIcon");
-  const selectedLabel = document.getElementById("selectedLabel");
-  if (!dropdownButton || !dropdownList || !selectedLabel || !dropdownIcon) {
-    throw new Error("Dropdown elements not found");
-  }
+<script define:vars={{ uniqueId }}>
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("LocaleSwitcher initializing with uniqueId:", uniqueId);
 
-  dropdownButton.addEventListener("click", () => {
-    dropdownList.classList.toggle("hidden");
-    dropdownList.classList.toggle("opacity-0");
-    dropdownList.classList.toggle("transform");
-    dropdownList.classList.toggle("scale-95");
-    dropdownIcon.classList.toggle("rotate-180");
-  });
+    const dropdownButton = document.getElementById(
+      "dropdownButton-" + uniqueId
+    );
+    const dropdownList = document.getElementById("dropdownList-" + uniqueId);
+    const dropdownIcon = document.getElementById("dropdownIcon-" + uniqueId);
+    const selectedLabel = document.getElementById("selectedLabel-" + uniqueId);
 
-  document.addEventListener("click", (event) => {
-    if (!dropdownButton.contains(event.target as Node)) {
-      dropdownList.classList.add("hidden");
-      dropdownList.classList.add("opacity-0");
-      dropdownList.classList.add("transform");
-      dropdownList.classList.add("scale-95");
-      dropdownIcon.classList.remove("rotate-180");
+    console.log("Found elements:", {
+      dropdownButton: !!dropdownButton,
+      dropdownList: !!dropdownList,
+      dropdownIcon: !!dropdownIcon,
+      selectedLabel: !!selectedLabel,
+    });
+
+    if (!dropdownButton || !dropdownList || !selectedLabel || !dropdownIcon) {
+      console.error("Dropdown elements not found for uniqueId:", uniqueId);
+      return;
     }
-  });
 
-  dropdownList.addEventListener("click", (event) => {
-    const targetElement = event.target as Element;
+    dropdownButton.addEventListener("click", () => {
+      dropdownList.classList.toggle("hidden");
+      dropdownList.classList.toggle("opacity-0");
+      dropdownList.classList.toggle("transform");
+      dropdownList.classList.toggle("scale-95");
+      dropdownIcon.classList.toggle("rotate-180");
+    });
 
-    // Only handle clicks on the link elements, not the list items
-    if (targetElement.tagName === "A" || targetElement.closest("a")) {
-      // Close the dropdown immediately
-      dropdownList.classList.add("hidden");
-      dropdownList.classList.add("opacity-0");
-      dropdownList.classList.add("transform");
-      dropdownList.classList.add("scale-95");
-      dropdownIcon.classList.remove("rotate-180");
+    document.addEventListener("click", (event) => {
+      if (!dropdownButton.contains(event.target)) {
+        dropdownList.classList.add("hidden");
+        dropdownList.classList.add("opacity-0");
+        dropdownList.classList.add("transform");
+        dropdownList.classList.add("scale-95");
+        dropdownIcon.classList.remove("rotate-180");
+      }
+    });
 
-      // Let the default link navigation happen
-      return true;
-    }
-  });
+    dropdownList.addEventListener("click", (event) => {
+      const targetElement = event.target;
 
-  document.addEventListener("scroll", () => {
-    const header = document.getElementById("header-container");
-    const dropdownList = document.getElementById("dropdownList");
+      // Only handle clicks on the link elements, not the list items
+      if (targetElement.tagName === "A" || targetElement.closest("a")) {
+        // Close the dropdown immediately
+        dropdownList.classList.add("hidden");
+        dropdownList.classList.add("opacity-0");
+        dropdownList.classList.add("transform");
+        dropdownList.classList.add("scale-95");
+        dropdownIcon.classList.remove("rotate-180");
 
-    if (!dropdownList) return;
+        // Let the default link navigation happen
+        return true;
+      }
+    });
 
-    const items = dropdownList.querySelectorAll("li");
+    document.addEventListener("scroll", () => {
+      const header = document.getElementById("header-container");
+      const dropdownList = document.getElementById("dropdownList-" + uniqueId);
 
-    if (header?.dataset.scrolled === "true") {
-      // scrolled → black borders
-      items.forEach((li) => {
-        li.classList.remove("bg-black");
-        li.classList.remove("border-white");
-        li.classList.add("border-black");
-        li.classList.add("bg-white");
-      });
-    } else {
-      // top → white borders
-      items.forEach((li) => {
-        li.classList.remove("bg-white");
-        li.classList.remove("border-black");
-        li.classList.add("border-white");
-        li.classList.add("bg-black");
-      });
-    }
-  });
+      if (!dropdownList) return;
+
+      const items = dropdownList.querySelectorAll("li");
+
+      if (header?.dataset.scrolled === "true") {
+        // scrolled → black borders
+        items.forEach((li) => {
+          li.classList.remove("bg-black");
+          li.classList.remove("border-white");
+          li.classList.add("border-black");
+          li.classList.add("bg-white");
+        });
+      } else {
+        // top → white borders
+        items.forEach((li) => {
+          li.classList.remove("bg-white");
+          li.classList.remove("border-black");
+          li.classList.add("border-white");
+          li.classList.add("bg-black");
+        });
+      }
+    });
+  }); // End of DOMContentLoaded
 </script>
-<form class="z-30">
+<form class="z-30" data-unique-id={uniqueId}>
   <div class="relative">
     <button
-      id="dropdownButton"
+      id={"dropdownButton-" + uniqueId}
       type="button"
       class="bg-transparent m-0 font-montserrat text-sm flex items-center gap-x-1 header-item text-white"
     >
-      <div id="selectedLabel" class="z-20 flex items-center">
+      <div id={"selectedLabel-" + uniqueId} class="z-20 flex items-center">
         <img
           src={`/flags/${languages[currentLang]}.svg`}
           alt={`${labels[currentLang]} flag`}
@@ -118,7 +136,7 @@ const translatePath = useTranslatedPath(currentLang);
         />
       </div>
       <svg
-        id="dropdownIcon"
+        id={"dropdownIcon-" + uniqueId}
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
@@ -136,7 +154,7 @@ const translatePath = useTranslatedPath(currentLang);
     </button>
     <div>
       <ul
-        id="dropdownList"
+        id={"dropdownList-" + uniqueId}
         class="absolute left-2 bg-transparent rounded-lg md:w-full w-[140px] mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium lg:text-xl text-sm"
       >
         {
