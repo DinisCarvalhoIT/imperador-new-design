@@ -1,80 +1,10 @@
 ---
-import { Image } from "astro:assets";
-import logoImg from "../../../public/HomePage/logoImperador.svg";
-import whatsappIcon from "../../../public/HomePage/whatsapp.svg";
-import { Button } from "@/components/ui/button";
-import LocaleSwitcher from "./LocaleSwitcher.astro";
+import HeaderMobile from "./HeaderMobile.astro";
+import HeaderPC from "./HeaderPC.astro";
 ---
 
-<header id="site-header" class="fixed top-0 left-0 right-0 z-20">
-  <div
-    id="header-large"
-    class="grid grid-cols-3 justify-items-center w-full pt-1 relative z-10"
-  >
-    <div class="flex items-start justify-center gap-x-2 pt-8">
-      <Image
-        src={whatsappIcon}
-        alt="Whatsapp Icon"
-        width={24}
-        height={24}
-        loading="lazy"
-      />
-      <p class="text-white text-base lg:text-lg font-poppins">
-        + 351 965 611 642
-      </p>
-    </div>
-    <div>
-      <Image
-        src={logoImg}
-        alt="Imperador Logo"
-        class="w-[200px] h-[115px] lg:w-[280px] lg:h-[137px] transition-all duration-300"
-        width={280}
-        height={187}
-        loading="lazy"
-      />
-    </div>
-    <div class="flex items-start justify-center pt-8">
-      <div class="flex items-center justify-center gap-x-6">
-        <Button
-          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
-          >Agendar Visita</Button
-        >
-        <LocaleSwitcher />
-      </div>
-    </div>
-  </div>
-
-  <div
-    id="header-small"
-    class="grid grid-cols-2 items-center w-full px-10 absolute inset-0 opacity-0 pointer-events-none"
-  >
-    <div class="flex items-center justify-start gap-x-2">
-      <Image
-        src={logoImg}
-        alt="Imperador Logo"
-        width={200}
-        height={82}
-        loading="lazy"
-      />
-    </div>
-
-    <div class="flex items-center justify-end">
-      <div class="flex items-center justify-end gap-x-6">
-        <Button
-          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
-          >Agendar Visita</Button
-        >
-        <LocaleSwitcher />
-      </div>
-    </div>
-  </div>
-</header>
-<style>
-  #header-large,
-  #header-small {
-    transition: opacity 0.3s ease;
-  }
-</style>
+<HeaderMobile />
+<HeaderPC />
 
 <script>
   const headerEl = document.getElementById("site-header");
