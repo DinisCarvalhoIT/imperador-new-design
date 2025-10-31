@@ -24,7 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import logoImg from "../../../public/HomePage/logoImperador.svg";
+import logoImg from "/HomePage/logoImperador.svg?url";
 
 const formSchema = z.object({
   name: z
@@ -67,7 +67,7 @@ export default function ContactFormButton({
         <DialogTrigger asChild>
           <Button className={classNameButtonStyle}>{buttonText}</Button>
         </DialogTrigger>
-        <DialogContent className="bg-[#0B1D26] w-[95vw] max-w-[600px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[900px] border-[#7192A2] text-[#6d847f] overflow-y-auto p-4 sm:p-6 md:p-8 lg:p-12 max-h-[90vh]">
+        <DialogContent className="bg-[#0B1D26]/94 w-[95vw] max-w-[600px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[900px] border-[#7192A2] text-[#6d847f] overflow-y-auto p-4 sm:p-6 md:p-8 lg:p-12 max-h-[90vh]">
           <DialogHeader>
             <DialogDescription className="text-center text-xs sm:text-sm md:text-[15px] text-[#E7C873] tracking-widest font-montserrat font-light">
               GOSTAVA DE SABER MAIS?
@@ -136,14 +136,14 @@ export default function ContactFormButton({
               </div>
               <div className="flex justify-center mt-4 sm:mt-6">
                 <Button
-                  className="text-white text-sm sm:text-base md:text-lg lg:text-xl bg-[#7192A2] hover:bg-[#7192A2]/80 hover:border-2 w-full sm:w-3/4 md:w-2/3 lg:w-1/2 max-w-[280px] h-[44px] sm:h-[48px] md:h-[52px] font-montserrat font-semibold cursor-pointer"
+                  className="text-white text-sm sm:text-base md:text-lg lg:text-xl bg-[#7192A2] hover:bg-[#7192A2]/80 hover:border-2 w-full max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] h-[44px] sm:h-[48px] md:h-[52px] font-montserrat font-semibold cursor-pointer"
                   type="submit"
                 >
                   AGENDAR VISITA
                 </Button>
               </div>
               <img
-                src={logoImg.src}
+                src={logoImg}
                 alt="Logo Imperador."
                 width={200}
                 height={200}
