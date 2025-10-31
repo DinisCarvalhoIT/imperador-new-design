@@ -5,7 +5,15 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet"
+} from "@/components/ui/sheet-apartments"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel"
 
 type ApartmentType = "T1" | "T2" | "T3"
 
@@ -16,20 +24,79 @@ type Rect = {
   height: number
 }
 
+type ApartmentModel = {
+  suites: number
+  bathrooms: number
+  parking: number
+  area: number
+  units: string
+  floors: string
+}
+
+type ApartmentItem = {
+  type: ApartmentType
+  modelIndex: number
+  model: ApartmentModel
+}
+
+const APARTMENT_DATA: Record<ApartmentType, ApartmentModel[]> = {
+  T1: [
+    { suites: 1, bathrooms: 2, parking: 2, area: 132, units: "7 Unidades", floors: "Piso 1 a 7" },
+    { suites: 1, bathrooms: 2, parking: 2, area: 132, units: "7 Unidades", floors: "Piso 1 a 7" },
+    { suites: 1, bathrooms: 2, parking: 2, area: 132, units: "7 Unidades", floors: "Piso 1 a 7" },
+  ],
+  T2: [
+    { suites: 2, bathrooms: 2, parking: 2, area: 145, units: "7 Unidades", floors: "Piso 1 a 7" },
+    { suites: 2, bathrooms: 2, parking: 2, area: 145, units: "7 Unidades", floors: "Piso 1 a 7" },
+  ],
+  T3: [
+    { suites: 3, bathrooms: 3, parking: 2, area: 180, units: "7 Unidades", floors: "Piso 1 a 7" },
+    { suites: 3, bathrooms: 3, parking: 2, area: 180, units: "7 Unidades", floors: "Piso 1 a 7" },
+  ],
+}
+
+// Create a flat array of all apartment models across all types
+function getAllApartmentItems(): ApartmentItem[] {
+  const items: ApartmentItem[] = []
+  const types: ApartmentType[] = ["T1", "T2", "T3"]
+  
+  types.forEach((type) => {
+    APARTMENT_DATA[type].forEach((model, index) => {
+      items.push({ type, modelIndex: index, model })
+    })
+  })
+  
+  return items
+}
+
+const ALL_APARTMENTS = getAllApartmentItems()
+
+// Find the index in ALL_APARTMENTS for a given type and shapeIndex
+function findApartmentIndex(type: ApartmentType, shapeIndex: number): number {
+  let index = 0
+  for (const item of ALL_APARTMENTS) {
+    if (item.type === type && item.modelIndex === shapeIndex) {
+      return index
+    }
+    index++
+  }
+  return 0
+}
+
 const BASE_SHAPES: Record<ApartmentType, Rect[]> = {
   // Coordinates in a 1000x1000 viewBox space so the SVG scales with the image
   T1: [
-    { x: 419, y: 756, width: 239, height: 78 }, // T1 model a
-    { x: 360, y: 215, width: 184, height: 541 }, // T1 model b
-    { x: 544, y: 215, width: 179, height: 541 }, // T1 model c
+    { x: 419, y: 758, width: 239, height: 78 }, // T1 model a
+    { x: 360, y: 198, width: 184, height: 560 }, // T1 model b
+    { x: 544, y: 198, width: 179, height: 560 }, // T1 model c
   ],
   T2: [
-    { x: 220, y: 215, width: 140, height: 541 }, // T2 model a
-    { x: 723, y: 215, width: 140, height: 541 }, // T2 model b
+    { x: 220, y: 198, width: 140, height: 560 }, // T2 model a
+    { x: 723, y: 198, width: 140, height: 560 }, // T2 model b
   ],
   T3: [
-    { x: 220, y: 756, width: 199, height: 78 }, // T3 model a
-    { x: 658, y: 756, width: 205, height: 78 }, // T3 model b
+    { x: 220, y: 758, width: 199, height: 78 }, // T3 model a
+    { x: 658, y: 758, width: 205, height: 78 }, // T3 model b
   ],
 }
 
@@ -80,6 +147,9 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
   const [hovered, setHovered] = React.useState<HoverState | null>(null)
   const [selected, setSelected] = React.useState<SelectedState | null>(null)
   const [open, setOpen] = React.useState(false)
+  const [api, setApi] = React.useState<CarouselApi>()
+  const [current, setCurrent] = React.useState(0)
+  const isCarouselControlled = React.useRef(false)
 
   function openFor(type: ApartmentType, shapeIndex: number) {
     setSelected({ type, shapeIndex })
@@ -94,6 +164,51 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
   function getModelLetter(shapeIndex: number): string {
     return String.fromCharCode(97 + shapeIndex) // 'a', 'b', 'c'
   }
+
+  // Sync carousel with selected model when sheet opens or selected changes from outside
+  React.useEffect(() => {
+    if (!api || !selected || !open || isCarouselControlled.current) {
+      isCarouselControlled.current = false
+      return
+    }
+    const carouselIndex = findApartmentIndex(selected.type, selected.shapeIndex)
+    api.scrollTo(carouselIndex)
+  }, [api, selected?.type, selected?.shapeIndex, open])
+
+  // Track carousel current index and update selected area when carousel changes
+  React.useEffect(() => {
+    if (!api || !selected) return
+
+    const updateSelected = () => {
+      isCarouselControlled.current = true
+      const carouselIndex = api.selectedScrollSnap()
+      setCurrent(carouselIndex)
+      
+      // Get the apartment item at this carousel index
+      const apartmentItem = ALL_APARTMENTS[carouselIndex]
+      if (apartmentItem) {
+        // Update selected to highlight the corresponding area on the map
+        setSelected((prev) => {
+          if (!prev) return prev
+          // Only update if the type or index actually changed
+          if (prev.type !== apartmentItem.type || prev.shapeIndex !== apartmentItem.modelIndex) {
+            return { type: apartmentItem.type, shapeIndex: apartmentItem.modelIndex }
+          }
+          return prev
+        })
+      }
+    }
+
+    // Set initial current index
+    const initialIndex = findApartmentIndex(selected.type, selected.shapeIndex)
+    setCurrent(initialIndex)
+
+    api.on("select", updateSelected)
+
+    return () => {
+      api.off("select", updateSelected)
+    }
+  }, [api, selected?.type, selected?.shapeIndex])
 
   return (
     <div className="absolute inset-0">
@@ -153,8 +268,8 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
         </defs>
 
         {(() => {
-          const topHeight = interacting ? imageHeight * 0.5 : imageHeight * 0.333
-          const bottomHeight = interacting ? imageHeight * 0.5 : imageHeight * 0.333
+          const topHeight = interacting ? imageHeight * 0.5 : imageHeight * 0.27
+          const bottomHeight = interacting ? imageHeight * 0.5 : imageHeight * 0.27
           return (
             <g mask="url(#activeHoleMask)">
               {/* Top band - starts exactly at y=0 to cover full edge */}
@@ -181,8 +296,8 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
       </svg>
 
       {/* Left selector: T1 / T2 / T3 */}
-      <div className="hidden md:flex absolute left-0 top-0 bottom-0 px-6 md:px-12 lg:px-32 items-center z-20">
-        <div className="flex flex-col justify-center gap-[49px] w-24 text-white">
+      <div className="hidden md:flex absolute left-0 top-0 bottom-0 px-6 md:px-12 lg:px-32 items-center z-15">
+        <div className="flex flex-col justify-center gap-[48px] w-24 text-white">
           {/* T1 */}
           <button
             type="button"
@@ -216,7 +331,7 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
             </svg>
             <div
               className={
-                `mt-[7px] h-0.5 w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
+                `mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
                   active?.type === "T1" ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
                 }`
               }
@@ -256,7 +371,7 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
             </svg>
             <div
               className={
-                `mt-[7px] h-0.5 w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
+                `mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
                   active?.type === "T2" ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
                 }`
               }
@@ -296,7 +411,7 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
             </svg>
             <div
               className={
-                `mt-[7px] h-0.5 w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
+                `mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
                   active?.type === "T3" ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
                 }`
               }
@@ -347,7 +462,7 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
         ))}
       </svg>
 
-      {/* Right-side sheet with details */}
+      {/* Sheet with carousel - 1/3 width */}
       <Sheet
         open={open}
         onOpenChange={(next) => {
@@ -358,35 +473,117 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
           }
         }}
       >
-        <SheetContent side="right" className="bg-[#0F3A4B] text-white z-20">
-          <SheetHeader className="gap-3">
-            <SheetTitle className="font-playfairDisplay text-2xl">
-              {selected ? `${selected.type} - modelo ${getModelLetter(selected.shapeIndex)}` : "Tipologia"}
-            </SheetTitle>
-            <SheetDescription className="text-white/80">
-              7 Unidades - Piso 1 a 7
-            </SheetDescription>
-          </SheetHeader>
-          <div className="px-4 pb-6 space-y-6">
-            <div className="grid grid-cols-3 gap-6 text-center">
-              <div>
-                <div className="text-4xl font-playfairDisplay">1</div>
-                <div className="text-sm opacity-80">Suite</div>
-              </div>
-              <div>
-                <div className="text-4xl font-playfairDisplay">2</div>
-                <div className="text-sm opacity-80">Casas de Banho</div>
-              </div>
-              <div>
-                <div className="text-4xl font-playfairDisplay">2</div>
-                <div className="text-sm opacity-80">Lugares de Estacionamento</div>
+        <SheetContent 
+          side="right" 
+          showOverlay={false}
+          className="text-white w-full max-w-none md:max-w-[40%] border-l border-transparent overflow-y-auto"
+        >
+          <SheetTitle hidden/>
+          {selected && ALL_APARTMENTS[current] && (
+            <div className="h-full flex flex-col relative">
+              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-8 py-12 overflow-y-auto">
+                {/* Carousel - Floor Plan Images */}
+                <Carousel
+                  setApi={setApi}
+                  className="w-full mb-8 relative"
+                  opts={{
+                    align: "center",
+                    loop: true,
+                  }}
+                >
+                  {/* Floor Plan Images */}
+                  <CarouselContent className="ml-0">
+                    {ALL_APARTMENTS.map((apartment) => (
+                      <CarouselItem key={`${apartment.type}-${apartment.modelIndex}`} className="pl-0">
+                        <div className="flex justify-center">
+                          <div className="relative w-full max-w-md aspect-square">
+                            <img 
+                              src={`/${apartment.type}.svg`} 
+                              alt={`${apartment.type} floor plan`}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+
+                  {/* Title Section with Navigation Arrows - Below Carousel */}
+                  <div className="flex items-center justify-center gap-6 mt-8 w-full">
+                    <CarouselPrevious 
+                      className="relative top-0 left-0 translate-x-0 translate-y-0 w-10 h-10 rounded-full bg-transparent border border-white/30 text-white hover:bg-white/10 hover:text-white shrink-0"
+                    />
+                    
+                    <div className="text-center flex-1">
+                      {ALL_APARTMENTS[current] && (
+                        <>
+                          <h2 className="text-3xl md:text-4xl lg:text-5xl font-playfairDisplay text-[#F1B44A] mb-2">
+                            <span className="font-playfairDisplay text-">{ALL_APARTMENTS[current].type.charAt(0)}</span><span className="text-4xl">{ALL_APARTMENTS[current].type.charAt(1)}</span>  - modelo {getModelLetter(ALL_APARTMENTS[current].modelIndex).toUpperCase()}
+                          </h2>
+                          <p className="text-white/80 text-sm md:text-base">
+                            {ALL_APARTMENTS[current].model.units} - {ALL_APARTMENTS[current].model.floors}
+                          </p>
+                        </>
+                      )}
+                    </div>
+                    
+                    <CarouselNext 
+                      className="relative top-0 right-0 translate-x-0 translate-y-0 w-10 h-10 rounded-full bg-transparent border border-white/30 text-white hover:bg-white/10 hover:text-white shrink-0"
+                    />
+                  </div>
+                </Carousel>
+
+                {/* Stats Grid */}
+                <div className="flex items-center justify-center gap-4 md:gap-6 mb-8 w-full">
+                  <div className="text-center">
+                    <div className="text-4xl md:text-5xl lg:text-6xl font-playfairDisplay text-white mb-2">
+                      {ALL_APARTMENTS[current].model.suites}
+                    </div>
+                    <div className="text-white/80 text-sm md:text-base">Suite</div>
+                  </div>
+                  
+                  <div className="text-[#F1B44A] text-2xl">•</div>
+                  
+                  <div className="text-center">
+                    <div className="text-4xl md:text-5xl lg:text-6xl font-playfairDisplay text-white mb-2">
+                      {ALL_APARTMENTS[current].model.bathrooms}
+                    </div>
+                    <div className="text-white/80 text-sm md:text-base">Casas de Banho</div>
+                  </div>
+                  
+                  <div className="text-[#F1B44A] text-2xl">•</div>
+                  
+                  <div className="text-center">
+                    <div className="text-4xl md:text-5xl lg:text-6xl font-playfairDisplay text-white mb-2">
+                      {ALL_APARTMENTS[current].model.parking}
+                    </div>
+                    <div className="text-white/80 text-sm md:text-base">Lugares de Estacionamento</div>
+                  </div>
+                </div>
+
+                {/* Area Information */}
+                <div className="text-center mb-8">
+                  <div className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-playfairDisplay text-white mb-2">
+                    +{ALL_APARTMENTS[current].model.area} m²
+                  </div>
+                  <div className="text-white/80 text-sm md:text-base">Área Bruta de Construção</div>
+                </div>
+
+                {/* VER MAIS Button */}
+                <div className="flex justify-center">
+                  <button
+                    className="px-8 py-3 border border-white/30 rounded-lg text-white uppercase tracking-wider hover:bg-white/10 transition-colors font-montserrat text-sm md:text-base"
+                    onClick={() => {
+                      // Add navigation or action here
+                      console.log("VER MAIS clicked")
+                    }}
+                  >
+                    VER MAIS
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-playfairDisplay">+132 m²</div>
-              <div className="opacity-80 text-sm">Área Bruta de Construção</div>
-            </div>
-          </div>
+          )}
         </SheetContent>
       </Sheet>
     </div>
