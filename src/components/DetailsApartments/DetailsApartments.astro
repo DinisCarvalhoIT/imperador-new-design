@@ -1,0 +1,34 @@
+---
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+import { Image } from "astro:assets";
+import InteractiveBuilding from "./InteractiveBuilding";
+---
+
+<section class="relative w-full max-h-[1050px]">
+  <div class="relative w-full h-full overflow-hidden">
+    
+
+    <Image
+      src="/details-apartments.png"
+      alt="Diferentes Tipologias"
+      format="webp"
+      width={1920}
+      height={1080}
+      class="w-full h-full object-cover"
+    />
+
+    <div class="absolute inset-0 px-6 md:px-12 lg:px-32 flex z-10">
+      <div class="flex-1 flex flex-col items-center justify-start pt-10 md:pt-14">
+        <div class="font-montserrat text-base uppercase text-[#E7C873] font-medium tracking-[6px]">
+          detalhes apartamentos
+        </div>
+        <div class="font-playfairDisplay text-[40px] leading-[50px] md:text-[58px] md:leading-[68px] text-white text-center">
+          Diferentes Tipologias
+        </div>
+      </div>
+    </div>
+    <InteractiveBuilding client:load imageWidth={1920} imageHeight={1080} />
+  </div>
+</section>
