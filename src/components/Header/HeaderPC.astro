@@ -2,9 +2,9 @@
 import { Image } from "astro:assets";
 import logoImg from "../../../public/HomePage/logoImperador.svg";
 import whatsappIcon from "../../../public/HomePage/whatsapp.svg";
-import { Button } from "@/components/ui/button";
 import LocaleSwitcher from "./LocaleSwitcher.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import ContactFormButton from "./ContactFormButton";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -42,10 +42,13 @@ const t = useTranslations(lang);
     </div>
     <div class="flex items-start justify-center pt-8">
       <div class="flex items-center justify-center gap-x-6">
-        <Button
-          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
-          >{t("header.schedule_visit")}</Button
-        >
+        <ContactFormButton
+          classNameButtonStyle="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
+          buttonText={t("header.schedule_visit")}
+          lang={Astro.currentLocale === "en" ? "en" : "pt"}
+          client:load
+        />
+
         <LocaleSwitcher />
       </div>
     </div>
@@ -67,10 +70,12 @@ const t = useTranslations(lang);
 
     <div class="flex items-center justify-end">
       <div class="flex items-center justify-end gap-x-6">
-        <Button
-          className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
-          >{t("header.schedule_visit")}</Button
-        >
+        <ContactFormButton
+          classNameButtonStyle="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
+          buttonText={t("header.schedule_visit")}
+          lang={Astro.currentLocale === "en" ? "en" : "pt"}
+          client:load
+        />
         <LocaleSwitcher />
       </div>
     </div>
