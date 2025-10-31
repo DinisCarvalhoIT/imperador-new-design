@@ -24,6 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import logoImg from "../../../public/HomePage/logoImperador.svg";
 
 const formSchema = z.object({
   name: z
@@ -66,33 +67,29 @@ export default function ContactFormButton({
         <DialogTrigger asChild>
           <Button className={classNameButtonStyle}>{buttonText}</Button>
         </DialogTrigger>
-        <DialogContent className=" bg-white md:min-w-[700px] max-w-lg w-full border-[#202d18] text-[#6d847f] overflow-y-auto max-h-[600px]">
+        <DialogContent className="bg-[#0B1D26] w-[95vw] max-w-[600px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[900px] border-[#7192A2] text-[#6d847f] overflow-y-auto p-4 sm:p-6 md:p-8 lg:p-12 max-h-[90vh]">
           <DialogHeader>
+            <DialogDescription className="text-center text-xs sm:text-sm md:text-[15px] text-[#E7C873] tracking-widest font-montserrat font-light">
+              GOSTAVA DE SABER MAIS?
+            </DialogDescription>
             <DialogTitle className="flex justify-center">
-              <span className="sm:text-4xl text-xl text-center text-[#6d847f] font-playfairDisplay ">
-                {"translations.dialogTitle"}
+              <span className="text-lg sm:text-2xl md:text-3xl lg:text-[54px] text-center text-white font-playfairDisplay font-thin leading-tight">
+                Agenda a sua Visita
               </span>
             </DialogTitle>
-            <DialogDescription className="text-center text-[#6d847f] mt-2">
-              Fill out this form to get in touch with us. We'll respond as soon
-              as possible.
-            </DialogDescription>
           </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="">
-              <div className="grid md:grid-cols-2 grid-cols-1 gap-x-4 items-center md:py-2">
+              <div className="grid sm:grid-cols-2 grid-cols-1 gap-x-2 sm:gap-x-3 gap-y-3 sm:gap-y-4 items-start pb-2 sm:pb-3 w-full max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] mx-auto">
                 <FormField
                   control={form.control}
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="sm:text-lg font-montserrat text-base italic">
-                        {"translations.nameLabel"}
-                      </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder={"translations.namePlaceholder"}
-                          className="bg-white border border-[#a3a3a0] sm:text-base text-black"
+                          placeholder={"Nome"}
+                          className="bg-white/84 border border-[#a3a3a0] h-[40px] sm:h-[44px] md:h-[48px] text-sm sm:text-base text-black font-montserrat tracking-widest font-light"
                           {...field}
                         />
                       </FormControl>
@@ -105,14 +102,11 @@ export default function ContactFormButton({
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="sm:text-lg font-montserrat text-base italic">
-                        {"translations.emailLabel"}
-                      </FormLabel>
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder={"translations.emailPlaceholder"}
-                          className="bg-white border border-[#a3a3a0] sm:text-base text-black"
+                          placeholder={"Email"}
+                          className="bg-white/84 border border-[#a3a3a0] h-[40px] sm:h-[44px] md:h-[48px] text-sm sm:text-base text-black font-montserrat tracking-widest font-light"
                           {...field}
                         />
                       </FormControl>
@@ -122,19 +116,16 @@ export default function ContactFormButton({
                 />
               </div>
 
-              <div className="sm:py-2 relative">
+              <div className="pt-2 sm:pt-3 w-full max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] mx-auto">
                 <FormField
                   control={form.control}
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="sm:text-lg font-montserrat text-base italic">
-                        {"translations.messageLabel"}
-                      </FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder={"translations.messagePlaceholder"}
-                          className="bg-white border border-[#a3a3a0] sm:text-base text-black"
+                          placeholder={"Como podemos ajudar?"}
+                          className="bg-white/84 border border-[#a3a3a0] h-[100px] sm:h-[120px] md:h-[128px] text-sm sm:text-base text-black font-montserrat tracking-widest font-light resize-none"
                           {...field}
                         />
                       </FormControl>
@@ -143,12 +134,21 @@ export default function ContactFormButton({
                   )}
                 />
               </div>
-              <Button
-                className="mx-auto text-[#6d847f] sm:text-xl text-base bg-[#f0f2f1] hover:bg-transparent hover:border-2  sm:w-1/2 w-1/3 sm:mt-4 mt-3 font-montserrat italic font-semibold cursor-pointer"
-                type="submit"
-              >
-                translations.loadingButton
-              </Button>
+              <div className="flex justify-center mt-4 sm:mt-6">
+                <Button
+                  className="text-white text-sm sm:text-base md:text-lg lg:text-xl bg-[#7192A2] hover:bg-[#7192A2]/80 hover:border-2 w-full sm:w-3/4 md:w-2/3 lg:w-1/2 max-w-[280px] h-[44px] sm:h-[48px] md:h-[52px] font-montserrat font-semibold cursor-pointer"
+                  type="submit"
+                >
+                  AGENDAR VISITA
+                </Button>
+              </div>
+              <img
+                src={logoImg.src}
+                alt="Logo Imperador."
+                width={200}
+                height={200}
+                className="w-[120px] h-[56px] sm:w-[140px] sm:h-[65px] md:w-[160px] md:h-[75px] lg:w-[171px] lg:h-[80px] mx-auto mt-6 sm:mt-8 md:mt-10"
+              />
             </form>
           </Form>
         </DialogContent>
