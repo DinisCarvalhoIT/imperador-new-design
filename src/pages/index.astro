@@ -1,11 +1,14 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Welcome from "@/components/Welcome.astro";
 import DetailsApartments from "@/components/DetailsApartments/DetailsApartments.astro";
 import HeroPage from "@/components/HeroPage/HeroPage.astro";
+import SummaryNumbers from "@/components/HeroPage/SummaryNumbers.astro";
+import SummaryBuilding from "@/components/SummaryBuilding/SummaryBuilding.astro";
 ---
 
 <Layout>
   <HeroPage />
+  <SummaryNumbers />
+  <SummaryBuilding />
   <DetailsApartments />
 </Layout>
