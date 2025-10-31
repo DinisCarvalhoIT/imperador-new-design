@@ -4,6 +4,10 @@ import logoImg from "../../../public/HomePage/logoImperador.svg";
 import whatsappIcon from "../../../public/HomePage/whatsapp.svg";
 import { Button } from "@/components/ui/button";
 import LocaleSwitcher from "./LocaleSwitcher.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <header
@@ -17,7 +21,7 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
     <div class="flex items-start justify-center gap-x-2 pt-8">
       <Image
         src={whatsappIcon}
-        alt="Whatsapp Icon"
+        alt={t("header.whatsapp_alt")}
         width={24}
         height={24}
         loading="lazy"
@@ -29,7 +33,7 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
     <div>
       <Image
         src={logoImg}
-        alt="Imperador Logo"
+        alt={t("header.logo_alt")}
         class="w-[200px] h-[115px] lg:w-[280px] lg:h-[137px] transition-all duration-300"
         width={280}
         height={187}
@@ -40,7 +44,7 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
       <div class="flex items-center justify-center gap-x-6">
         <Button
           className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
-          >Agendar Visita</Button
+          >{t("header.schedule_visit")}</Button
         >
         <LocaleSwitcher />
       </div>
@@ -54,7 +58,7 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
     <div class="flex items-center justify-start gap-x-2">
       <Image
         src={logoImg}
-        alt="Imperador Logo"
+        alt={t("header.logo_alt")}
         width={200}
         height={82}
         loading="lazy"
@@ -65,7 +69,7 @@ import LocaleSwitcher from "./LocaleSwitcher.astro";
       <div class="flex items-center justify-end gap-x-6">
         <Button
           className="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
-          >Agendar Visita</Button
+          >{t("header.schedule_visit")}</Button
         >
         <LocaleSwitcher />
       </div>
