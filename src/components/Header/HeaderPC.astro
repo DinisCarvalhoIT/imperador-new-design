@@ -45,7 +45,7 @@ const t = useTranslations(lang);
         <ContactFormButton
           classNameButtonStyle="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
           buttonText={t("header.schedule_visit")}
-          lang={Astro.currentLocale === "en" ? "en" : "pt"}
+          lang={lang}
           client:load
         />
 
@@ -73,7 +73,7 @@ const t = useTranslations(lang);
         <ContactFormButton
           classNameButtonStyle="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
           buttonText={t("header.schedule_visit")}
-          lang={Astro.currentLocale === "en" ? "en" : "pt"}
+          lang={lang}
           client:load
         />
         <LocaleSwitcher />

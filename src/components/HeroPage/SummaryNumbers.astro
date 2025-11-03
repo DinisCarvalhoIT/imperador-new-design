@@ -1,5 +1,9 @@
 ---
 import VectorPointer from "../../../public/HomePage/pointNumbers.svg";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section class="w-full bg-transparent absolute -bottom-8 hidden sm:block">
@@ -10,32 +14,33 @@ import VectorPointer from "../../../public/HomePage/pointNumbers.svg";
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
         >10</span
-      ><span class="font-montserrat text-center">Pisos</span><span
-        class="font-montserrat text-center invisible">&nbsp;</span
-      >
+      ><span class="font-montserrat text-center">{t("summary.floors")}</span
+      ><span class="font-montserrat text-center invisible">&nbsp;</span>
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
         >31</span
-      ><span class="font-montserrat text-center">Apartamentos</span><span
-        class="font-montserrat text-center">de Luxo</span
-      >
+      ><span class="font-montserrat text-center">{t("summary.apartments")}</span
+      ><span class="font-montserrat text-center">{t("summary.luxury")}</span>
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
         >64</span
-      ><span class="font-montserrat text-center">Lugares de</span><span
-        class="font-montserrat text-center">Estacionamento</span
+      ><span class="font-montserrat text-center"
+        >{t("summary.parking_line1")}</span
+      ><span class="font-montserrat text-center"
+        >{t("summary.parking_line2")}</span
       >
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
         >5279.85</span
-      ><span class="font-montserrat text-center">Área Bruta de</span>
-      <span class="font-montserrat text-center">Construção (m²)</span>
+      ><span class="font-montserrat text-center">{t("summary.area_line1")}</span
+      >
+      <span class="font-montserrat text-center">{t("summary.area_line2")}</span>
     </div>
   </div>
 </section>
@@ -47,30 +52,32 @@ import VectorPointer from "../../../public/HomePage/pointNumbers.svg";
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
         >10</span
-      ><span class="font-montserrat text-center">Pisos</span>
+      ><span class="font-montserrat text-center">{t("summary.floors")}</span>
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
         >31</span
-      ><span class="font-montserrat text-center">Apartamentos</span><span
-        class="font-montserrat text-center">de Luxo</span
-      >
+      ><span class="font-montserrat text-center">{t("summary.apartments")}</span
+      ><span class="font-montserrat text-center">{t("summary.luxury")}</span>
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
         >64</span
-      ><span class="font-montserrat text-center">Lugares de</span><span
-        class="font-montserrat text-center">Estacionamento</span
+      ><span class="font-montserrat text-center"
+        >{t("summary.parking_line1")}</span
+      ><span class="font-montserrat text-center"
+        >{t("summary.parking_line2")}</span
       >
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
         >5279.85</span
-      ><span class="font-montserrat text-center">Área Bruta de</span>
-      <span class="font-montserrat text-center">Construção (m²)</span>
+      ><span class="font-montserrat text-center">{t("summary.area_line1")}</span
+      >
+      <span class="font-montserrat text-center">{t("summary.area_line2")}</span>
     </div>
   </div>
 </section>

@@ -2,6 +2,10 @@
 import { Image } from "astro:assets";
 import buildingImage from "../../../public/SummaryBuilding/01.png";
 import VectorVenda from "../../../public/SummaryBuilding/Group 1171274879.svg";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <section
@@ -13,25 +17,19 @@ import VectorVenda from "../../../public/SummaryBuilding/Group 1171274879.svg";
     <div
       class="text-[#E7C873] font-montserrat tracking-[0.3em] text-xs sm:text-sm pb-6 sm:pb-8 md:pb-10"
     >
-      NOVOS APARTAMENTOS DE LUXO
+      {t("summary_building.tagline")}
     </div>
     <div
       class="text-white flex flex-col font-playfairDisplay text-3xl sm:text-4xl md:text-4xl lg:text-5xl pb-8 sm:pb-10 md:pb-12"
     >
-      <span> Apresentamos o </span>
-      <span> Edifício Imperador </span>
+      <span> {t("summary_building.title_line1")} </span>
+      <span> {t("summary_building.title_line2")} </span>
     </div>
 
     <div
       class="text-white flex flex-col font-montserrat text-sm sm:text-base font-light pb-8 sm:pb-10 md:pb-12 w-[90%] md:w-[85%] xl:w-[70%]"
     >
-      <span>
-        Um novo ícone residencial na zona mais prestigiada do Funchal. Com uma
-        arquitetura contemporânea e acabamentos de elevada qualidade, cada
-        apartamento foi concebido para proporcionar conforto, privacidade e
-        distinção. Um projeto exclusivo, pensado ao detalhe para quem valoriza
-        sofisticação, localização e bem-estar duradouro.</span
-      >
+      <span> {t("summary_building.description")}</span>
     </div>
     <VectorVenda class="w-32 sm:w-auto" />
   </div>
@@ -45,7 +43,7 @@ import VectorVenda from "../../../public/SummaryBuilding/Group 1171274879.svg";
     </div>
     <Image
       src={buildingImage}
-      alt={"Building Image Summary"}
+      alt={t("summary_building.image_alt")}
       class="w-full h-full object-contain"
       width={540}
       height={600}

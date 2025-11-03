@@ -59,11 +59,11 @@ const t = useTranslations(lang);
         <div
           class="text-white sm:text-lg text-sm font-montserrat tracking-widest font-semibold"
         >
-          BEM-VINDOS AO
+          {t("hero.welcome_mobile")}
         </div>
         <Image
           src={logoImg}
-          alt={"Logo Imperador"}
+          alt={t("header.logo_alt")}
           width={241}
           height={114}
           loading="lazy"
@@ -71,9 +71,9 @@ const t = useTranslations(lang);
         <div
           class="text-white text-3xl font-playfairDisplay font-italic flex flex-col items-center justify-center"
         >
-          <span>Onde o Luxo</span>
-          <span> e o Conforto se</span>
-          <span> encontram.</span>
+          <span>{t("hero.title_mobile_line1")}</span>
+          <span>{t("hero.title_mobile_line2")}</span>
+          <span>{t("hero.title_mobile_line3")}</span>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@ const t = useTranslations(lang);
       <ContactFormButton
         classNameButtonStyle="bg-transparent border border-white hover:bg-white hover:text-black tracking-wide w-[200px] h-[40px] text-md font-montserrat text-white rounded-md font-medium p-0 tracking-widest"
         buttonText={t("header.schedule_visit")}
-        lang={Astro.currentLocale === "en" ? "en" : "pt"}
+        lang={lang}
         client:load
       />
     </div>
