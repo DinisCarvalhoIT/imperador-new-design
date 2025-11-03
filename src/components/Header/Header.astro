@@ -24,12 +24,14 @@ import HeaderPC from "./HeaderPC.astro";
       headerLarge.style.pointerEvents = "none";
       headerSmall.style.opacity = "1";
       headerSmall.style.pointerEvents = "auto";
+      headerEl.style.height = "95px";
     } else {
       headerEl.style.background = gradientBg;
       headerLarge.style.opacity = "1";
       headerLarge.style.pointerEvents = "auto";
       headerSmall.style.opacity = "0";
       headerSmall.style.pointerEvents = "none";
+      headerEl.style.height = "141px";
     }
   }
 
