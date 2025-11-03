@@ -3,6 +3,8 @@ import { Image } from "astro:assets";
 import heroImg from "../../../public/HomePage/homePageImage.png";
 import heroImgV2 from "../../../public/HomePage/homePageImagev2.png";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import logoImg from "../../../public/HomePage/logoImperador.svg";
+import ContactFormButton from "../Header/ContactFormButton.tsx";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -19,13 +21,10 @@ const t = useTranslations(lang);
     decoding="sync"
     fetchpriority="high"
   />
+  <div class="absolute inset-0 gradient-overlay"></div>
+
   <div
-    class="absolute inset-0"
-    style="background: linear-gradient(180deg, rgba(11, 29, 38, 0) 80%, rgba(11, 29, 38, 0.3) 80%, #0B1D26 100%);"
-  >
-  </div>
-  <div
-    class="absolute inset-0 flex flex-col items-center justify-center px-4 text-center"
+    class="absolute inset-0 sm:flex hidden flex-col items-center justify-center px-4 text-center"
   >
     <div
       class="px-6 py-4 rounded-full"
@@ -48,4 +47,79 @@ const t = useTranslations(lang);
       </div>
     </div>
   </div>
+
+  <div
+    class="absolute inset-0 flex sm:hidden flex-col items-center justify-between px-4 text-center py-8"
+  >
+    <div class="flex-1 flex items-center justify-center">
+      <div
+        class="px-6 py-4 rounded-full flex flex-col items-center justify-center"
+        style="background: radial-gradient(50% 50% at 50% 50%, rgba(11, 29, 38, 0.4) 0%, rgba(18, 38, 52, 0) 100%);"
+      >
+        <div
+          class="text-white sm:text-lg text-sm font-montserrat tracking-widest font-semibold"
+        >
+          BEM-VINDOS AO
+        </div>
+        <Image
+          src={logoImg}
+          alt={"Logo Imperador"}
+          width={241}
+          height={114}
+          loading="lazy"
+        />
+        <div
+          class="text-white text-3xl font-playfairDisplay font-italic flex flex-col items-center justify-center"
+        >
+          <span>Onde o Luxo</span>
+          <span> e o Conforto se</span>
+          <span> encontram.</span>
+        </div>
+      </div>
+    </div>
+    <div class="pb-4">
+      <ContactFormButton
+        classNameButtonStyle="bg-transparent border border-white hover:bg-white hover:text-black tracking-wide w-[200px] h-[40px] text-md font-montserrat text-white rounded-md font-medium p-0 tracking-widest"
+        buttonText={t("header.schedule_visit")}
+        lang={Astro.currentLocale === "en" ? "en" : "pt"}
+        client:load
+      />
+    </div>
+  </div>
 </section>
+
+<style>
+  .gradient-overlay {
+    /* Mobile gradient (default) */
+    background: linear-gradient(
+      180deg,
+      rgba(11, 29, 38, 0) 2.87%,
+      rgba(11, 29, 38, 0.572115) 64.87%,
+      #0b1d26 80.26%
+    );
+  }
+
+  /* Tablet gradient */
+  @media (min-width: 640px) {
+    .gradient-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(11, 29, 38, 0) 80%,
+        rgba(11, 29, 38, 0.3) 80%,
+        #0b1d26 100%
+      );
+    }
+  }
+
+  /* Desktop gradient */
+  @media (min-width: 1024px) {
+    .gradient-overlay {
+      background: linear-gradient(
+        180deg,
+        rgba(11, 29, 38, 0) 80%,
+        rgba(11, 29, 38, 0.3) 80%,
+        #0b1d26 100%
+      );
+    }
+  }
+</style>

@@ -5,19 +5,25 @@ import VectorVenda from "../../../public/SummaryBuilding/Group 1171274879.svg";
 ---
 
 <section
-  class="w-full bg-[#0B1D26] min-h-screen grid grid-cols-2 justify-items-center items-center py-32"
+  class="w-full bg-[#0B1D26] min-h-screen grid grid-cols-1 md:grid-cols-2 justify-items-center items-center py-16 sm:py-24 md:py-32 px-6 sm:px-8 md:px-0"
 >
-  <div class="w-full flex flex-col items-start justify-center pl-30">
-    <div class="text-[#E7C873] font-montserrat tracking-[0.3em] text-sm pb-10">
+  <div
+    class="w-full flex flex-col items-start justify-center md:pl-30 px-4 sm:px-8 md:px-0 order-2 md:order-1"
+  >
+    <div
+      class="text-[#E7C873] font-montserrat tracking-[0.3em] text-xs sm:text-sm pb-6 sm:pb-8 md:pb-10"
+    >
       NOVOS APARTAMENTOS DE LUXO
     </div>
-    <div class="text-white flex flex-col font-playfairDisplay text-5xl pb-12">
+    <div
+      class="text-white flex flex-col font-playfairDisplay text-3xl sm:text-4xl md:text-5xl pb-8 sm:pb-10 md:pb-12"
+    >
       <span> Apresentamos o </span>
       <span> Edifício Imperador </span>
     </div>
 
     <div
-      class="text-white flex flex-col font-montserrat text-base font-light pb-12 xl:w-[70%] w-[85%]"
+      class="text-white flex flex-col font-montserrat text-sm sm:text-base font-light pb-8 sm:pb-10 md:pb-12 w-full md:w-[85%] xl:w-[70%]"
     >
       <span>
         Um novo ícone residencial na zona mais prestigiada do Funchal. Com uma
@@ -27,13 +33,15 @@ import VectorVenda from "../../../public/SummaryBuilding/Group 1171274879.svg";
         sofisticação, localização e bem-estar duradouro.</span
       >
     </div>
-    <VectorVenda />
+    <VectorVenda class="w-32 sm:w-auto" />
   </div>
-  <div class="w-[480px] h-[540px] flex items-center justify-center mx-auto">
+  <div
+    class="w-full max-w-[300px] sm:max-w-[400px] md:w-[480px] h-auto md:h-[540px] flex items-center justify-center mx-auto order-1 md:order-2 mb-8 md:mb-0"
+  >
     <Image
       src={buildingImage}
       alt={"Building Image Summary"}
-      class="w-full h-full"
+      class="w-full h-full object-contain"
       width={540}
       height={600}
     />
