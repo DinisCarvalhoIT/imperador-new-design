@@ -633,7 +633,7 @@ export default function InteractiveBuilding({
       </div>
 
       {/* Mobile selector: T1 · T2 · T3 with halo background */}
-      <div className="flex lg:hidden absolute left-0 right-0 top-35 items-center justify-center z-15">
+      <div className="flex lg:hidden absolute left-0 right-0 top-36 items-center justify-center z-15">
         <div className="relative flex items-center gap-4 text-white">
           {/* Radial halo behind */}
           <svg
