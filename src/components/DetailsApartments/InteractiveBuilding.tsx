@@ -380,7 +380,7 @@ export default function InteractiveBuilding({
     <div ref={containerRef} className="absolute inset-0">
       {/* Gradient overlays - solid bands that don't affect apartment shapes */}
       {/* Left gradient band */}
-      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-1/5 bg-linear-to-r from-[#0F3A4B] to-transparent z-5" />
+      <div className="hidden lg:block pointer-events-none absolute left-0 top-0 bottom-0 w-1/5 bg-linear-to-r from-[#0F3A4B] to-transparent z-5" />
       {/* Top/Bottom gradients with mask that excludes active shapes */}
       <svg
         viewBox={`0 0 ${renderWidth} ${renderHeight}`}
@@ -456,10 +456,10 @@ export default function InteractiveBuilding({
         {(() => {
           const topHeight = interacting
             ? renderHeight * 0.5
-            : renderHeight * 0.27;
+            : renderHeight * 0.26;
           const bottomHeight = interacting
             ? renderHeight * 0.5
-            : renderHeight * 0.27;
+            : renderHeight * 0.19;
           return (
             <g mask="url(#activeHoleMask)">
               {/* Top band - starts exactly at y=0 to cover full edge */}
