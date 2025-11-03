@@ -1,11 +1,12 @@
-import * as React from "react"
+import * as React from "react";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet-apartments"
+  SheetClose,
+} from "@/components/ui/sheet-apartments";
 import {
   Carousel,
   CarouselContent,
@@ -13,74 +14,125 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
+import { Button } from "../ui/button";
+import { XIcon } from "lucide-react";
 
-type ApartmentType = "T1" | "T2" | "T3"
+type ApartmentType = "T1" | "T2" | "T3";
 
 type Rect = {
-  x: number
-  y: number
-  width: number
-  height: number
-}
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
 
 type ApartmentModel = {
-  suites: number
-  bathrooms: number
-  parking: number
-  area: number
-  units: string
-  floors: string
-}
+  suites: number;
+  bathrooms: number;
+  parking: number;
+  area: number;
+  units: string;
+  floors: string;
+};
 
 type ApartmentItem = {
-  type: ApartmentType
-  modelIndex: number
-  model: ApartmentModel
-}
+  type: ApartmentType;
+  modelIndex: number;
+  model: ApartmentModel;
+};
 
 const APARTMENT_DATA: Record<ApartmentType, ApartmentModel[]> = {
   T1: [
-    { suites: 1, bathrooms: 2, parking: 2, area: 132, units: "7 Unidades", floors: "Piso 1 a 7" },
-    { suites: 1, bathrooms: 2, parking: 2, area: 132, units: "7 Unidades", floors: "Piso 1 a 7" },
-    { suites: 1, bathrooms: 2, parking: 2, area: 132, units: "7 Unidades", floors: "Piso 1 a 7" },
+    {
+      suites: 1,
+      bathrooms: 2,
+      parking: 2,
+      area: 132,
+      units: "7 Unidades",
+      floors: "Piso 1 a 7",
+    },
+    {
+      suites: 1,
+      bathrooms: 2,
+      parking: 2,
+      area: 132,
+      units: "7 Unidades",
+      floors: "Piso 1 a 7",
+    },
+    {
+      suites: 1,
+      bathrooms: 2,
+      parking: 2,
+      area: 132,
+      units: "7 Unidades",
+      floors: "Piso 1 a 7",
+    },
   ],
   T2: [
-    { suites: 2, bathrooms: 2, parking: 2, area: 145, units: "7 Unidades", floors: "Piso 1 a 7" },
-    { suites: 2, bathrooms: 2, parking: 2, area: 145, units: "7 Unidades", floors: "Piso 1 a 7" },
+    {
+      suites: 2,
+      bathrooms: 2,
+      parking: 2,
+      area: 145,
+      units: "7 Unidades",
+      floors: "Piso 1 a 7",
+    },
+    {
+      suites: 2,
+      bathrooms: 2,
+      parking: 2,
+      area: 145,
+      units: "7 Unidades",
+      floors: "Piso 1 a 7",
+    },
   ],
   T3: [
-    { suites: 3, bathrooms: 3, parking: 2, area: 180, units: "7 Unidades", floors: "Piso 1 a 7" },
-    { suites: 3, bathrooms: 3, parking: 2, area: 180, units: "7 Unidades", floors: "Piso 1 a 7" },
+    {
+      suites: 3,
+      bathrooms: 3,
+      parking: 2,
+      area: 180,
+      units: "7 Unidades",
+      floors: "Piso 1 a 7",
+    },
+    {
+      suites: 3,
+      bathrooms: 3,
+      parking: 2,
+      area: 180,
+      units: "7 Unidades",
+      floors: "Piso 1 a 7",
+    },
   ],
-}
+};
 
 // Create a flat array of all apartment models across all types
 function getAllApartmentItems(): ApartmentItem[] {
-  const items: ApartmentItem[] = []
-  const types: ApartmentType[] = ["T1", "T2", "T3"]
-  
+  const items: ApartmentItem[] = [];
+  const types: ApartmentType[] = ["T1", "T2", "T3"];
+
   types.forEach((type) => {
     APARTMENT_DATA[type].forEach((model, index) => {
-      items.push({ type, modelIndex: index, model })
-    })
-  })
-  
-  return items
+      items.push({ type, modelIndex: index, model });
+    });
+  });
+
+  return items;
 }
 
-const ALL_APARTMENTS = getAllApartmentItems()
+const ALL_APARTMENTS = getAllApartmentItems();
 
 // Find the index in ALL_APARTMENTS for a given type and shapeIndex
 function findApartmentIndex(type: ApartmentType, shapeIndex: number): number {
-  let index = 0
+  let index = 0;
   for (const item of ALL_APARTMENTS) {
     if (item.type === type && item.modelIndex === shapeIndex) {
-      return index
+      return index;
     }
-    index++
+    index++;
   }
-  return 0
+  return 0;
 }
 
 const BASE_SHAPES: Record<ApartmentType, Rect[]> = {
@@ -98,26 +150,29 @@ const BASE_SHAPES: Record<ApartmentType, Rect[]> = {
     { x: 220, y: 758, width: 199, height: 78 }, // T3 model a
     { x: 658, y: 758, width: 205, height: 78 }, // T3 model b
   ],
-}
+};
 
-function getScaledShapes(imageWidth: number, imageHeight: number): Record<ApartmentType, Rect[]> {
+function getScaledShapes(
+  imageWidth: number,
+  imageHeight: number
+): Record<ApartmentType, Rect[]> {
   const scaleX = imageWidth / 1000;
   const scaleY = imageHeight / 1000;
 
   return {
-    T1: BASE_SHAPES.T1.map(rect => ({
+    T1: BASE_SHAPES.T1.map((rect) => ({
       x: rect.x * scaleX,
       y: rect.y * scaleY,
       width: rect.width * scaleX,
       height: rect.height * scaleY,
     })),
-    T2: BASE_SHAPES.T2.map(rect => ({
+    T2: BASE_SHAPES.T2.map((rect) => ({
       x: rect.x * scaleX,
       y: rect.y * scaleY,
       width: rect.width * scaleX,
       height: rect.height * scaleY,
     })),
-    T3: BASE_SHAPES.T3.map(rect => ({
+    T3: BASE_SHAPES.T3.map((rect) => ({
       x: rect.x * scaleX,
       y: rect.y * scaleY,
       width: rect.width * scaleX,
@@ -126,7 +181,7 @@ function getScaledShapes(imageWidth: number, imageHeight: number): Record<Apartm
   };
 }
 
-const GOLD = "#F1B44A"
+const GOLD = "#F1B44A";
 
 interface InteractiveBuildingProps {
   imageWidth: number;
@@ -134,81 +189,97 @@ interface InteractiveBuildingProps {
 }
 
 type HoverState = {
-  type: ApartmentType
-  shapeIndex: number | null // null = all shapes of this type, number = specific shape
-}
+  type: ApartmentType;
+  shapeIndex: number | null; // null = all shapes of this type, number = specific shape
+};
 
 type SelectedState = {
-  type: ApartmentType
-  shapeIndex: number
-}
+  type: ApartmentType;
+  shapeIndex: number;
+};
 
-export default function InteractiveBuilding({ imageWidth, imageHeight }: InteractiveBuildingProps) {
-  const [hovered, setHovered] = React.useState<HoverState | null>(null)
-  const [selected, setSelected] = React.useState<SelectedState | null>(null)
-  const [open, setOpen] = React.useState(false)
-  const [api, setApi] = React.useState<CarouselApi>()
-  const [current, setCurrent] = React.useState(0)
-  const isCarouselControlled = React.useRef(false)
+export default function InteractiveBuilding({
+  imageWidth,
+  imageHeight,
+}: InteractiveBuildingProps) {
+  const [hovered, setHovered] = React.useState<HoverState | null>(null);
+  const [selected, setSelected] = React.useState<SelectedState | null>(null);
+  const [open, setOpen] = React.useState(false);
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const isCarouselControlled = React.useRef(false);
 
   function openFor(type: ApartmentType, shapeIndex: number) {
-    setSelected({ type, shapeIndex })
-    setOpen(true)
+    setSelected({ type, shapeIndex });
+    setOpen(true);
   }
 
-  const active = hovered ?? (selected ? { type: selected.type, shapeIndex: selected.shapeIndex } : null)
-  const interacting = Boolean(active)
-  const SHAPES = getScaledShapes(imageWidth, imageHeight)
+  const active =
+    hovered ??
+    (selected
+      ? { type: selected.type, shapeIndex: selected.shapeIndex }
+      : null);
+  const interacting = Boolean(active);
+  const SHAPES = getScaledShapes(imageWidth, imageHeight);
 
   // Get model letter from shape index (0 = a, 1 = b, 2 = c)
   function getModelLetter(shapeIndex: number): string {
-    return String.fromCharCode(97 + shapeIndex) // 'a', 'b', 'c'
+    return String.fromCharCode(97 + shapeIndex); // 'a', 'b', 'c'
   }
 
   // Sync carousel with selected model when sheet opens or selected changes from outside
   React.useEffect(() => {
     if (!api || !selected || !open || isCarouselControlled.current) {
-      isCarouselControlled.current = false
-      return
+      isCarouselControlled.current = false;
+      return;
     }
-    const carouselIndex = findApartmentIndex(selected.type, selected.shapeIndex)
-    api.scrollTo(carouselIndex)
-  }, [api, selected?.type, selected?.shapeIndex, open])
+    const carouselIndex = findApartmentIndex(
+      selected.type,
+      selected.shapeIndex
+    );
+    api.scrollTo(carouselIndex);
+  }, [api, selected?.type, selected?.shapeIndex, open]);
 
   // Track carousel current index and update selected area when carousel changes
   React.useEffect(() => {
-    if (!api || !selected) return
+    if (!api || !selected) return;
 
     const updateSelected = () => {
-      isCarouselControlled.current = true
-      const carouselIndex = api.selectedScrollSnap()
-      setCurrent(carouselIndex)
-      
+      isCarouselControlled.current = true;
+      const carouselIndex = api.selectedScrollSnap();
+      setCurrent(carouselIndex);
+
       // Get the apartment item at this carousel index
-      const apartmentItem = ALL_APARTMENTS[carouselIndex]
+      const apartmentItem = ALL_APARTMENTS[carouselIndex];
       if (apartmentItem) {
         // Update selected to highlight the corresponding area on the map
         setSelected((prev) => {
-          if (!prev) return prev
+          if (!prev) return prev;
           // Only update if the type or index actually changed
-          if (prev.type !== apartmentItem.type || prev.shapeIndex !== apartmentItem.modelIndex) {
-            return { type: apartmentItem.type, shapeIndex: apartmentItem.modelIndex }
+          if (
+            prev.type !== apartmentItem.type ||
+            prev.shapeIndex !== apartmentItem.modelIndex
+          ) {
+            return {
+              type: apartmentItem.type,
+              shapeIndex: apartmentItem.modelIndex,
+            };
           }
-          return prev
-        })
+          return prev;
+        });
       }
-    }
+    };
 
     // Set initial current index
-    const initialIndex = findApartmentIndex(selected.type, selected.shapeIndex)
-    setCurrent(initialIndex)
+    const initialIndex = findApartmentIndex(selected.type, selected.shapeIndex);
+    setCurrent(initialIndex);
 
-    api.on("select", updateSelected)
+    api.on("select", updateSelected);
 
     return () => {
-      api.off("select", updateSelected)
-    }
-  }, [api, selected?.type, selected?.shapeIndex])
+      api.off("select", updateSelected);
+    };
+  }, [api, selected?.type, selected?.shapeIndex]);
 
   return (
     <div className="absolute inset-0">
@@ -223,12 +294,26 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
         aria-hidden
       >
         <defs>
-          <linearGradient id="gradTop" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+          <linearGradient
+            id="gradTop"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+            gradientUnits="objectBoundingBox"
+          >
             <stop offset="0%" stopColor="#0F3A4B" />
             <stop offset="1%" stopColor="#0F3A4B" />
             <stop offset="100%" stopColor="#0F3A4B" stopOpacity="0" />
           </linearGradient>
-          <linearGradient id="gradBottom" x1="0" y1="1" x2="0" y2="0" gradientUnits="objectBoundingBox">
+          <linearGradient
+            id="gradBottom"
+            x1="0"
+            y1="1"
+            x2="0"
+            y2="0"
+            gradientUnits="objectBoundingBox"
+          >
             <stop offset="0%" stopColor="#0F3A4B" />
             <stop offset="1%" stopColor="#0F3A4B" />
             <stop offset="100%" stopColor="#0F3A4B" stopOpacity="0" />
@@ -237,9 +322,15 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
           {/* Mask that punches holes where the active shapes are */}
           <mask id="activeHoleMask" maskUnits="userSpaceOnUse">
             {/* White = visible gradient; Black = cut-out */}
-            <rect x="0" y="0" width={imageWidth} height={imageHeight} fill="white" />
-            {active && (
-              active.shapeIndex === null
+            <rect
+              x="0"
+              y="0"
+              width={imageWidth}
+              height={imageHeight}
+              fill="white"
+            />
+            {active &&
+              (active.shapeIndex === null
                 ? SHAPES[active.type].map((r, i) => (
                     <rect
                       key={`mask-${active.type}-${i}`}
@@ -251,7 +342,7 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
                     />
                   ))
                 : (() => {
-                    const r = SHAPES[active.type][active.shapeIndex]
+                    const r = SHAPES[active.type][active.shapeIndex];
                     return (
                       <rect
                         key={`mask-${active.type}-${active.shapeIndex}`}
@@ -261,15 +352,18 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
                         height={r.height}
                         fill="black"
                       />
-                    )
-                  })()
-            )}
+                    );
+                  })())}
           </mask>
         </defs>
 
         {(() => {
-          const topHeight = interacting ? imageHeight * 0.5 : imageHeight * 0.27
-          const bottomHeight = interacting ? imageHeight * 0.5 : imageHeight * 0.27
+          const topHeight = interacting
+            ? imageHeight * 0.5
+            : imageHeight * 0.27;
+          const bottomHeight = interacting
+            ? imageHeight * 0.5
+            : imageHeight * 0.27;
           return (
             <g mask="url(#activeHoleMask)">
               {/* Top band - starts exactly at y=0 to cover full edge */}
@@ -288,10 +382,12 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
                 width={imageWidth}
                 height={bottomHeight}
                 fill="url(#gradBottom)"
-                style={{ transition: "height 300ms ease-out, y 300ms ease-out" }}
+                style={{
+                  transition: "height 300ms ease-out, y 300ms ease-out",
+                }}
               />
             </g>
-          )
+          );
         })()}
       </svg>
 
@@ -303,7 +399,7 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
             type="button"
             aria-label="T1"
             className="group hover:cursor-pointer flex flex-col items-start w-fit transform-gpu transition-all duration-500 ease-out opacity-0 translate-y-2 animate-[fadeIn_0.6s_ease-out_forwards]"
-            style={{ animationDelay: '0ms', animationFillMode: 'forwards' }}
+            style={{ animationDelay: "0ms", animationFillMode: "forwards" }}
             onMouseEnter={() => setHovered({ type: "T1", shapeIndex: null })}
             onMouseLeave={() => setHovered(null)}
             onClick={() => openFor("T1", 0)}
@@ -319,31 +415,39 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
               <path
                 d="M1.1677 1.23204L0.0172992 17.8369L0 18.0487H1.5353L1.5526 17.8671C2.49108 6.72232 5.73901 2.77105 13.9604 2.77105H19.8595V55.3739H14.0037V56.9129H32.3754V55.3739H26.7619L26.6797 2.77105H32.6609C40.8218 2.77105 44.0481 6.72231 44.9866 17.8715L45.0039 18.053H46.5392L45.3715 1.23204H1.1677Z"
                 className={
-                  active?.type === "T1" ? "fill-[#F1B44A]" : "fill-white group-hover:fill-[#F1B44A]"
+                  active?.type === "T1"
+                    ? "fill-[#F1B44A]"
+                    : "fill-white group-hover:fill-[#F1B44A]"
                 }
               />
               <path
                 d="M77.1026 55.374V0L76.7652 0.306937C68.7168 7.708 61.3863 10.4834 57.7361 11.4777L57.5372 11.5339L57.9826 12.9778L58.1729 12.9216C62.5323 11.6247 66.9912 9.54962 70.1959 7.34054V55.3696H56.4517V56.9086H90.7646V55.3696H77.1026V55.374Z"
                 className={
-                  active?.type === "T1" ? "fill-[#F1B44A]" : "fill-white group-hover:fill-[#F1B44A]"
+                  active?.type === "T1"
+                    ? "fill-[#F1B44A]"
+                    : "fill-white group-hover:fill-[#F1B44A]"
                 }
               />
             </svg>
             <div
-              className={
-                `mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
-                  active?.type === "T1" ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
-                }`
-              }
+              className={`mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
+                active?.type === "T1"
+                  ? "scale-x-100 opacity-100"
+                  : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
+              }`}
             />
           </button>
-          <img src="/dot.svg" alt="Separator dot" className="h-2 w-auto self-center" />
+          <img
+            src="/detailsApartments/dot.svg"
+            alt="Separator dot"
+            className="h-2 w-auto self-center"
+          />
           {/* T2 */}
           <button
             type="button"
             aria-label="T2"
             className="group hover:cursor-pointer flex flex-col items-start w-fit transform-gpu transition-all duration-500 ease-out opacity-0 translate-y-2 animate-[fadeIn_0.6s_ease-out_forwards]"
-            style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}
+            style={{ animationDelay: "200ms", animationFillMode: "forwards" }}
             onMouseEnter={() => setHovered({ type: "T2", shapeIndex: null })}
             onMouseLeave={() => setHovered(null)}
             onClick={() => openFor("T2", 0)}
@@ -359,31 +463,39 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
               <path
                 d="M1.1677 0.566345L0.0172992 17.1755L0 17.3873H1.53963L1.55693 17.2058C2.49108 6.05661 5.73901 2.10535 13.9648 2.10535H19.8638V54.7082H14.008V56.2472H32.3798V54.7082H26.7662L26.684 2.10535H32.6652C40.8304 2.10535 44.0524 6.05661 44.9909 17.2058L45.0082 17.3873H46.5435L45.3758 0.566345H1.1677Z"
                 className={
-                  active?.type === "T2" ? "fill-[#F1B44A]" : "fill-white group-hover:fill-[#F1B44A]"
+                  active?.type === "T2"
+                    ? "fill-[#F1B44A]"
+                    : "fill-white group-hover:fill-[#F1B44A]"
                 }
               />
               <path
                 d="M90.8296 44.3026L88.8791 49.7496H62.7746C79.8922 36.6076 88.572 24.5333 88.572 13.8554C88.572 5.17901 82.2362 0 71.6188 0C62.567 0 55.4787 6.48025 55.4787 14.7502C55.4787 18.1352 57.0442 20.1541 59.6651 20.1541C62.2859 20.1541 63.4449 18.1136 63.4449 16.2158C63.4449 14.8151 63.2374 13.7127 63.0341 12.6406C62.8352 11.5901 62.6319 10.505 62.6319 9.14325C62.6319 5.35626 65.3868 1.539 71.541 1.539C78.1017 1.539 81.4275 5.68481 81.4275 13.8597C81.4275 25.3028 73.366 38.674 58.7266 51.5091L57.8962 52.2224C56.4431 53.4718 54.2504 55.3653 53.5325 55.8884L53.0352 56.2515H88.3558L92.4773 44.3069H90.8339L90.8296 44.3026Z"
                 className={
-                  active?.type === "T2" ? "fill-[#F1B44A]" : "fill-white group-hover:fill-[#F1B44A]"
+                  active?.type === "T2"
+                    ? "fill-[#F1B44A]"
+                    : "fill-white group-hover:fill-[#F1B44A]"
                 }
               />
             </svg>
             <div
-              className={
-                `mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
-                  active?.type === "T2" ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
-                }`
-              }
+              className={`mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
+                active?.type === "T2"
+                  ? "scale-x-100 opacity-100"
+                  : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
+              }`}
             />
           </button>
-          <img src="/dot.svg" alt="Separator dot" className="h-2 w-auto self-center" />
+          <img
+            src="/detailsApartments/dot.svg"
+            alt="Separator dot"
+            className="h-2 w-auto self-center"
+          />
           {/* T3 */}
           <button
             type="button"
             aria-label="T3"
             className="group hover:cursor-pointer flex flex-col items-start w-fit transform-gpu transition-all duration-500 ease-out opacity-0 translate-y-2 animate-[fadeIn_0.6s_ease-out_forwards]"
-            style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}
+            style={{ animationDelay: "400ms", animationFillMode: "forwards" }}
             onMouseEnter={() => setHovered({ type: "T3", shapeIndex: null })}
             onMouseLeave={() => setHovered(null)}
             onClick={() => openFor("T3", 0)}
@@ -399,22 +511,26 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
               <path
                 d="M1.1677 0.566284L0.0172992 17.1755L0 17.3873H1.53963L1.55693 17.2057C2.49108 6.05655 5.73901 2.10529 13.9648 2.10529H19.8638V54.7082H14.008V56.2472H32.3798V54.7082H26.7662L26.684 2.10529H32.6652C40.8304 2.10529 44.0524 6.05655 44.9909 17.2057L45.0082 17.3873H46.5435L45.3758 0.566284H1.1677Z"
                 className={
-                  active?.type === "T3" ? "fill-[#F1B44A]" : "fill-white group-hover:fill-[#F1B44A]"
+                  active?.type === "T3"
+                    ? "fill-[#F1B44A]"
+                    : "fill-white group-hover:fill-[#F1B44A]"
                 }
               />
               <path
                 d="M76.938 23.954C83.1874 21.572 87.1878 16.6827 87.1878 11.3351C87.1878 4.2366 81.7602 0 72.6738 0C64.3572 0 58.3241 5.52056 58.3241 13.1248C58.3241 16.4017 59.8205 18.2822 62.4283 18.2822C65.2178 18.2822 66.2082 16.2936 66.2082 14.586C66.2082 13.1161 65.9401 11.9532 65.6806 10.8292C65.4514 9.83493 65.2308 8.89684 65.2308 7.83769C65.2308 3.95127 68.0852 1.53468 72.6738 1.53468C77.7684 1.53468 80.6876 5.07527 80.6876 11.2529C80.6876 16.6524 77.6127 21.745 73.2014 23.6514C68.9977 23.6601 65.3173 24.6976 65.3173 25.8821C65.3173 26.1242 65.4341 26.3317 65.6546 26.483C66.9002 27.339 71.718 26.3749 74.4037 25.3547C80.9341 26.5262 84.6751 31.8436 84.6751 39.945C84.6751 51.1114 78.123 55.1362 72.5138 55.1924C66.6839 55.1924 63.8512 52.9185 63.8512 48.2366C63.8512 47.1645 64.0544 46.2221 64.2664 45.2278C64.4999 44.1254 64.7464 42.9884 64.7464 41.5705C64.7464 39.7548 63.7777 37.6321 61.0487 37.6321C58.3198 37.6321 56.8623 39.6208 56.8623 42.9538C56.8623 51.2411 63.1506 56.8092 72.5138 56.8092C81.8769 56.8092 92.0705 51.4789 92.0705 39.7807C92.0705 31.7701 86.2969 25.7524 76.9423 23.9454L76.938 23.954Z"
                 className={
-                  active?.type === "T3" ? "fill-[#F1B44A]" : "fill-white group-hover:fill-[#F1B44A]"
+                  active?.type === "T3"
+                    ? "fill-[#F1B44A]"
+                    : "fill-white group-hover:fill-[#F1B44A]"
                 }
               />
             </svg>
             <div
-              className={
-                `mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
-                  active?.type === "T3" ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
-                }`
-              }
+              className={`mt-[23px] h-[3px] w-full bg-[#F1B44A] transform-gpu transition-[transform,opacity] duration-500 ease-out origin-left ${
+                active?.type === "T3"
+                  ? "scale-x-100 opacity-100"
+                  : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100"
+              }`}
             />
           </button>
         </div>
@@ -433,11 +549,12 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
               // Highlight if:
               // 1. All shapes of this type are active (shapeIndex === null) OR
               // 2. This specific shape is active (type matches and shapeIndex matches)
-              const isTypeActive = active?.type === type
-              const isAllShapesActive = isTypeActive && active.shapeIndex === null
-              const isThisShapeActive = isTypeActive && active.shapeIndex === i
-              const highlighted = isAllShapesActive || isThisShapeActive
-              
+              const isTypeActive = active?.type === type;
+              const isAllShapesActive =
+                isTypeActive && active.shapeIndex === null;
+              const isThisShapeActive = isTypeActive && active.shapeIndex === i;
+              const highlighted = isAllShapesActive || isThisShapeActive;
+
               return (
                 <rect
                   key={`${type}-${i}`}
@@ -451,12 +568,12 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
                   className="transition-all duration-300 ease-out"
                   style={{ cursor: "pointer" }}
                   onMouseEnter={() => {
-                    setHovered({ type, shapeIndex: i })
+                    setHovered({ type, shapeIndex: i });
                   }}
                   onMouseLeave={() => setHovered(null)}
                   onClick={() => openFor(type, i)}
                 />
-              )
+              );
             })}
           </g>
         ))}
@@ -466,39 +583,51 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
       <Sheet
         open={open}
         onOpenChange={(next) => {
-          setOpen(next)
+          setOpen(next);
           if (!next) {
-            setSelected(null)
-            setHovered(null)
+            setSelected(null);
+            setHovered(null);
           }
         }}
       >
-        <SheetContent 
-          side="right" 
+        <SheetContent
+          side="right"
           showOverlay={false}
           className="text-white w-full max-w-none md:max-w-[40%] border-l border-transparent overflow-y-auto"
         >
-          <SheetTitle hidden/>
+          <SheetTitle hidden />
           {selected && ALL_APARTMENTS[current] && (
             <div className="h-full flex flex-col relative">
-              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-8 py-12 overflow-y-auto">
+              <SheetClose asChild>
+                <Button
+                  type="button"
+                  className="absolute top-8 cursor-pointer font-normal font-montserrat text-[40px] right-12 z-50 text-[#B0C4CC]/50 hover:text-[#B0C4CC] focus:outline-hidden"
+                  aria-label="Fechar"
+                >
+                  x
+                </Button>
+              </SheetClose>
+              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-8 py-4 overflow-y-auto">
                 {/* Carousel - Floor Plan Images */}
                 <Carousel
                   setApi={setApi}
-                  className="w-full mb-8 relative"
+                  className="w-full pb-8 relative pt-15"
                   opts={{
                     align: "center",
                     loop: true,
                   }}
                 >
                   {/* Floor Plan Images */}
-                  <CarouselContent className="ml-0">
+                  <CarouselContent className="ml-0 md:h-full">
                     {ALL_APARTMENTS.map((apartment) => (
-                      <CarouselItem key={`${apartment.type}-${apartment.modelIndex}`} className="pl-0">
-                        <div className="flex justify-center">
-                          <div className="relative w-full max-w-md aspect-square">
-                            <img 
-                              src={`/${apartment.type}.svg`} 
+                      <CarouselItem
+                        key={`${apartment.type}-${apartment.modelIndex}`}
+                        className="pl-0 md:h-full"
+                      >
+                        <div className="flex justify-center items-center md:h-full">
+                          <div className="relative w-full max-w-[550px] aspect-auto md:h-full">
+                            <img
+                              src={`/detailsApartments/${apartment.type}.svg`}
                               alt={`${apartment.type} floor plan`}
                               className="w-full h-full object-contain"
                             />
@@ -509,77 +638,155 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
                   </CarouselContent>
 
                   {/* Title Section with Navigation Arrows - Below Carousel */}
-                  <div className="flex items-center justify-center gap-6 mt-8 w-full">
-                    <CarouselPrevious 
-                      className="relative top-0 left-0 translate-x-0 translate-y-0 w-10 h-10 rounded-full bg-transparent border border-white/30 text-white hover:bg-white/10 hover:text-white shrink-0"
-                    />
-                    
-                    <div className="text-center flex-1">
+                  <div className="flex items-center justify-center gap-6 w-full pt-6">
+                    <CarouselPrevious className="relative top-0 -left-15 translate-x-0 translate-y-0 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0" />
+
+                    <div className="text-center items-cnter justify-center self-center flex flex-col gap-0">
                       {ALL_APARTMENTS[current] && (
                         <>
-                          <h2 className="text-3xl md:text-4xl lg:text-5xl font-playfairDisplay text-[#F1B44A] mb-2">
-                            <span className="font-playfairDisplay text-">{ALL_APARTMENTS[current].type.charAt(0)}</span><span className="text-4xl">{ALL_APARTMENTS[current].type.charAt(1)}</span>  - modelo {getModelLetter(ALL_APARTMENTS[current].modelIndex).toUpperCase()}
+                          <h2 className="text-[#E1B260] mb-0">
+                            <span className="font-playfairDisplay text-[52px]">
+                              {ALL_APARTMENTS[current].type.charAt(0)}
+                            </span>
+                            <span className="font-libreCaslonDisplay text-[52px]">
+                              {ALL_APARTMENTS[current].type.charAt(1)}
+                            </span><span className="mr-4"></span>
+                            <span className="font-playpenSans text-[42px] leading-[52px]">
+                              -
+                            </span><span className="mr-4"></span>
+                            <span className="font-playfairDisplay text-[58px]">
+                              modelo{" "}
+                              {getModelLetter(
+                                ALL_APARTMENTS[current].modelIndex
+                              ).toUpperCase()}
+                            </span>
                           </h2>
-                          <p className="text-white/80 text-sm md:text-base">
-                            {ALL_APARTMENTS[current].model.units} - {ALL_APARTMENTS[current].model.floors}
+                          <p className="text-[#B0C4CC] -mt-2">
+                            <span className="font-libreCaslonDisplay leading-[52px] text-[42px]">
+                              {
+                                ALL_APARTMENTS[current].model.units.split(
+                                  " "
+                                )[0]
+                              }{" "}
+                            </span>{" "}
+                            <span className="font-playfairDisplay leading-[52px] text-[42px]">
+                              {
+                                ALL_APARTMENTS[current].model.units.split(
+                                  " "
+                                )[1]
+                              }{" "}
+                            </span>
+                            <span className="font-playpenSans text-[32px] leading-[52px]">
+                            - {" "}
+                            </span>{" "}
+                            <span className="font-playfairDisplay leading-[52px] text-[42px]">
+                              {
+                                ALL_APARTMENTS[current].model.floors.split(
+                                  " "
+                                )[0]
+                              }{" "}
+                            </span>
+                            <span className="font-libreCaslonDisplay leading-[52px] text-[42px]">
+                              {
+                                ALL_APARTMENTS[current].model.floors.split(
+                                  " "
+                                )[1]
+                              }{" "}
+                            </span>
+                            <span className="font-playfairDisplay leading-[52px] text-[42px]">
+                              {
+                                ALL_APARTMENTS[current].model.floors.split(
+                                  " "
+                                )[2]
+                              }{" "}
+                            </span>
+                            <span className="font-libreCaslonDisplay leading-[52px] text-[42px]">
+                              {
+                                ALL_APARTMENTS[current].model.floors.split(
+                                  " "
+                                )[3]
+                              }
+                            </span>
                           </p>
                         </>
                       )}
                     </div>
-                    
-                    <CarouselNext 
-                      className="relative top-0 right-0 translate-x-0 translate-y-0 w-10 h-10 rounded-full bg-transparent border border-white/30 text-white hover:bg-white/10 hover:text-white shrink-0"
-                    />
+
+                    <CarouselNext className="relative top-0 -right-15 translate-x-0 translate-y-0 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0" />
                   </div>
                 </Carousel>
 
-                {/* Stats Grid */}
-                <div className="flex items-center justify-center gap-4 md:gap-6 mb-8 w-full">
-                  <div className="text-center">
-                    <div className="text-4xl md:text-5xl lg:text-6xl font-playfairDisplay text-white mb-2">
-                      {ALL_APARTMENTS[current].model.suites}
+                {/* Content Container - All content below carousel */}
+                <div className="">
+                  {/* Stats Grid - two rows: numbers on top, labels below */}
+                  <div className="grid grid-rows-2  pb-10 grid-cols-[1fr_4px_1fr_36px_1fr] items-center justify-center">
+                    {/* Row 1: Numbers */}
+                    <div className="flex justify-center items-center">
+                      <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                        {ALL_APARTMENTS[current].model.suites}
+                      </span>
                     </div>
-                    <div className="text-white/80 text-sm md:text-base">Suite</div>
-                  </div>
-                  
-                  <div className="text-[#F1B44A] text-2xl">•</div>
-                  
-                  <div className="text-center">
-                    <div className="text-4xl md:text-5xl lg:text-6xl font-playfairDisplay text-white mb-2">
-                      {ALL_APARTMENTS[current].model.bathrooms}
+                    {/* Separator spanning two rows */}
+                    <div
+                      className="row-span-2 self-center"
+                      style={{ width: "1px", height: "116px", borderLeft: "0.2px solid #E1B260", opacity: 0.6 }}
+                    />
+                    <div className="flex justify-center items-center">
+                      <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                        {ALL_APARTMENTS[current].model.bathrooms}
+                      </span>
                     </div>
-                    <div className="text-white/80 text-sm md:text-base">Casas de Banho</div>
-                  </div>
-                  
-                  <div className="text-[#F1B44A] text-2xl">•</div>
-                  
-                  <div className="text-center">
-                    <div className="text-4xl md:text-5xl lg:text-6xl font-playfairDisplay text-white mb-2">
-                      {ALL_APARTMENTS[current].model.parking}
+                    {/* Separator spanning two rows */}
+                    <div
+                      className="row-span-2 self-center"
+                      style={{ width: "1px", height: "116px", borderLeft: "0.2px solid #E1B260", opacity: 0.6 }}
+                    />
+                    <div className="flex justify-center items-center">
+                      <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                        {ALL_APARTMENTS[current].model.parking}
+                      </span>
                     </div>
-                    <div className="text-white/80 text-sm md:text-base">Lugares de Estacionamento</div>
-                  </div>
-                </div>
 
-                {/* Area Information */}
-                <div className="text-center mb-8">
-                  <div className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-playfairDisplay text-white mb-2">
-                    +{ALL_APARTMENTS[current].model.area} m²
+                    {/* Row 2: Labels */}
+                    <div className="text-white font-playfairDisplay text-[30px] leading-[22px] text-center">
+                      Suite
+                    </div>
+                    {/* placeholder for sep column (occupied by row-span-2) */}
+                    <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[100px] mx-auto text-base leading-[22px] text-center">
+                      Casas de Banho
+                    </div>
+                    {/* placeholder for sep column (occupied by row-span-2) */}
+                    <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[160px] mx-auto text-base leading-[22px] text-center">
+                      Lugares de Estacionamento
+                    </div>
                   </div>
-                  <div className="text-white/80 text-sm md:text-base">Área Bruta de Construção</div>
-                </div>
 
-                {/* VER MAIS Button */}
-                <div className="flex justify-center">
-                  <button
-                    className="px-8 py-3 border border-white/30 rounded-lg text-white uppercase tracking-wider hover:bg-white/10 transition-colors font-montserrat text-sm md:text-base"
-                    onClick={() => {
-                      // Add navigation or action here
-                      console.log("VER MAIS clicked")
-                    }}
-                  >
-                    VER MAIS
-                  </button>
+                  {/* Area Information */}
+                  <div className="text-center pb-12">
+                    <div className="flex justify-center items-center pb-2 h-8 md:h-10 lg:h-12">
+                      <span className="text-white text-4xl md:text-5xl lg:text-6xl font-libreCaslonDisplay">
+                        {ALL_APARTMENTS[current].model.area} m²
+                      </span>
+                    </div>
+                    <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty mx-auto text-base leading-[22px]">
+                      Área Bruta de Construção
+                    </div>
+                  </div>
+
+                  {/* VER MAIS Button */}
+                  <div className="flex justify-center">
+                    <Button
+                      className="w-[160px] h-[28px] uppercase bg-transparent border border-[#7192A2] cursor-pointer rounded-[6px] text-white tracking-wider hover:bg-[#7192A2] transition-colors font-montserrat text-sm md:text-base flex items-center justify-center"
+                      onClick={() => {
+                        // Add navigation or action here
+                        console.log("VER MAIS clicked");
+                      }}
+                    >
+                      <span className="font-montserrat font-semibold text-[11px] leading-[28px] flex items-center text-center tracking-[0.15em] uppercase text-white">
+                        VER MAIS
+                      </span>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -587,7 +794,5 @@ export default function InteractiveBuilding({ imageWidth, imageHeight }: Interac
         </SheetContent>
       </Sheet>
     </div>
-  )
+  );
 }
-
-

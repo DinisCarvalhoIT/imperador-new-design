@@ -40,6 +40,8 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   --font-playfairDisplay: "Playfair Display";
+  --font-libreCaslonDisplay: "Libre Caslon Display";
+  --font-playpenSans: "Playpen Sans";
   --font-montserrat: "Montserrat";
   --font-poppins: "Poppins";
 }
@@ -129,10 +131,15 @@
   .font-montserrat {
     font-family: var(--font-montserrat);
   }
+  .font-playpenSans {
+    font-family: var(--font-playpenSans);
+  }
   .font-poppins {
     font-family: var(--font-poppins);
   }
-
+  .font-libreCaslonDisplay {
+    font-family: var(--font-libreCaslonDisplay);
+  }
   @keyframes fadeIn {
     from {
       opacity: 0;
