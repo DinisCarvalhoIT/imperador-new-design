@@ -1,10 +1,39 @@
 ---
-
+import { Image } from "astro:assets";
+import logoImg from "../../../public/HomePage/logoImperador.svg";
+import LocaleSwitcher from "./LocaleSwitcher.astro";
 ---
 
 <header
   id="site-header-mobile"
   class="fixed top-0 left-0 right-0 z-20 sm:hidden block"
 >
-  Hello World
+  <div
+    id="header-small-mobile"
+    class="grid grid-cols-2 items-center w-full absolute inset-0 opacity-100 pointer-events-auto px-5"
+  >
+    <div class="flex items-center justify-start gap-x-2">
+      <Image
+        src={logoImg}
+        alt={"Logo Imperador"}
+        width={150}
+        height={65}
+        loading="lazy"
+      />
+    </div>
+
+    <div class="flex items-center justify-end">
+      <div class="flex items-center justify-end gap-x-6">
+        <LocaleSwitcher />
+      </div>
+    </div>
+  </div>
 </header>
+
+<style>
+  #site-header-mobile {
+    transition:
+      height 0.3s ease,
+      background 0.3s ease;
+  }
+</style>
