@@ -389,6 +389,7 @@ export default function InteractiveBuilding({
         aria-hidden
       >
         <defs>
+          {/* Top band gradient: transparent to #0F3A4B (toward interior) */}
           <linearGradient
             id="gradTop"
             x1="0"
@@ -401,17 +402,17 @@ export default function InteractiveBuilding({
             <stop offset="1%" stopColor="#0F3A4B" />
             <stop offset="100%" stopColor="#0F3A4B" stopOpacity="0" />
           </linearGradient>
+          {/* Bottom band gradient: transparent to #06384A (toward bottom edge) */}
           <linearGradient
             id="gradBottom"
             x1="0"
-            y1="1"
+            y1="0"
             x2="0"
-            y2="0"
+            y2="1"
             gradientUnits="objectBoundingBox"
           >
-            <stop offset="0%" stopColor="#0F3A4B" />
-            <stop offset="1%" stopColor="#0F3A4B" />
-            <stop offset="100%" stopColor="#0F3A4B" stopOpacity="0" />
+            <stop offset="0%" stopColor="#0B1D26" stopOpacity="0" />
+            <stop offset="100%" stopColor="#06384A" />
           </linearGradient>
 
           {/* Mask that punches holes where the active shapes are */}
@@ -815,7 +816,7 @@ export default function InteractiveBuilding({
                   height={r.height}
                   fill={"transparent"}
                   stroke={highlighted ? GOLD : "rgba(241,180,74,0.6)"}
-                  strokeWidth={highlighted ? 6 : 0}
+                  strokeWidth={highlighted ? (isMobile ? 2 : 6) : 0}
                   className="transition-all duration-300 ease-out"
                   style={{ cursor: "pointer" }}
                   onMouseEnter={() => {
@@ -858,7 +859,7 @@ export default function InteractiveBuilding({
                   x
                 </Button>
               </SheetClose>
-              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-8 py-4 overflow-y-auto">
+              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-2 md:px-8 py-4 overflow-y-auto">
                 {/* Carousel - Floor Plan Images */}
                 <Carousel
                   setApi={setApi}
@@ -1089,7 +1090,7 @@ export default function InteractiveBuilding({
                         <div className="flex items-center justify-center gap-6 w-full">
                           {/* Suites */}
                           <div className="flex flex-col justify-center items-center flex-[0.8]">
-                            <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                            <span className="text-white md:text-[53px] text-[47px] font-libreCaslonDisplay leading-none ">
                               {ALL_APARTMENTS[current].model.suites}
                             </span>
                             <div className="text-white font-playfairDisplay text-[30px] leading-[22px] mt-2 text-center">
@@ -1104,7 +1105,7 @@ export default function InteractiveBuilding({
                           
                           {/* Parking */}
                           <div className="flex flex-col justify-center items-center flex-[1.2]">
-                            <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                            <span className="text-white md:text-[53px] text-[47px] font-libreCaslonDisplay leading-none">
                               {ALL_APARTMENTS[current].model.parking}
                             </span>
                             <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-base leading-[22px] mt-2 text-center">
@@ -1117,7 +1118,7 @@ export default function InteractiveBuilding({
                         <div className="flex items-center justify-center gap-6 w-full">
                           {/* Bathrooms */}
                           <div className="flex flex-col justify-center items-center flex-[0.8]">
-                            <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                            <span className="text-white md:text-[53px] text-[47px] font-libreCaslonDisplay leading-none">
                               {ALL_APARTMENTS[current].model.bathrooms}
                             </span>
                             <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-base leading-[22px] mt-2 text-center">
@@ -1132,7 +1133,7 @@ export default function InteractiveBuilding({
                           
                           {/* Area */}
                           <div className="flex flex-col justify-center items-center flex-[1.2]">
-                            <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                            <span className="text-white md:text-[53px] text-[47px] font-libreCaslonDisplay leading-none whitespace-nowrap">
                               + {ALL_APARTMENTS[current].model.area} m²
                             </span>
                             <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-base leading-[22px] mt-2 text-center">
