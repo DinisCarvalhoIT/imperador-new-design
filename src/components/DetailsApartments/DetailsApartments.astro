@@ -6,17 +6,22 @@ import { Image } from "astro:assets";
 import InteractiveBuilding from "./InteractiveBuilding";
 ---
 
-<section class="relative w-full max-h-screen">
-  <div class="relative w-full h-full overflow-hidden bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(rgba(11, 29, 38, 0.94), rgba(11, 29, 38, 0.94)), url('/detailsApartments/details-apartments.png');">
-
+<section class="relative w-full">
+  <div
+    class="relative w-full h-full overflow-hidden bg-cover bg-center bg-no-repeat"
+    style="background-image: linear-gradient(rgba(11, 29, 38, 0.94), rgba(11, 29, 38, 0.94)), url('/detailsApartments/details-apartments.png');"
+  >
     <div class="flex justify-center items-center h-full">
       <div class="relative">
         <picture>
-          <source srcset="/detailsApartments/details-apartments-mobile.png" media="(max-width: 1023px)" />
+          <source
+            srcset="/detailsApartments/details-apartments-mobile.png"
+            media="(max-width: 1023px)"
+          />
           <Image
             src="/detailsApartments/details-apartments.png"
             alt="Diferentes Tipologias"
-            class=" max-w-[1680px]  w-full h-auto object-contain rounded-lg shadow-2xl"
+            class="max-w-[1680px] w-full h-auto object-contain rounded-lg shadow-2xl"
             width="1920"
             format="webp"
             height="1080"
@@ -24,11 +29,17 @@ import InteractiveBuilding from "./InteractiveBuilding";
         </picture>
 
         <div class="absolute inset-0 px-6 lg:px-12 flex z-10">
-          <div class="flex-1 flex flex-col items-center justify-start pt-12 lg:pt-10 xl:pt-14">
-            <div class="font-montserrat text-[10px] lg:text-base uppercase text-[#E7C873] font-medium tracking-widest lg:tracking-[6px] leading-[14px] lg:leading-[22px]">
+          <div
+            class="flex-1 flex flex-col items-center justify-start pt-12 lg:pt-10 xl:pt-14"
+          >
+            <div
+              class="font-montserrat text-[10px] lg:text-base uppercase text-[#E7C873] font-medium tracking-widest lg:tracking-[6px] leading-[14px] lg:leading-[22px]"
+            >
               detalhes apartamentos
             </div>
-            <div class="font-playfairDisplay text-[28px] leading-[32px] lg:text-[58px] text-pretty lg:leading-[68px] text-white text-center">
+            <div
+              class="font-playfairDisplay text-[28px] leading-[32px] lg:text-[58px] text-pretty lg:leading-[68px] text-white text-center"
+            >
               Diferentes Tipologias
             </div>
           </div>
