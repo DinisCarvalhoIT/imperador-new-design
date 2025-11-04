@@ -34,19 +34,15 @@ const commonSpaces = [
 ---
 
 <section
-  class="relative w-full bg-[#0B1D26] min-h-screen py-16 lg:py-24"
+  class="relative w-full bg-[#0B1D26] min-h-screen py-12 md:py-16 lg:py-20 xl:py-24"
   id="common-spaces"
 >
-  <div class="w-full max-w-[1920px] mx-auto">
+  <div class="w-full mx-auto">
     {/* Section Title - Aligned with space titles */}
-    <div
-      class="font-montserrat text-[#E7C873] uppercase text-[10px] lg:text-[18px] tracking-widest lg:tracking-[6px]  lg:mb-12 pl-8 lg:pl-[136px] xl:pl-[195px]"
-    >
-      {t("common_spaces.title")}
-    </div>
+   
 
     {/* Carousel Component */}
-    <CommonSpacesCarousel client:load spaces={commonSpaces} />
+    <CommonSpacesCarousel client:load spaces={commonSpaces} lang={lang} />
   </div>
 </section>
 
