@@ -144,7 +144,7 @@ export default function CommonSpacesCarousel({
               />
             </div>
 
-            <div className="space-y-10 md:space-y-16 lg:space-y-20 xl:space-y-[100px]">
+            <div className="space-y-10">
             {spaces.map((space, index) => (
               <div
                 key={space.id}
@@ -187,12 +187,12 @@ export default function CommonSpacesCarousel({
           >
             <CarouselContent className="h-full ml-0">
               {spaces.map((space, _) => (
-                <CarouselItem key={space.id} className="h-full pl-0 basis-full">
+                <CarouselItem key={space.id} className="max-h-[960px] pl-0 basis-full">
                   <div className="relative w-full h-full">
                     <img
                       src={space.image}
                       alt={space.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full  object-cover"
                     />
                   </div>
                 </CarouselItem>

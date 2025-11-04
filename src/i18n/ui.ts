@@ -60,6 +60,8 @@ export const ui = {
     "common_spaces.solarium.title": "Solarium",
     "common_spaces.solarium.description":
       "Our solarium provides a serene space for sunbathing and relaxing. Equipped with comfortable chairs and a stunning view, it's the ideal place to recharge your energy.",
+    "gallery.tagline": "GALLERY",
+    "gallery.title": "An Exclusive Residence",
   },
   pt: {
     "hero.title": "Olá Mundo",
@@ -115,5 +117,7 @@ export const ui = {
     "common_spaces.solarium.title": "Solário",
     "common_spaces.solarium.description":
       "O nosso solário proporciona um espaço sereno para apanhar sol e relaxar. Equipado com cadeiras confortáveis e uma vista deslumbrante, é o local ideal para recarregar energias.",
+    "gallery.tagline": "GALERIA de FOTOS",
+    "gallery.title": "Uma Residência Exclusiva",
   },
 } as const;
