@@ -47,6 +47,19 @@ export const ui = {
     "summary_building.description":
       "A new residential icon in the most prestigious area of Funchal. With contemporary architecture and high-quality finishes, each apartment has been designed to provide comfort, privacy and distinction. An exclusive project, designed down to the last detail for those who value sophistication, location and lasting well-being.",
     "summary_building.image_alt": "Building Image Summary",
+    "common_spaces.title": "COMMON SPACES",
+    "common_spaces.rooftop.title": "Rooftop",
+    "common_spaces.rooftop.description":
+      "Our rooftop offers an exclusive space with a stunning view of the sea and mountains. With sun loungers and an outdoor shower, it's perfect for relaxing and enjoying sunny days.",
+    "common_spaces.garden.title": "Garden",
+    "common_spaces.garden.description":
+      "Our garden is a true haven of tranquility. With a wide variety of plants and flowers, it's the ideal place to unwind and connect with nature.",
+    "common_spaces.pool.title": "Infinity Pool",
+    "common_spaces.pool.description":
+      "Our infinity pool, with its spacious area and comfortable sun loungers, invites you to refreshing dips and enjoying the sun in complete comfort.",
+    "common_spaces.solarium.title": "Solarium",
+    "common_spaces.solarium.description":
+      "Our solarium provides a serene space for sunbathing and relaxing. Equipped with comfortable chairs and a stunning view, it's the ideal place to recharge your energy.",
   },
   pt: {
     "hero.title": "Olá Mundo",
@@ -89,5 +102,18 @@ export const ui = {
     "summary_building.description":
       "Um novo ícone residencial na zona mais prestigiada do Funchal. Com uma arquitetura contemporânea e acabamentos de elevada qualidade, cada apartamento foi concebido para proporcionar conforto, privacidade e distinção. Um projeto exclusivo, pensado ao detalhe para quem valoriza sofisticação, localização e bem-estar duradouro.",
     "summary_building.image_alt": "Imagem do Edifício",
+    "common_spaces.title": "ESPAÇOS COMUNS",
+    "common_spaces.rooftop.title": "Rooftop",
+    "common_spaces.rooftop.description":
+      "O nosso rooftop oferece um espaço exclusivo com vista deslumbrante para o mar e as montanhas. Com espreguiçadeiras e duche ao ar livre, é perfeito para relaxar e aproveitar os dias de sol.",
+    "common_spaces.garden.title": "Jardim",
+    "common_spaces.garden.description":
+      "O nosso jardim é um verdadeiro refúgio de tranquilidade. Com uma vasta variedade de plantas e flores, é o local ideal para descontrair e conectar-se com a natureza.",
+    "common_spaces.pool.title": "Piscina Infinita",
+    "common_spaces.pool.description":
+      "A nossa piscina infinita, com a sua ampla área e espreguiçadeiras confortáveis, convida a mergulhos refrescantes e a aproveitar o sol com todo o conforto.",
+    "common_spaces.solarium.title": "Solário",
+    "common_spaces.solarium.description":
+      "O nosso solário proporciona um espaço sereno para apanhar sol e relaxar. Equipado com cadeiras confortáveis e uma vista deslumbrante, é o local ideal para recarregar energias.",
   },
 } as const;
