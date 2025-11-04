@@ -11,8 +11,6 @@ import { Card, CardContent } from "@/components/ui/card";
 type DataCarousel = {
   id: string;
   floorPlanImage: string;
-  floorPlanImageSize: string;
-  floorPlanTableSize: string;
   smallImageCollumnTable: boolean;
   smallImageStyle: string;
   smallFloorPlanImage: string;
@@ -25,10 +23,9 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-1",
     floorPlanImage: "/FloorPlans/T1_Modelo_A.png",
-    floorPlanImageSize: "2xl:w-[546px] 2xl:h-[713px] w-[460px] h-[613px]",
-    floorPlanTableSize: "w-[382px] h-[414px]",
     smallImageCollumnTable: true,
-    smallImageStyle: "w-[171px] h-[89px]",
+    smallImageStyle:
+      "hidden lg:flex w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[171px] lg:h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_A_Table.svg",
     mainTitle: "T1 - modelo A",
@@ -37,10 +34,9 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-2",
     floorPlanImage: "/FloorPlans/T1_Modelo_B.png",
-    floorPlanImageSize: "2xl:w-[546px] 2xl:h-[511px] w-[480px] h-[461px]",
-    floorPlanTableSize: "w-[382px] h-[447px]",
     smallImageCollumnTable: false,
-    smallImageStyle: "w-[171px] h-[89px] mx-auto",
+    smallImageStyle:
+      "hidden lg:flex w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[171px] lg:h-[89px] mx-auto",
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_B_Table.svg",
     mainTitle: "T1 - modelo B",
@@ -49,10 +45,9 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-3",
     floorPlanImage: "/FloorPlans/T1_Modelo_C.png",
-    floorPlanImageSize: "2xl:w-[546px] 2xl:h-[511px] w-[480px] h-[461px]",
-    floorPlanTableSize: "w-[382px] h-[447px]",
     smallImageCollumnTable: false,
-    smallImageStyle: "w-[171px] h-[89px] mx-auto",
+    smallImageStyle:
+      "hidden lg:flex w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[171px] lg:h-[89px] mx-auto",
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_C_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_C_Table.svg",
     mainTitle: "T1 - modelo C",
@@ -61,11 +56,9 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-4",
     floorPlanImage: "/FloorPlans/T2_Modelo_A.png",
-    floorPlanImageSize: "2xl:w-[603px] 2xl:h-[713px] w-[520px] h-[613px]",
-    floorPlanTableSize: "w-[382px] h-[546px]",
     smallImageCollumnTable: false,
     smallImageStyle:
-      "absolute 2xl:bottom-66 2xl:-right-5 bottom-72 -right-9 w-[171px] h-[89px]",
+      "hidden lg:flex absolute bottom-50 xl:bottom-52 -right-11 xl:-right-5 w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[171px] lg:h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T2_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T2_Modelo_A_Table.svg",
     mainTitle: "T2 - modelo A",
@@ -74,11 +67,9 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-5",
     floorPlanImage: "/FloorPlans/T2_Modelo_B.png",
-    floorPlanImageSize: "2xl:w-[603px] 2xl:h-[713px] w-[520px] h-[613px]",
-    floorPlanTableSize: "w-[382px] h-[546px]",
     smallImageCollumnTable: false,
     smallImageStyle:
-      "absolute 2xl:bottom-66 2xl:-left-5 bottom-75 -left-4 2xl:w-[171px] 2xl:h-[89px] w-[150px] h-[71px]",
+      " hidden lg:flex absolute bottom-50 xl:bottom-53 -left-2 xl:-left-4 w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] xl:w-[171px] xl:h-[89px] lg:w-[141px] lg:h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T2_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T2_Modelo_B_Table.svg",
     mainTitle: "T2 - modelo B",
@@ -87,11 +78,9 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-6",
     floorPlanImage: "/FloorPlans/T3_Modelo_A.png",
-    floorPlanImageSize: "2xl:w-[480px] 2xl:h-[740px] w-[430px] h-[620px]",
-    floorPlanTableSize: "2xl:w-[382px] 2xl:h-[590px] w-[350px] h-[510px]",
     smallImageCollumnTable: false,
     smallImageStyle:
-      "absolute 2xl:bottom-147 2xl:-right-21 bottom-128 -right-17 2xl:w-[171px] 2xl:h-[89px] w-[140px] h-[71px]",
+      "hidden lg:flex absolute bottom-100 xl:bottom-110 -right-17 xl:-right-7 w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[171px] lg:h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T3_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T3_Modelo_A_Table.svg",
     mainTitle: "T3 - modelo A",
@@ -100,35 +89,38 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-7",
     floorPlanImage: "/FloorPlans/T3_Modelo_B.png",
-    floorPlanImageSize: "2xl:w-[480px] 2xl:h-[740px] w-[400px] h-[600px]",
-    floorPlanTableSize: "2xl:w-[382px] 2xl:h-[590px] w-[350px] h-[510px]",
     smallImageCollumnTable: false,
     smallImageStyle:
-      "absolute 2xl:bottom-151 2xl:-left-27 bottom-140 -left-22 2xl:w-[171px] 2xl:h-[89px] w-[140px] h-[71px]",
+      " hidden lg:flex absolute bottom-110 xl:bottom-122 -left-2 xl:-left-3 w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[100px] lg:h-[89px] xl:w-[150px] xl:h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T3_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T3_Modelo_B_Table.svg",
     mainTitle: "T3 - modelo B",
     subTitle: "1 Unidade - Piso Térreo",
   },
 ];
-
+// absolute inset-0 ---- no primeiro div itnha
 export default function FloorPlansCarousel() {
   return (
-    <div className="absolute inset-0 flex items-center justify-center p-8">
-      <Carousel className="w-[95%] h-[90%]">
-        <CarouselContent className="h-full">
+    <div className=" flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8  ">
+      <Carousel className="w-full sm:w-[95%] md:w-[90%] lg:w-[96%] h-full sm:h-[95%] md:h-[90%] flex items-center justify-center">
+        <CarouselContent className="h-full flex items-center ">
           {dataCarousel.map((data, index) => (
-            <CarouselItem key={index} className="h-full">
-              <Card className="h-full bg-white/86">
-                <CardContent className="grid grid-cols-2 h-full items-center justify-items-center">
-                  <div className="relative flex flex-col items-center justify-center py-24">
-                    <img
-                      src={data.floorPlanImage}
-                      alt={data.id}
-                      width={546}
-                      height={713}
-                      className={data.floorPlanImageSize}
-                    />
+            <CarouselItem
+              key={index}
+              className="h-full flex items-center justify-center"
+            >
+              <Card className="w-full max-w-[1250px] h-full lg:max-h-[800px] min-h-[400px] sm:min-h-[500px] md:min-h-[600px] bg-white/86 flex items-center justify-center">
+                <CardContent className="grid grid-cols-1 lg:grid-cols-2 h-full w-full items-center justify-items-center p-2 sm:p-4 md:p-6 gap-4 lg:gap-0">
+                  <div className="relative flex flex-col items-center justify-center h-full w-full order-1 lg:order-0">
+                    <div className="w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[350px] xl:max-w-[500px] h-full max-h-[300px] sm:max-h-[400px] md:max-h-[500px] lg:max-h-[600px] flex items-center justify-center">
+                      <img
+                        src={data.floorPlanImage}
+                        alt={data.id}
+                        width={546}
+                        height={713}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
                     {!data.smallImageCollumnTable && (
                       <img
                         src={data.smallFloorPlanImage}
@@ -139,22 +131,24 @@ export default function FloorPlansCarousel() {
                       />
                     )}
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-y-10">
+                  <div className="flex flex-col items-center justify-center gap-y-4 sm:gap-y-6 md:gap-y-8 lg:gap-y-10 h-full w-full order-2 lg:order-0">
                     <div className="flex flex-col items-center justify-center gap-y-1">
-                      <h1 className="text-6xl text-[#E1B260] font-normal font-playfairDisplay">
+                      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#E1B260] font-normal font-playfairDisplay text-center">
                         {data.mainTitle}
                       </h1>
-                      <p className="text-2xl text-[#024C67] font-playfairDisplay">
+                      <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#024C67] font-playfairDisplay text-center">
                         {data.subTitle}
                       </p>
                     </div>
-                    <img
-                      src={data.tableImage}
-                      alt={data.id}
-                      width={382}
-                      height={414}
-                      className={data.floorPlanTableSize}
-                    />
+                    <div className="w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[450px] flex items-center justify-center">
+                      <img
+                        src={data.tableImage}
+                        alt={data.id}
+                        width={382}
+                        height={414}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </div>
                     {data.smallImageCollumnTable && (
                       <img
                         src={data.smallFloorPlanImage}
@@ -165,13 +159,22 @@ export default function FloorPlansCarousel() {
                       />
                     )}
                   </div>
+                  <div className="flex lg:hidden flex-col items-center justify-center order-3 pt-4">
+                    <img
+                      src={data.smallFloorPlanImage}
+                      alt={data.id}
+                      width={171}
+                      height={89}
+                      className={" w-[150px] h-[83px] mx-auto"}
+                    />
+                  </div>
                 </CardContent>
               </Card>
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPreviousFloorPlans />
-        <CarouselNextFloorPlans />
+        {/* <CarouselPreviousFloorPlans /> */}
+        {/* <CarouselNextFloorPlans /> */}
       </Carousel>
     </div>
   );
