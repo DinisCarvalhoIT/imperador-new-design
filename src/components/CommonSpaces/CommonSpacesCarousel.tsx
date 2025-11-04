@@ -67,39 +67,24 @@ export default function CommonSpacesCarousel({
     return "text-[rgba(113,146,162,0.21)]";
   };
 
-  // Calculate the color for each segment of the continuous line
-  const getSegmentColor = (index: number) => {
-    if (index === activeIndex) return "#FFF8F6";
-    if (index === activeIndex + 1 || index === activeIndex - 1) {
-      return "#4A7D91";
-    }
-    if (index === activeIndex + 2 || index === activeIndex - 2) {
-      return "rgba(74, 125, 145, 0.8)";
-    }
-    return "rgba(74, 125, 145, 0.7)";
-  };
-
-   
-
   return (
     <div className="relative w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
         {/* Left Column - Text Content */}
         <div className="relative pl-8 lg:pl-[106px] xl:pl-[195px] pr-8 lg:pr-16 xl:pr-24 pb-12 lg:py-16 min-w-0">
-          {/* Continuous Left Border Line - Full height, no gaps */}
-          <div
-            className="hidden lg:block absolute left-[106px] top-0 bottom-0 w-1 transition-all duration-300"
-            style={{
-              background: `linear-gradient(to bottom, ${spaces
-                .map((_, index) => {
-                  const color = getSegmentColor(index);
-                  const startPercent = (index / spaces.length) * 100;
-                  const endPercent = ((index + 1) / spaces.length) * 100;
-                  return `${color} ${startPercent}%, ${color} ${endPercent}%`;
-                })
-                .join(", ")})`,
-            }}
-          />
+          {/* Continuous Left Border Line - Static background */}
+          <div className="hidden lg:block absolute left-[106px] top-0 bottom-0 w-1">
+            {/* Static background line - no highlighting */}
+            <div className="absolute inset-0 bg-[rgba(74,125,145,0.7)]" />
+            {/* Sliding indicator that moves up and down */}
+            <div
+              className="absolute left-0 w-full bg-[#FFF8F6] transition-all duration-500 ease-in-out"
+              style={{
+                top: `${(activeIndex / spaces.length) * 100}%`,
+                height: `${(1 / spaces.length) * 100}%`,
+              }}
+            />
+          </div>
           
           <div className="space-y-10 lg:space-y-[100px]">
             {spaces.map((space, index) => (
