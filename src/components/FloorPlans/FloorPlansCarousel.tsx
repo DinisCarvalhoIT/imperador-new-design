@@ -3,8 +3,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  CarouselNextFloorPlans,
+  CarouselPreviousFloorPlans,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -25,7 +25,7 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-1",
     floorPlanImage: "/FloorPlans/T1_Modelo_A.png",
-    floorPlanImageSize: "w-[546px] h-[713px]",
+    floorPlanImageSize: "2xl:w-[546px] 2xl:h-[713px] w-[460px] h-[613px]",
     floorPlanTableSize: "w-[382px] h-[414px]",
     smallImageCollumnTable: true,
     smallImageStyle: "w-[171px] h-[89px]",
@@ -37,7 +37,7 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-2",
     floorPlanImage: "/FloorPlans/T1_Modelo_B.png",
-    floorPlanImageSize: "w-[546px] h-[511px]",
+    floorPlanImageSize: "2xl:w-[546px] 2xl:h-[511px] w-[480px] h-[461px]",
     floorPlanTableSize: "w-[382px] h-[447px]",
     smallImageCollumnTable: false,
     smallImageStyle: "w-[171px] h-[89px] mx-auto",
@@ -49,7 +49,7 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-3",
     floorPlanImage: "/FloorPlans/T1_Modelo_C.png",
-    floorPlanImageSize: "w-[546px] h-[511px]",
+    floorPlanImageSize: "2xl:w-[546px] 2xl:h-[511px] w-[480px] h-[461px]",
     floorPlanTableSize: "w-[382px] h-[447px]",
     smallImageCollumnTable: false,
     smallImageStyle: "w-[171px] h-[89px] mx-auto",
@@ -61,10 +61,11 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-4",
     floorPlanImage: "/FloorPlans/T2_Modelo_A.png",
-    floorPlanImageSize: "w-[603px] h-[713px]",
+    floorPlanImageSize: "2xl:w-[603px] 2xl:h-[713px] w-[520px] h-[613px]",
     floorPlanTableSize: "w-[382px] h-[546px]",
     smallImageCollumnTable: false,
-    smallImageStyle: "absolute bottom-66 -right-5 w-[171px] h-[89px]",
+    smallImageStyle:
+      "absolute 2xl:bottom-66 2xl:-right-5 bottom-72 -right-9 w-[171px] h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T2_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T2_Modelo_A_Table.svg",
     mainTitle: "T2 - modelo A",
@@ -73,10 +74,11 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-5",
     floorPlanImage: "/FloorPlans/T2_Modelo_B.png",
-    floorPlanImageSize: "w-[603px] h-[713px]",
+    floorPlanImageSize: "2xl:w-[603px] 2xl:h-[713px] w-[520px] h-[613px]",
     floorPlanTableSize: "w-[382px] h-[546px]",
     smallImageCollumnTable: false,
-    smallImageStyle: "absolute bottom-66 -left-5 w-[171px] h-[89px]",
+    smallImageStyle:
+      "absolute 2xl:bottom-66 2xl:-left-5 bottom-75 -left-4 2xl:w-[171px] 2xl:h-[89px] w-[150px] h-[71px]",
     smallFloorPlanImage: "/FloorPlans/T2_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T2_Modelo_B_Table.svg",
     mainTitle: "T2 - modelo B",
@@ -85,10 +87,11 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-6",
     floorPlanImage: "/FloorPlans/T3_Modelo_A.png",
-    floorPlanImageSize: "w-[500px] h-[740px]",
-    floorPlanTableSize: "w-[382px] h-[590px]",
+    floorPlanImageSize: "2xl:w-[480px] 2xl:h-[740px] w-[430px] h-[620px]",
+    floorPlanTableSize: "2xl:w-[382px] 2xl:h-[590px] w-[350px] h-[510px]",
     smallImageCollumnTable: false,
-    smallImageStyle: "absolute bottom-147 -right-21 w-[171px] h-[89px]",
+    smallImageStyle:
+      "absolute 2xl:bottom-147 2xl:-right-21 bottom-128 -right-17 2xl:w-[171px] 2xl:h-[89px] w-[140px] h-[71px]",
     smallFloorPlanImage: "/FloorPlans/T3_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T3_Modelo_A_Table.svg",
     mainTitle: "T3 - modelo A",
@@ -97,10 +100,11 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-7",
     floorPlanImage: "/FloorPlans/T3_Modelo_B.png",
-    floorPlanImageSize: "w-[500px] h-[740px]",
-    floorPlanTableSize: "w-[382px] h-[590px]",
+    floorPlanImageSize: "2xl:w-[480px] 2xl:h-[740px] w-[400px] h-[600px]",
+    floorPlanTableSize: "2xl:w-[382px] 2xl:h-[590px] w-[350px] h-[510px]",
     smallImageCollumnTable: false,
-    smallImageStyle: "absolute bottom-153 -left-27 w-[171px] h-[89px]",
+    smallImageStyle:
+      "absolute 2xl:bottom-151 2xl:-left-27 bottom-140 -left-22 2xl:w-[171px] 2xl:h-[89px] w-[140px] h-[71px]",
     smallFloorPlanImage: "/FloorPlans/T3_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T3_Modelo_B_Table.svg",
     mainTitle: "T3 - modelo B",
@@ -117,7 +121,7 @@ export default function FloorPlansCarousel() {
             <CarouselItem key={index} className="h-full">
               <Card className="h-full bg-white/86">
                 <CardContent className="grid grid-cols-2 h-full items-center justify-items-center">
-                  <div className="relative h-[740px] flex flex-col items-center justify-center">
+                  <div className="relative flex flex-col items-center justify-center py-24">
                     <img
                       src={data.floorPlanImage}
                       alt={data.id}
@@ -135,7 +139,7 @@ export default function FloorPlansCarousel() {
                       />
                     )}
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-y-10 h-[740px]">
+                  <div className="flex flex-col items-center justify-center gap-y-10">
                     <div className="flex flex-col items-center justify-center gap-y-1">
                       <h1 className="text-6xl text-[#E1B260] font-normal font-playfairDisplay">
                         {data.mainTitle}
@@ -166,8 +170,8 @@ export default function FloorPlansCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        {/* <CarouselPrevious /> */}
-        {/* <CarouselNext /> */}
+        <CarouselPreviousFloorPlans />
+        <CarouselNextFloorPlans />
       </Carousel>
     </div>
   );

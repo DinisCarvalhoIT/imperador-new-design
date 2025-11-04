@@ -213,6 +213,42 @@ function CarouselPrevious({
   );
 }
 
+function CarouselPreviousFloorPlans({
+  className,
+  variant = "outline",
+  size = "icon",
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel();
+
+  return (
+    <Button
+      data-slot="carousel-previous"
+      variant={null}
+      size={size}
+      className={cn(
+        "absolute size-8 rounded-full",
+        orientation === "horizontal"
+          ? "top-1/2 -left-12 -translate-y-1/2"
+          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollPrev}
+      onClick={scrollPrev}
+      {...props}
+    >
+      <img
+        src={"/FloorPlans/prevCarousel.svg"}
+        width={35}
+        height={35}
+        className="w-[35px] h-[35px]"
+      />
+
+      <span className="sr-only">Previous slide</span>
+    </Button>
+  );
+}
+
 function CarouselNext({
   className,
   variant = "outline",
@@ -257,11 +293,49 @@ function CarouselNext({
   );
 }
 
+function CarouselNextFloorPlans({
+  className,
+  variant = "outline",
+  size = "icon",
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { orientation, scrollNext, canScrollNext } = useCarousel();
+
+  return (
+    <Button
+      data-slot="carousel-next"
+      variant={null}
+      size={size}
+      className={cn(
+        "absolute size-12 rounded-full",
+        orientation === "horizontal"
+          ? "top-1/2 -right-12 -translate-y-1/2"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollNext}
+      onClick={scrollNext}
+      {...props}
+    >
+      <img
+        src={"/FloorPlans/nextCarousel.svg"}
+        width={35}
+        height={35}
+        className="w-[35px] h-[35px]"
+      />
+
+      <span className="sr-only">Next slide</span>
+    </Button>
+  );
+}
+
 export {
   type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselPrevious,
+  CarouselPreviousFloorPlans,
+  CarouselNextFloorPlans,
   CarouselNext,
 };
