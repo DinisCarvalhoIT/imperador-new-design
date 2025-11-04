@@ -204,7 +204,7 @@ function CarouselPrevious({
           d="M0.418448 5.70577L5.56049 11.0036L6.01611 10.5118L1.35139 5.70577L6.01611 0.899696L5.56049 0.430265L0.418448 5.70577Z"
           fill="white"
           stroke="white"
-          stroke-width="0.6"
+          strokeWidth="0.6"
         />
       </svg>
 
@@ -248,7 +248,7 @@ function CarouselNext({
           d="M6.01563 5.70577L0.873593 11.0036L0.417969 10.5118L5.08269 5.70577L0.417969 0.899696L0.873593 0.430265L6.01563 5.70577Z"
           fill="white"
           stroke="white"
-          stroke-width="0.6"
+          strokeWidth="0.6"
         />
       </svg>
 

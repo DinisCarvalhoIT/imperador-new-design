@@ -1,9 +1,10 @@
 ---
 import { Image } from "astro:assets";
 import floorPlansImage from "../../../public/FloorPlans/Rectangle 34624212.png";
+import FloorPlansCarousel from "./FloorPlansCarousel";
 ---
 
-<section class="w-full min-h-screen relative">
+<section class="w-full relative">
   <div class="w-full h-full">
     <Image
       src={floorPlansImage}
@@ -12,11 +13,5 @@ import floorPlansImage from "../../../public/FloorPlans/Rectangle 34624212.png";
     />
   </div>
 
-  <!-- Card overlay -->
-  <div class="absolute inset-0 flex items-center justify-center p-6">
-    <div
-      class="bg-white/86 border border-[rgba(74,125,145,0.11)] rounded-2xl p-8 max-w-[80%] w-full shadow-lg"
-    >
-    </div>
-  </div>
+  <FloorPlansCarousel client:load />
 </section>
