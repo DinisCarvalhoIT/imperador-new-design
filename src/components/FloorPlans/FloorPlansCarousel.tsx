@@ -11,6 +11,10 @@ import { Card, CardContent } from "@/components/ui/card";
 type DataCarousel = {
   id: string;
   floorPlanImage: string;
+  floorPlanImageSize: string;
+  floorPlanTableSize: string;
+  smallImageCollumnTable: boolean;
+  smallImageStyle: string;
   smallFloorPlanImage: string;
   tableImage: string;
   mainTitle: string;
@@ -21,6 +25,10 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-1",
     floorPlanImage: "/FloorPlans/T1_Modelo_A.png",
+    floorPlanImageSize: "w-[546px] h-[713px]",
+    floorPlanTableSize: "w-[382px] h-[414px]",
+    smallImageCollumnTable: true,
+    smallImageStyle: "w-[171px] h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_A_Table.svg",
     mainTitle: "T1 - modelo A",
@@ -29,6 +37,10 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-2",
     floorPlanImage: "/FloorPlans/T1_Modelo_B.png",
+    floorPlanImageSize: "w-[546px] h-[511px]",
+    floorPlanTableSize: "w-[382px] h-[447px]",
+    smallImageCollumnTable: false,
+    smallImageStyle: "w-[171px] h-[89px] mx-auto",
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_B_Table.svg",
     mainTitle: "T1 - modelo B",
@@ -37,6 +49,10 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-3",
     floorPlanImage: "/FloorPlans/T1_Modelo_C.png",
+    floorPlanImageSize: "w-[546px] h-[511px]",
+    floorPlanTableSize: "w-[382px] h-[447px]",
+    smallImageCollumnTable: false,
+    smallImageStyle: "w-[171px] h-[89px] mx-auto",
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_C_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_C_Table.svg",
     mainTitle: "T1 - modelo C",
@@ -45,6 +61,10 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-4",
     floorPlanImage: "/FloorPlans/T2_Modelo_A.png",
+    floorPlanImageSize: "w-[603px] h-[713px]",
+    floorPlanTableSize: "w-[382px] h-[546px]",
+    smallImageCollumnTable: false,
+    smallImageStyle: "absolute bottom-66 -right-5 w-[171px] h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T2_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T2_Modelo_A_Table.svg",
     mainTitle: "T2 - modelo A",
@@ -53,6 +73,10 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-5",
     floorPlanImage: "/FloorPlans/T2_Modelo_B.png",
+    floorPlanImageSize: "w-[603px] h-[713px]",
+    floorPlanTableSize: "w-[382px] h-[546px]",
+    smallImageCollumnTable: false,
+    smallImageStyle: "absolute bottom-66 -left-5 w-[171px] h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T2_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T2_Modelo_B_Table.svg",
     mainTitle: "T2 - modelo B",
@@ -61,6 +85,10 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-6",
     floorPlanImage: "/FloorPlans/T3_Modelo_A.png",
+    floorPlanImageSize: "w-[500px] h-[740px]",
+    floorPlanTableSize: "w-[382px] h-[590px]",
+    smallImageCollumnTable: false,
+    smallImageStyle: "absolute bottom-147 -right-21 w-[171px] h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T3_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T3_Modelo_A_Table.svg",
     mainTitle: "T3 - modelo A",
@@ -69,6 +97,10 @@ const dataCarousel: DataCarousel[] = [
   {
     id: "floor-plan-7",
     floorPlanImage: "/FloorPlans/T3_Modelo_B.png",
+    floorPlanImageSize: "w-[500px] h-[740px]",
+    floorPlanTableSize: "w-[382px] h-[590px]",
+    smallImageCollumnTable: false,
+    smallImageStyle: "absolute bottom-153 -left-27 w-[171px] h-[89px]",
     smallFloorPlanImage: "/FloorPlans/T3_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T3_Modelo_B_Table.svg",
     mainTitle: "T3 - modelo B",
@@ -85,16 +117,25 @@ export default function FloorPlansCarousel() {
             <CarouselItem key={index} className="h-full">
               <Card className="h-full bg-white/86">
                 <CardContent className="grid grid-cols-2 h-full items-center justify-items-center">
-                  <div className="">
+                  <div className="relative h-[740px] flex flex-col items-center justify-center">
                     <img
                       src={data.floorPlanImage}
                       alt={data.id}
                       width={546}
                       height={713}
-                      className="w-[546px] h-[713px]"
+                      className={data.floorPlanImageSize}
                     />
+                    {!data.smallImageCollumnTable && (
+                      <img
+                        src={data.smallFloorPlanImage}
+                        alt={data.id}
+                        width={171}
+                        height={89}
+                        className={data.smallImageStyle}
+                      />
+                    )}
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-y-10">
+                  <div className="flex flex-col items-center justify-center gap-y-10 h-[740px]">
                     <div className="flex flex-col items-center justify-center gap-y-1">
                       <h1 className="text-6xl text-[#E1B260] font-normal font-playfairDisplay">
                         {data.mainTitle}
@@ -108,15 +149,17 @@ export default function FloorPlansCarousel() {
                       alt={data.id}
                       width={382}
                       height={414}
-                      className="w-[382px] h-[414px]"
+                      className={data.floorPlanTableSize}
                     />
-                    <img
-                      src={data.smallFloorPlanImage}
-                      alt={data.id}
-                      width={171}
-                      height={89}
-                      className="w-[171px] h-[89px]"
-                    />
+                    {data.smallImageCollumnTable && (
+                      <img
+                        src={data.smallFloorPlanImage}
+                        alt={data.id}
+                        width={171}
+                        height={89}
+                        className={data.smallImageStyle}
+                      />
+                    )}
                   </div>
                 </CardContent>
               </Card>
