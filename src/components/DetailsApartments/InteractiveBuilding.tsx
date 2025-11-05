@@ -16,6 +16,8 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
+import { useTranslations } from "@/i18n/utils";
+import type { ui } from "@/i18n/ui";
 
 type ApartmentType = "T1" | "T2" | "T3";
 
@@ -31,8 +33,10 @@ type ApartmentModel = {
   bathrooms: number;
   parking: number;
   area: number;
-  units: string;
-  floors: string;
+  unitsCount: number;
+  isSingleUnit: boolean;
+  isGroundFloor: boolean;
+  floorRange?: { from: number; to: number };
 };
 
 type ApartmentItem = {
@@ -47,61 +51,72 @@ const APARTMENT_DATA: Record<ApartmentType, ApartmentModel[]> = {
       suites: 1,
       bathrooms: 2,
       parking: 2,
-      area: 132,
-      units: "1 Unidades",
-      floors: "Piso Térreo",
+      area: 176,
+      unitsCount: 1,
+      isSingleUnit: true,
+      isGroundFloor: true,
     },
     {
       suites: 1,
       bathrooms: 2,
       parking: 2,
       area: 132,
-      units: "7 Unidades",
-      floors: "Piso 1 a 7",
+      unitsCount: 7,
+      isSingleUnit: false,
+      isGroundFloor: false,
+      floorRange: { from: 1, to: 7 },
     },
     {
       suites: 1,
       bathrooms: 2,
       parking: 2,
       area: 132,
-      units: "7 Unidades",
-      floors: "Piso 1 a 7",
+      unitsCount: 7,
+      isSingleUnit: false,
+      isGroundFloor: false,
+      floorRange: { from: 1, to: 7 },
     },
   ],
   T2: [
     {
       suites: 2,
-      bathrooms: 2,
+      bathrooms: 3,
       parking: 2,
-      area: 145,
-      units: "7 Unidades",
-      floors: "Piso 1 a 7",
+      area: 185,
+      unitsCount: 7,
+      isSingleUnit: false,
+      isGroundFloor: false,
+      floorRange: { from: 1, to: 7 },
     },
     {
       suites: 2,
-      bathrooms: 2,
+      bathrooms: 3,
       parking: 2,
-      area: 145,
-      units: "7 Unidades",
-      floors: "Piso 1 a 7",
+      area: 185,
+      unitsCount: 7,
+      isSingleUnit: false,
+      isGroundFloor: false,
+      floorRange: { from: 1, to: 7 },
     },
   ],
   T3: [
     {
       suites: 3,
-      bathrooms: 3,
-      parking: 2,
-      area: 180,
-      units: "1 Unidade",
-      floors: "Piso Térreo",
+      bathrooms: 4,
+      parking: 3,
+      area: 311,
+      unitsCount: 1,
+      isSingleUnit: true,
+      isGroundFloor: true,
     },
     {
       suites: 3,
-      bathrooms: 3,
-      parking: 2,
-      area: 180,
-      units: "1 Unidade",
-      floors: "Piso Térreo",
+      bathrooms: 4,
+      parking: 3,
+      area: 307,
+      unitsCount: 1,
+      isSingleUnit: true,
+      isGroundFloor: true,
     },
   ],
 };
@@ -172,6 +187,7 @@ const GOLD = "#F1B44A";
 interface InteractiveBuildingProps {
   imageWidth?: number;
   imageHeight?: number;
+  lang?: keyof typeof ui;
 }
 
 type HoverState = {
@@ -187,7 +203,9 @@ type SelectedState = {
 export default function InteractiveBuilding({
   imageWidth: initialWidth = 1920,
   imageHeight: initialHeight = 1080,
+  lang = "en",
 }: InteractiveBuildingProps) {
+  const t = useTranslations(lang);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const VIEW_W = 1000;
   const VIEW_H = 1000;
@@ -232,6 +250,32 @@ export default function InteractiveBuilding({
   // Get model letter from shape index (0 = a, 1 = b, 2 = c)
   function getModelLetter(shapeIndex: number): string {
     return String.fromCharCode(97 + shapeIndex); // 'a', 'b', 'c'
+  }
+
+  // Format units text for rendering with original font styling
+  function formatUnitsForRender(model: ApartmentModel) {
+    const unitsText = model.isSingleUnit 
+      ? `${model.unitsCount} ${t("details_apartments.unit")}` 
+      : `${model.unitsCount} ${t("details_apartments.units")}`;
+    const parts = unitsText.split(" ");
+    return { number: parts[0], word: parts.slice(1).join(" ") };
+  }
+
+  // Format floors text for rendering with original font styling
+  function formatFloorsForRender(model: ApartmentModel) {
+    if (model.isGroundFloor) {
+      const floorsText = t("details_apartments.ground_floor");
+      const parts = floorsText.split(" ");
+      return parts.map((part, i) => ({ text: part, isNumber: !isNaN(Number(part)) }));
+    }
+    if (model.floorRange) {
+      const floorsText = t("details_apartments.floor_range")
+        .replace("{from}", model.floorRange.from.toString())
+        .replace("{to}", model.floorRange.to.toString());
+      const parts = floorsText.split(" ");
+      return parts.map((part, i) => ({ text: part, isNumber: !isNaN(Number(part)) }));
+    }
+    return [];
   }
 
   // Sync carousel with selected model when sheet opens or selected changes from outside
@@ -691,7 +735,7 @@ export default function InteractiveBuilding({
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         preserveAspectRatio="none"
         className="absolute inset-0 w-full h-full z-10 lg:hidden"
-        aria-label="Mapa das tipologias"
+        aria-label={t("details_apartments.map_alt")}
       >
         {(["T1", "T2", "T3"] as ApartmentType[]).map((type) => (
           <g key={`m-${type}`}>
@@ -731,7 +775,7 @@ export default function InteractiveBuilding({
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         preserveAspectRatio="none"
         className="absolute inset-0 w-full h-full z-10 hidden lg:block"
-        aria-label="Mapa das tipologias"
+        aria-label={t("details_apartments.map_alt")}
       >
         {(["T1", "T2", "T3"] as ApartmentType[]).map((type) => (
           <g key={`d-${type}`}>
@@ -781,33 +825,33 @@ export default function InteractiveBuilding({
         <SheetContent
           side="right"
           showOverlay={false}
-          className="text-white w-full max-w-none lg:max-w-[50%] xl:max-w-[42%] border-l border-transparent overflow-y-auto"
+          className="text-white w-full max-w-none lg:max-w-[50%] xl:max-w-[42%] border-l border-transparent overflow-hidden"
         >
           <SheetTitle hidden />
           {selected && ALL_APARTMENTS[current] && (
-            <div className="h-full flex flex-col relative">
+            <div className="h-full flex flex-col relative overflow-hidden">
               <SheetClose asChild>
                 <Button
                   type="button"
-                  className="absolute bg-transparent hover:bg-transparent top-8 cursor-pointer font-normal font-montserrat lg:text-[40px] text-[34px] right-12 z-50 text-[#B0C4CC]/50 hover:text-[#B0C4CC] focus:outline-hidden"
-                  aria-label="Fechar"
+                  className="absolute bg-transparent hover:bg-transparent top-4 sm:top-6 lg:top-8 cursor-pointer font-normal font-montserrat lg:text-[40px] text-[28px] sm:text-[32px] right-8 sm:right-10 lg:right-12 z-50 text-[#B0C4CC]/50 hover:text-[#B0C4CC] focus:outline-hidden"
+                  aria-label={t("details_apartments.close")}
                 >
                   x
                 </Button>
               </SheetClose>
-              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-2 md:px-8 py-4 overflow-y-auto">
+              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-2 md:px-8 py-2 sm:py-3 lg:py-4 min-h-0">
                 {/* Carousel - Floor Plan Images */}
                 <Carousel
                   setApi={setApi}
-                  className="w-full pb-8 relative pt-15"
+                  className="w-full pb-2 sm:pb-4 lg:pb-6 relative pt-6 sm:pt-8 lg:pt-10 shrink min-h-0"
                   opts={{
                     align: "center",
                     loop: true,
                   }}
                 >
                   {/* Mobile Layout: Arrows on sides of floor plan */}
-                  <div className="flex items-center justify-center gap-6 w-full relative px-12 sm:px-16 md:px-20 lg:hidden">
-                    <CarouselPrevious className="absolute left-0 translate-y-16 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" />
+                  <div className="flex items-center justify-center gap-4 sm:gap-6 w-full relative px-8 sm:px-12 md:px-16 lg:hidden">
+                    <CarouselPrevious className="absolute left-0 translate-y-12 sm:translate-y-16 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" />
                     <CarouselContent className="ml-0 flex-1 w-full">
                       {ALL_APARTMENTS.map((apartment) => (
                         <CarouselItem
@@ -815,7 +859,7 @@ export default function InteractiveBuilding({
                           className="pl-0"
                         >
                           <div className="flex justify-center items-center">
-                            <div className="relative w-full max-w-[550px] aspect-auto">
+                            <div className="relative w-full max-w-[400px] sm:max-w-[500px] md:max-w-[550px] aspect-auto">
                               <img
                                 src={`/detailsApartments/${apartment.type}.svg`}
                                 alt={`${apartment.type} floor plan`}
@@ -826,19 +870,19 @@ export default function InteractiveBuilding({
                         </CarouselItem>
                       ))}
                     </CarouselContent>
-                    <CarouselNext className="absolute right-0 translate-y-16 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" />
+                    <CarouselNext className="absolute right-0 translate-y-12 sm:translate-y-16 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" />
                   </div>
 
                   {/* Desktop Layout: Floor plan images */}
                   <div className="hidden lg:block">
-                    <CarouselContent className="ml-0 md:h-full">
+                    <CarouselContent className="ml-0">
                       {ALL_APARTMENTS.map((apartment) => (
                         <CarouselItem
                           key={`${apartment.type}-${apartment.modelIndex}`}
-                          className="pl-0 md:h-full"
+                          className="pl-0"
                         >
-                          <div className="flex justify-center items-center md:h-full">
-                            <div className="relative w-full max-w-[550px] aspect-auto md:h-full">
+                          <div className="flex justify-center items-center">
+                            <div className="relative w-full max-w-[450px] xl:max-w-[500px] aspect-auto">
                               <img
                                 src={`/detailsApartments/${apartment.type}.svg`}
                                 alt={`${apartment.type} floor plan`}
@@ -853,102 +897,70 @@ export default function InteractiveBuilding({
 
 
                   {/* Text below floor plan for mobile */}
-                  <div className="text-center items-center justify-center self-center flex flex-col gap-0 pt-6 lg:hidden">
+                  <div className="text-center items-center justify-center self-center flex flex-col gap-0 pt-2 sm:pt-4 lg:hidden">
                     {ALL_APARTMENTS[current] && (
                       <>
                         <h2 className="text-[#E1B260] mb-0">
-                          <span className="font-playfairDisplay text-[26px] md:text-[52px]">
+                          <span className="font-playfairDisplay text-[22px] md:text-[48px]">
                             {ALL_APARTMENTS[current].type.charAt(0)}
                           </span>
-                          <span className="font-libreCaslonDisplay text-[26px] md:text-[52px]">
+                          <span className="font-libreCaslonDisplay text-[22px] md:text-[48px]">
                             {ALL_APARTMENTS[current].type.charAt(1)}
-                          </span><span className="mr-4"></span>
-                          <span className="font-playpenSans text-[20px] md:text-[42px] leading-[52px]">
+                          </span><span className="mr-2 md:mr-4"></span>
+                          <span className="font-playpenSans text-[18px] md:text-[38px] leading-[22px] md:leading-[48px]">
                             -
-                          </span><span className="mr-4"></span>
-                          <span className="font-playfairDisplay md:text-[58px] text-[26px]">
-                            modelo{" "}
+                          </span><span className="mr-2 md:mr-4"></span>
+                          <span className="font-playfairDisplay md:text-[54px] text-[22px]">
+                            {t("details_apartments.model")}{" "}
                             {getModelLetter(
                               ALL_APARTMENTS[current].modelIndex
                             ).toUpperCase()}
                           </span>
                         </h2>
-                        <p className="text-[#B0C4CC] -mt-2">
+                        <p className="text-[#B0C4CC] -mt-1 md:-mt-2">
                           <span className="font-libreCaslonDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
-                            {
-                              ALL_APARTMENTS[current].model.units.split(
-                                " "
-                              )[0]
-                            }{" "}
+                            {formatUnitsForRender(ALL_APARTMENTS[current].model).number}{" "}
                           </span>{" "}
                           <span className="font-playfairDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
-                            {
-                              ALL_APARTMENTS[current].model.units.split(
-                                " "
-                              )[1]
-                            }{" "}
+                            {formatUnitsForRender(ALL_APARTMENTS[current].model).word}{" "}
                           </span>
                           <span className="font-playpenSans md:text-[32px] text-[19px] md:leading-[52px] leading-[30px]">
                           | {" "}
                           </span>{" "}
-                          <span className="font-playfairDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
-                            {
-                              ALL_APARTMENTS[current].model.floors.split(
-                                " "
-                              )[0]
-                            }{" "}
-                          </span>
-                          {(() => {
-                            const floorsPart = ALL_APARTMENTS[current].model.floors.split(" ")[1];
-                            const isNumber = !isNaN(Number(floorsPart));
-                            return (
-                              <span
-                                className={`${
-                                  isNumber ? "font-libreCaslonDisplay" : "font-playfairDisplay"
-                                } leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]`}
-                              >
-                                {floorsPart}{" "}
-                              </span>
-                            );
-                          })()}
-                          <span className="font-playfairDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
-                            {
-                              ALL_APARTMENTS[current].model.floors.split(
-                                " "
-                              )[2]
-                            }{" "}
-                          </span>
-                          <span className="font-libreCaslonDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
-                            {
-                              ALL_APARTMENTS[current].model.floors.split(
-                                " "
-                              )[3]
-                            }
-                          </span>
+                          {formatFloorsForRender(ALL_APARTMENTS[current].model).map((part, i, arr) => (
+                            <span
+                              key={i}
+                              className={`${
+                                part.isNumber ? "font-libreCaslonDisplay" : "font-playfairDisplay"
+                              } leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]`}
+                            >
+                              {part.text}{i < arr.length - 1 ? " " : ""}
+                            </span>
+                          ))}
                         </p>
                       </>
                     )}
                   </div>
 
                   {/* Title Section with Navigation Arrows - Below Carousel for desktop */}
-                  <div className="hidden lg:flex items-center justify-center gap-6 w-full pt-6 relative px-16 xl:px-20">
+                  <div className="hidden lg:flex items-center justify-center gap-6 w-full pt-4 relative px-16 xl:px-20">
                     <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 disabled:opacity-100 disabled:pointer-events-auto" />
 
-                    <div className="text-center items-cnter justify-center self-center flex flex-col gap-0">
+                    <div className="text-center items-center justify-center self-center flex flex-col gap-0">
                       {ALL_APARTMENTS[current] && (
                         <>
                           <h2 className="text-[#E1B260] mb-0">
-                            <span className="font-playfairDisplay text-[52px]">
+                            <span className="font-playfairDisplay text-[48px]">
                               {ALL_APARTMENTS[current].type.charAt(0)}
                             </span>
-                            <span className="font-libreCaslonDisplay text-[52px]">
+                            <span className="font-libreCaslonDisplay text-[48px]">
                               {ALL_APARTMENTS[current].type.charAt(1)}
                             </span><span className="mr-4"></span>
-                            <span className="font-playpenSans text-[42px] leading-[52px]">
+                            <span className="font-playpenSans text-[38px] leading-[48px]">
                               -
                             </span><span className="mr-4"></span>
-                            <span className="font-playfairDisplay text-[58px]">
-                              modelo{" "}
+                            <span className="font-playfairDisplay text-[54px]">
+                              {t("details_apartments.model")}{" "}
                               {getModelLetter(
                                 ALL_APARTMENTS[current].modelIndex
                               ).toUpperCase()}
@@ -956,56 +968,24 @@ export default function InteractiveBuilding({
                           </h2>
                           <p className="text-[#B0C4CC] -mt-2">
                             <span className="font-libreCaslonDisplay leading-[52px] text-[42px]">
-                              {
-                                ALL_APARTMENTS[current].model.units.split(
-                                  " "
-                                )[0]
-                              }{" "}
+                              {formatUnitsForRender(ALL_APARTMENTS[current].model).number}{" "}
                             </span>{" "}
                             <span className="font-playfairDisplay leading-[52px] text-[42px]">
-                              {
-                                ALL_APARTMENTS[current].model.units.split(
-                                  " "
-                                )[1]
-                              }{" "}
+                              {formatUnitsForRender(ALL_APARTMENTS[current].model).word}{" "}
                             </span>
                             <span className="font-playpenSans text-[32px] leading-[52px]">
                             - {" "}
                             </span>{" "}
-                            <span className="font-playfairDisplay leading-[52px] text-[42px]">
-                              {
-                                ALL_APARTMENTS[current].model.floors.split(
-                                  " "
-                                )[0]
-                              }{" "}
-                            </span>
-                            {(() => {
-                              const floorsPart = ALL_APARTMENTS[current].model.floors.split(" ")[1];
-                              const isNumber = !isNaN(Number(floorsPart));
-                              return (
-                                <span
-                                  className={`${
-                                    isNumber ? "font-libreCaslonDisplay" : "font-playfairDisplay"
-                                  } leading-[52px] text-[42px]`}
-                                >
-                                  {floorsPart}{" "}
-                                </span>
-                              );
-                            })()}
-                            <span className="font-playfairDisplay leading-[52px] text-[42px]">
-                              {
-                                ALL_APARTMENTS[current].model.floors.split(
-                                  " "
-                                )[2]
-                              }{" "}
-                            </span>
-                            <span className="font-libreCaslonDisplay leading-[52px] text-[42px]">
-                              {
-                                ALL_APARTMENTS[current].model.floors.split(
-                                  " "
-                                )[3]
-                              }
-                            </span>
+                            {formatFloorsForRender(ALL_APARTMENTS[current].model).map((part, i, arr) => (
+                              <span
+                                key={i}
+                                className={`${
+                                  part.isNumber ? "font-libreCaslonDisplay" : "font-playfairDisplay"
+                                } leading-[52px] text-[42px]`}
+                              >
+                                {part.text}{i < arr.length - 1 ? " " : ""}
+                              </span>
+                            ))}
                           </p>
                         </>
                       )}
@@ -1016,64 +996,64 @@ export default function InteractiveBuilding({
                 </Carousel>
 
                 {/* Content Container - All content below carousel */}
-                <div className="">
+                <div className="shrink-0">
                   {/* Stats Grid - Mobile: 2x2 layout, Desktop: 3 columns */}
-                  <div className="lg:grid lg:grid-rows-2 lg:pb-10 lg:grid-cols-[1fr_8px_1fr_36px_1fr] lg:items-center lg:justify-center">
+                  <div className="lg:grid lg:grid-rows-2 lg:pb-6 lg:grid-cols-[1fr_8px_1fr_36px_1fr] lg:items-center lg:justify-center">
                     {/* Mobile: Two flex rows with separators */}
-                    <div className="lg:hidden relative pb-10">
-                      <div className="flex flex-col gap-6 items-center">
+                    <div className="lg:hidden relative pb-4 sm:pb-6">
+                      <div className="flex flex-col gap-4 sm:gap-5 items-center">
                         {/* Row 1: Suites and Parking */}
-                        <div className="flex items-center justify-center gap-6 w-full">
+                        <div className="flex items-center justify-center gap-4 sm:gap-6 w-full">
                           {/* Suites */}
                           <div className="flex flex-col justify-center items-center flex-[0.8]">
-                            <span className="text-white md:text-[53px] text-[47px] font-libreCaslonDisplay leading-none ">
+                            <span className="text-white md:text-[48px] text-[40px] font-libreCaslonDisplay leading-none ">
                               {ALL_APARTMENTS[current].model.suites}
                             </span>
-                            <div className="text-white font-playfairDisplay text-[30px] leading-[22px] mt-2 text-center">
-                              Suite
+                            <div className="text-white font-playfairDisplay text-[26px] sm:text-[28px] leading-[20px] mt-1 sm:mt-2 text-center">
+                              {t("details_apartments.suite")}
                             </div>
                           </div>
                           
                           {/* Separator */}
                           <div
-                            className="w-px h-[74px] bg-[#E1B260] opacity-60"
+                            className="w-px h-[60px] sm:h-[70px] bg-[#E1B260] opacity-60"
                           />  
                           
                           {/* Parking */}
                           <div className="flex flex-col justify-center items-center flex-[1.2]">
-                            <span className="text-white md:text-[53px] text-[47px] font-libreCaslonDisplay leading-none">
+                            <span className="text-white md:text-[48px] text-[40px] font-libreCaslonDisplay leading-none">
                               {ALL_APARTMENTS[current].model.parking}
                             </span>
-                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-base leading-[22px] mt-2 text-center">
-                              Lugares de Estacionamento
+                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-sm sm:text-base leading-[20px] sm:leading-[22px] mt-1 sm:mt-2 text-center">
+                              {t("details_apartments.parking_spaces")}
                             </div>
                           </div>
                         </div>
 
                         {/* Row 2: Bathrooms and Area */}
-                        <div className="flex items-center justify-center gap-6 w-full">
+                        <div className="flex items-center justify-center gap-4 sm:gap-6 w-full">
                           {/* Bathrooms */}
                           <div className="flex flex-col justify-center items-center flex-[0.8]">
-                            <span className="text-white md:text-[53px] text-[47px] font-libreCaslonDisplay leading-none">
+                            <span className="text-white md:text-[48px] text-[40px] font-libreCaslonDisplay leading-none">
                               {ALL_APARTMENTS[current].model.bathrooms}
                             </span>
-                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-base leading-[22px] mt-2 text-center">
-                              Casas de Banho
+                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-sm sm:text-base leading-[20px] sm:leading-[22px] mt-1 sm:mt-2 text-center">
+                              {t("details_apartments.bathrooms")}
                             </div>
                           </div>
                           
                           {/* Separator */}
                           <div
-                            className="w-px h-[74px] bg-[#E1B260] opacity-60"
+                            className="w-px h-[60px] sm:h-[70px] bg-[#E1B260] opacity-60"
                           />
                           
                           {/* Area */}
                           <div className="flex flex-col justify-center items-center flex-[1.2]">
-                            <span className="text-white md:text-[53px] text-[47px] font-libreCaslonDisplay leading-none whitespace-nowrap">
+                            <span className="text-white md:text-[48px] text-[40px] font-libreCaslonDisplay leading-none whitespace-nowrap">
                               + {ALL_APARTMENTS[current].model.area} m²
                             </span>
-                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-base leading-[22px] mt-2 text-center">
-                              Área Bruta de Construção
+                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-sm sm:text-base leading-[20px] sm:leading-[22px] mt-1 sm:mt-2 text-center">
+                              {t("details_apartments.gross_construction_area")}
                             </div>
                           </div>
                         </div>
@@ -1083,68 +1063,68 @@ export default function InteractiveBuilding({
                     {/* Desktop: Original 3-column layout */}
                     {/* Row 1: Numbers */}
                     <div className="hidden lg:flex justify-center items-center">
-                      <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                      <span className="text-white text-[48px] xl:text-[53px] font-libreCaslonDisplay leading-none">
                         {ALL_APARTMENTS[current].model.suites}
                       </span>
                     </div>
                     {/* Separator spanning two rows */}
                     <div
                       className="hidden lg:block row-span-2 self-center"
-                      style={{ width: "1px", height: "116px", borderLeft: "0.2px solid #E1B260", opacity: 0.6 }}
+                      style={{ width: "1px", height: "100px", borderLeft: "0.2px solid #E1B260", opacity: 0.6 }}
                     />
                     <div className="hidden lg:flex justify-center items-center">
-                      <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                      <span className="text-white text-[48px] xl:text-[53px] font-libreCaslonDisplay leading-none">
                         {ALL_APARTMENTS[current].model.bathrooms}
                       </span>
                     </div>
                     {/* Separator spanning two rows */}
                     <div
                       className="hidden lg:block row-span-2 self-center"
-                      style={{ width: "1px", height: "116px", borderLeft: "0.2px solid #E1B260", opacity: 0.6 }}
+                      style={{ width: "1px", height: "100px", borderLeft: "0.2px solid #E1B260", opacity: 0.6 }}
                     />
                     <div className="hidden lg:flex justify-center items-center">
-                      <span className="text-white text-[53px] font-libreCaslonDisplay leading-none">
+                      <span className="text-white text-[48px] xl:text-[53px] font-libreCaslonDisplay leading-none">
                         {ALL_APARTMENTS[current].model.parking}
                       </span>
                     </div>
 
                     {/* Row 2: Labels */}
-                    <div className="hidden lg:block text-white font-playfairDisplay text-[30px] leading-[22px] text-center">
-                      Suite
+                    <div className="hidden lg:block text-white font-playfairDisplay text-[28px] xl:text-[30px] leading-[20px] xl:leading-[22px] text-center">
+                      {t("details_apartments.suite")}
                     </div>
                     {/* placeholder for sep column (occupied by row-span-2) */}
-                    <div className="hidden lg:block text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[100px] mx-auto text-base leading-[22px] text-center">
-                      Casas de Banho
+                    <div className="hidden lg:block text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[100px] mx-auto text-sm xl:text-base leading-[20px] xl:leading-[22px] text-center">
+                      {t("details_apartments.bathrooms")}
                     </div>
                     {/* placeholder for sep column (occupied by row-span-2) */}
-                    <div className="hidden lg:block text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[160px] mx-auto text-base leading-[22px] text-center">
-                      Lugares de Estacionamento
+                    <div className="hidden lg:block text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[160px] mx-auto text-sm xl:text-base leading-[20px] xl:leading-[22px] text-center">
+                      {t("details_apartments.parking_spaces")}
                     </div>
                   </div>
 
                   {/* Area Information - Desktop only */}
-                  <div className="hidden lg:block text-center pb-12">
-                    <div className="flex justify-center items-center pb-2 h-8 md:h-10 lg:h-12">
-                      <span className="text-white text-4xl md:text-5xl lg:text-6xl font-libreCaslonDisplay">
+                  <div className="hidden lg:block text-center pb-6">
+                    <div className="flex justify-center items-center pb-1 xl:pb-2 h-6 xl:h-8">
+                      <span className="text-white text-3xl xl:text-4xl 2xl:text-5xl font-libreCaslonDisplay">
                         + {ALL_APARTMENTS[current].model.area} m²
                       </span>
                     </div>
-                    <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty mx-auto text-base leading-[22px]">
-                      Área Bruta de Construção
+                    <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty mx-auto text-sm xl:text-base leading-[20px] xl:leading-[22px]">
+                      {t("details_apartments.gross_construction_area")}
                     </div>
                   </div>
 
                   {/* VER MAIS Button */}
-                  <div className="flex justify-center">
+                  <div className="flex justify-center pt-2 sm:pt-4">
                     <Button
-                      className="w-[160px] h-[28px] uppercase bg-transparent border border-[#7192A2] cursor-pointer rounded-[6px] text-white tracking-wider hover:bg-[#7192A2] transition-colors font-montserrat text-sm md:text-base flex items-center justify-center"
+                      className="w-[140px] sm:w-[160px] h-[26px] sm:h-[28px] uppercase bg-transparent border border-[#7192A2] cursor-pointer rounded-[6px] text-white tracking-wider hover:bg-[#7192A2] transition-colors font-montserrat text-sm md:text-base flex items-center justify-center"
                       onClick={() => {
                         // Add navigation or action here
                         console.log("VER MAIS clicked");
                       }}
                     >
-                      <span className="font-montserrat font-semibold md:text-[11px] text-[10px] leading-[28px] flex items-center text-center tracking-[0.15em] uppercase text-white">
-                        VER MAIS
+                      <span className="font-montserrat font-semibold md:text-[11px] text-[10px] leading-[26px] sm:leading-[28px] flex items-center text-center tracking-[0.15em] uppercase text-white">
+                        {t("details_apartments.see_more")}
                       </span>
                     </Button>
                   </div>

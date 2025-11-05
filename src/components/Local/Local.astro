@@ -117,7 +117,7 @@ const titleSecondLine = titleWords.slice(3).join(" ");
 
     <!-- Text content on top of gradient -->
     <div
-      class="relative z-10 flex flex-col justify-center px-8 py-8 lg:px-10 xl:px-12 2xl:px-16 xl:py-10 ml-auto h-full w-[45%] xl:w-[40%] 2xl:w-[35%]"
+      class="relative z-10 flex flex-col justify-center px-8 lg:px-0 py-8 xl:py-10 ml-auto h-full w-[45%] xl:w-[40%] 2xl:w-[35%]"
     >
       <!-- Tagline -->
       <div
@@ -128,9 +128,9 @@ const titleSecondLine = titleWords.slice(3).join(" ");
 
       <!-- Title -->
       <h2
-        class="font-playfairDisplay text-white text-pretty text-4xl xl:text-[52px] leading-[1.19] mb-6"
+        class="font-playfairDisplay  text-white  text-4xl xl:text-[52px] leading-[1.19] mb-6"
       >
-        <span>{titleFirstLine}</span>
+        <span class="text-pretty 2xl:whitespace-nowrap">{titleFirstLine}</span>
         <br />
         <span>{titleSecondLine}</span>
       </h2>
