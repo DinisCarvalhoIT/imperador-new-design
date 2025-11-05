@@ -227,7 +227,7 @@ function CarouselPreviousFloorPlans({
       variant={null}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute size-10 rounded-full",
         orientation === "horizontal"
           ? "top-1/2 -left-12 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -239,9 +239,9 @@ function CarouselPreviousFloorPlans({
     >
       <img
         src={"/FloorPlans/prevCarousel.svg"}
-        width={35}
-        height={35}
-        className="w-[35px] h-[35px]"
+        width={40}
+        height={40}
+        className="w-[40px] h-[40px]"
       />
 
       <span className="sr-only">Previous slide</span>
@@ -307,7 +307,7 @@ function CarouselNextFloorPlans({
       variant={null}
       size={size}
       className={cn(
-        "absolute size-12 rounded-full",
+        "absolute size-10 rounded-full",
         orientation === "horizontal"
           ? "top-1/2 -right-12 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -319,9 +319,9 @@ function CarouselNextFloorPlans({
     >
       <img
         src={"/FloorPlans/nextCarousel.svg"}
-        width={35}
-        height={35}
-        className="w-[35px] h-[35px]"
+        width={40}
+        height={40}
+        className="w-[40px] h-[40px]"
       />
 
       <span className="sr-only">Next slide</span>

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNextFloorPlans,
   CarouselPreviousFloorPlans,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -30,7 +31,7 @@ const dataCarousel: DataCarousel[] = [
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_A_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_A_Table.svg",
     tableImageStyle:
-      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[450px] flex items-center justify-center",
+      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitle: "T1 - modelo A",
     subTitle: "1 Unidade - Piso Térreo",
   },
@@ -43,7 +44,7 @@ const dataCarousel: DataCarousel[] = [
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_B_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_B_Table.svg",
     tableImageStyle:
-      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[270px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[450px] flex items-center justify-center",
+      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[270px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitle: "T1 - modelo B",
     subTitle: "7 Unidades - Piso 1 a 7",
   },
@@ -56,7 +57,7 @@ const dataCarousel: DataCarousel[] = [
     smallFloorPlanImage: "/FloorPlans/T1_Modelo_C_Small.svg",
     tableImage: "/FloorPlans/T1_Modelo_C_Table.svg",
     tableImageStyle:
-      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[450px] flex items-center justify-center",
+      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitle: "T1 - modelo C",
     subTitle: "7 Unidades - Piso 1 a 7",
   },
@@ -115,19 +116,95 @@ const dataCarousel: DataCarousel[] = [
 ];
 // absolute inset-0 ---- no primeiro div itnha
 export default function FloorPlansCarousel() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
+
+  const getVisibleTitles = () => {
+    const totalSlides = dataCarousel.length;
+    const titles = [];
+
+    // Always show 3 titles
+    if (current === 0) {
+      // At the start: show first 3 slides
+      for (let i = 0; i < Math.min(3, totalSlides); i++) {
+        titles.push({ ...dataCarousel[i], index: i });
+      }
+    } else if (current === totalSlides - 1) {
+      // At the end: show last 3 slides
+      for (let i = Math.max(0, totalSlides - 3); i < totalSlides; i++) {
+        titles.push({ ...dataCarousel[i], index: i });
+      }
+    } else {
+      // In the middle: show previous, current, and next
+      for (let i = -1; i <= 1; i++) {
+        const index = current + i;
+        if (index >= 0 && index < totalSlides) {
+          titles.push({ ...dataCarousel[index], index });
+        }
+      }
+    }
+
+    return titles;
+  };
+
+  const visibleTitles = getVisibleTitles();
+
   return (
-    <div className=" flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8  ">
-      <Carousel className="w-full sm:w-[95%] md:w-[90%] lg:w-[96%] h-full sm:h-[95%] md:h-[90%] flex items-center justify-center">
+    <div className=" flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8  ">
+      <div className="w-full sm:w-[95%] md:w-[90%] lg:w-[96%] flex flex-row justify-center items-center gap-x-4">
+        {visibleTitles.map((data, idx) => (
+          <React.Fragment key={data.index}>
+            <div className="flex flex-col items-center">
+              <div
+                className={`text-3xl text-white font-playfairDisplay transition-opacity duration-300 ${
+                  data.index === current
+                    ? "opacity-100 font-normal pb-3"
+                    : "opacity-60 pb-3"
+                }`}
+              >
+                {data.mainTitle}
+              </div>
+              {data.index === current && (
+                <div className="w-full h-[5px] bg-[#F1B44A] rounded-full transition-all duration-300 top-1 relative z-10" />
+              )}
+            </div>
+            {idx < visibleTitles.length - 1 && (
+              <div
+                className="bg-[#C3871B] mb-5 xl:mx-20 mx-7"
+                style={{
+                  width: "49.14px",
+                  height: "2px",
+                  transform: "rotate(90deg)",
+                }}
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <Carousel
+        setApi={setApi}
+        className="w-full sm:w-[95%] md:w-[85%] lg:w-[95%] 2xl:w-[86%] h-full sm:h-[95%] md:h-[90%] flex items-center justify-center"
+      >
         <CarouselContent className="h-full flex items-center ">
           {dataCarousel.map((data, index) => (
             <CarouselItem
               key={index}
               className="h-full flex items-center justify-center"
             >
-              <Card className="w-full max-w-[1250px] h-full lg:max-h-[800px] min-h-[400px] sm:min-h-[500px] md:min-h-[600px] bg-white/86 flex items-center justify-center">
+              <Card className="w-full max-w-[1250px] min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:h-[670px] bg-white/86 flex items-center justify-center">
                 <CardContent className="grid grid-cols-1 lg:grid-cols-2 h-full w-full items-center justify-items-center p-2 sm:p-4 md:p-6 gap-4 lg:gap-0">
                   <div className="relative flex flex-col items-center justify-center h-full w-full order-1 lg:order-0">
-                    <div className="w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[350px] xl:max-w-[500px] h-full max-h-[300px] sm:max-h-[400px] md:max-h-[500px] lg:max-h-[600px] flex items-center justify-center">
+                    <div className="w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[350px] xl:max-w-[500px] h-full max-h-[300px] sm:max-h-[400px] md:max-h-[500px] lg:max-h-[577px] flex items-center justify-center">
                       <img
                         src={data.floorPlanImage}
                         alt={data.id}
@@ -146,7 +223,7 @@ export default function FloorPlansCarousel() {
                       />
                     )}
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-y-4 sm:gap-y-6 md:gap-y-8 lg:gap-y-10 h-full w-full order-2 lg:order-0">
+                  <div className="flex flex-col items-center justify-center gap-y-4 sm:gap-y-6 md:gap-y-7 h-full w-full order-2 lg:order-0">
                     <div className="flex flex-col items-center justify-center gap-y-1">
                       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#E1B260] font-normal font-playfairDisplay text-center">
                         {data.mainTitle}
@@ -188,8 +265,8 @@ export default function FloorPlansCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        {/* <CarouselPreviousFloorPlans /> */}
-        {/* <CarouselNextFloorPlans /> */}
+        <CarouselPreviousFloorPlans />
+        <CarouselNextFloorPlans />
       </Carousel>
     </div>
   );
