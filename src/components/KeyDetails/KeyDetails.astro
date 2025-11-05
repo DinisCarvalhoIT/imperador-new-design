@@ -8,39 +8,43 @@ import coffee from "../../../public/KeyDetails/coffe.svg";
 import gym from "../../../public/KeyDetails/gym.svg";
 import pharmacy from "../../../public/KeyDetails/pharmacy.svg";
 import bus from "../../../public/KeyDetails/bus.svg";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const dataKeyDetails = [
   {
-    title: "5 Minutos",
-    description: "Praia Formosa |",
-    secondDescription: "Piscinas Naturais",
+    title: t("keydetails.beach.title"),
+    description: t("keydetails.beach.description"),
+    secondDescription: t("keydetails.beach.second_description"),
     svgPath: beachIcon,
   },
   {
-    title: "5 Minutos",
-    description: "Centro Comercial",
-    secondDescription: "Fórum Madeira",
+    title: t("keydetails.shopping.title"),
+    description: t("keydetails.shopping.description"),
+    secondDescription: t("keydetails.shopping.second_description"),
     svgPath: building,
   },
   {
-    title: "1 Minuto",
-    description: "Restaurantes",
-    secondDescription: "Padarias | Pastelarias",
+    title: t("keydetails.restaurants.title"),
+    description: t("keydetails.restaurants.description"),
+    secondDescription: t("keydetails.restaurants.second_description"),
     svgPath: coffee,
   },
   {
-    title: "3 Minutos",
-    description: "Ginásios",
+    title: t("keydetails.gyms.title"),
+    description: t("keydetails.gyms.description"),
     svgPath: gym,
   },
   {
-    title: "5 Minutos",
-    description: "Hospital Privado",
+    title: t("keydetails.hospital.title"),
+    description: t("keydetails.hospital.description"),
     svgPath: pharmacy,
   },
   {
-    title: "1 Minuto",
-    description: "Transportes Públicos",
+    title: t("keydetails.transport.title"),
+    description: t("keydetails.transport.description"),
     svgPath: bus,
   },
 ];
@@ -72,7 +76,7 @@ const dataKeyDetails = [
   >
     <Image
       src={logoImperador}
-      alt="Imperador Logo"
+      alt={t("keydetails.logo_alt")}
       class="w-48 md:w-56 lg:w-64 h-auto"
     />
 
