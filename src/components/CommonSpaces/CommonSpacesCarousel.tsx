@@ -34,7 +34,6 @@ export default function CommonSpacesCarousel({
       Autoplay({
         delay: 4000,
         stopOnInteraction: true,
-        stopOnMouseEnter: true,
       }),
     []
   );

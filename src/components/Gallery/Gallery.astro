@@ -23,7 +23,7 @@ const getImageUrl = async (image: any) => {
   const processed = await getImage({
     src: image,
     format: "webp",
-    quality: 85,
+    quality: 95,
   });
   return processed.src;
 };
@@ -35,7 +35,7 @@ const galleryImages = await Promise.all(
 ---
 
 <section
-  class="relative w-full bg-[#0B1D26] py-12 md:py-16 lg:py-20 xl:py-24"
+  class=" w-full bg-[#0B1D26]"
   id="gallery"
 >
   <div class="w-full mx-auto px-4 md:px-8 lg:px-[134px]">
