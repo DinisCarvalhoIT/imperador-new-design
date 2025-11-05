@@ -8,6 +8,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
+import { ui } from "@/i18n/ui";
 
 type DataCarousel = {
   id: string;
@@ -17,9 +18,13 @@ type DataCarousel = {
   smallFloorPlanImage: string;
   tableImage: string;
   tableImageStyle: string;
-  mainTitle: string;
-  mobileMainTitle: string;
-  subTitle: string;
+  mainTitleKey: string;
+  mobileTitleKey: string;
+  subTitleKey: string;
+};
+
+type FloorPlansCarouselProps = {
+  lang: keyof typeof ui;
 };
 
 const dataCarousel: DataCarousel[] = [
@@ -33,9 +38,9 @@ const dataCarousel: DataCarousel[] = [
     tableImage: "/FloorPlans/T1_Modelo_A_Table.svg",
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
-    mainTitle: "T1 - modelo A",
-    mobileMainTitle: "T1-A",
-    subTitle: "1 Unidade - Piso Térreo",
+    mainTitleKey: "floorplans.t1_model_a",
+    mobileTitleKey: "floorplans.t1_model_a_mobile",
+    subTitleKey: "floorplans.t1_model_a_subtitle",
   },
   {
     id: "floor-plan-2",
@@ -47,9 +52,9 @@ const dataCarousel: DataCarousel[] = [
     tableImage: "/FloorPlans/T1_Modelo_B_Table.svg",
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[270px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
-    mainTitle: "T1 - modelo B",
-    mobileMainTitle: "T1-B",
-    subTitle: "7 Unidades - Piso 1 a 7",
+    mainTitleKey: "floorplans.t1_model_b",
+    mobileTitleKey: "floorplans.t1_model_b_mobile",
+    subTitleKey: "floorplans.t1_model_b_subtitle",
   },
   {
     id: "floor-plan-3",
@@ -61,9 +66,9 @@ const dataCarousel: DataCarousel[] = [
     tableImage: "/FloorPlans/T1_Modelo_C_Table.svg",
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
-    mainTitle: "T1 - modelo C",
-    mobileMainTitle: "T1-C",
-    subTitle: "7 Unidades - Piso 1 a 7",
+    mainTitleKey: "floorplans.t1_model_c",
+    mobileTitleKey: "floorplans.t1_model_c_mobile",
+    subTitleKey: "floorplans.t1_model_c_subtitle",
   },
   {
     id: "floor-plan-4",
@@ -75,9 +80,9 @@ const dataCarousel: DataCarousel[] = [
     tableImage: "/FloorPlans/T2_Modelo_A_Table.svg",
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[400px] h-full max-h-[330px] sm:max-h-[360px] md:max-h-[450px] lg:max-h-[450px] flex items-center justify-center",
-    mainTitle: "T2 - modelo A",
-    mobileMainTitle: "T2-A",
-    subTitle: "7 Unidades - Piso 1 a 7",
+    mainTitleKey: "floorplans.t2_model_a",
+    mobileTitleKey: "floorplans.t2_model_a_mobile",
+    subTitleKey: "floorplans.t2_model_a_subtitle",
   },
   {
     id: "floor-plan-5",
@@ -89,9 +94,9 @@ const dataCarousel: DataCarousel[] = [
     tableImage: "/FloorPlans/T2_Modelo_B_Table.svg",
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[400px] h-full max-h-[330px] sm:max-h-[360px] md:max-h-[450px] lg:max-h-[450px] flex items-center justify-center",
-    mainTitle: "T2 - modelo B",
-    mobileMainTitle: "T2-B",
-    subTitle: "7 Unidades - Piso 1 a 7",
+    mainTitleKey: "floorplans.t2_model_b",
+    mobileTitleKey: "floorplans.t2_model_b_mobile",
+    subTitleKey: "floorplans.t2_model_b_subtitle",
   },
   {
     id: "floor-plan-6",
@@ -103,9 +108,9 @@ const dataCarousel: DataCarousel[] = [
     tableImage: "/FloorPlans/T3_Modelo_A_Table.svg",
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[400px] h-full max-h-[370px] sm:max-h-[400px] md:max-h-[480px] lg:max-h-[450px] flex items-center justify-center",
-    mainTitle: "T3 - modelo A",
-    mobileMainTitle: "T3-A",
-    subTitle: "1 Unidade - Piso Térreo",
+    mainTitleKey: "floorplans.t3_model_a",
+    mobileTitleKey: "floorplans.t3_model_a_mobile",
+    subTitleKey: "floorplans.t3_model_a_subtitle",
   },
   {
     id: "floor-plan-7",
@@ -117,15 +122,19 @@ const dataCarousel: DataCarousel[] = [
     tableImage: "/FloorPlans/T3_Modelo_B_Table.svg",
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[400px] h-full max-h-[370px] sm:max-h-[400px] md:max-h-[480px] lg:max-h-[450px] flex items-center justify-center",
-    mainTitle: "T3 - modelo B",
-    mobileMainTitle: "T3-B",
-    subTitle: "1 Unidade - Piso Térreo",
+    mainTitleKey: "floorplans.t3_model_b",
+    mobileTitleKey: "floorplans.t3_model_b_mobile",
+    subTitleKey: "floorplans.t3_model_b_subtitle",
   },
 ];
 // absolute inset-0 ---- no primeiro div itnha
-export default function FloorPlansCarousel() {
+export default function FloorPlansCarousel({ lang }: FloorPlansCarouselProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
+
+  const t = (key: keyof (typeof ui)[typeof lang]) => {
+    return ui[lang][key];
+  };
 
   useEffect(() => {
     if (!api) return;
@@ -180,8 +189,12 @@ export default function FloorPlansCarousel() {
                     : "opacity-60 pb-3"
                 }`}
               >
-                <span className="md:hidden">{data.mobileMainTitle}</span>
-                <span className="hidden md:inline">{data.mainTitle}</span>
+                <span className="md:hidden">
+                  {t(data.mobileTitleKey as keyof (typeof ui)[typeof lang])}
+                </span>
+                <span className="hidden md:inline">
+                  {t(data.mainTitleKey as keyof (typeof ui)[typeof lang])}
+                </span>
               </div>
               {data.index === current && (
                 <div className="w-full h-[5px] bg-[#F1B44A] rounded-full transition-all duration-300 top-1 relative z-10" />
@@ -235,14 +248,18 @@ export default function FloorPlansCarousel() {
                     <div className="flex flex-col items-center justify-center gap-y-1">
                       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#E1B260] font-normal font-playfairDisplay text-center">
                         <span className="lg:hidden">
-                          {data.mobileMainTitle}
+                          {t(
+                            data.mobileTitleKey as keyof (typeof ui)[typeof lang]
+                          )}
                         </span>
                         <span className="hidden lg:inline">
-                          {data.mainTitle}
+                          {t(
+                            data.mainTitleKey as keyof (typeof ui)[typeof lang]
+                          )}
                         </span>
                       </h1>
                       <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#024C67] font-playfairDisplay text-center">
-                        {data.subTitle}
+                        {t(data.subTitleKey as keyof (typeof ui)[typeof lang])}
                       </p>
                     </div>
                     <div className={data.tableImageStyle}>
@@ -279,12 +296,12 @@ export default function FloorPlansCarousel() {
           ))}
         </CarouselContent>
         <div className="md:hidden">
-          <CarouselPreviousFloorPlans className=" absolute -top-7 left-2 sm:left-15" />
-          <CarouselNextFloorPlans className="absolute -top-7 right-2 sm:right-15 " />
+          <CarouselPreviousFloorPlans className=" absolute -top-7 left-2 sm:left-15 cursor-pointer" />
+          <CarouselNextFloorPlans className="absolute -top-7 right-2 sm:right-15 cursor-pointer" />
         </div>
         <div className="hidden md:block">
-          <CarouselPreviousFloorPlans />
-          <CarouselNextFloorPlans />
+          <CarouselPreviousFloorPlans className="cursor-pointer" />
+          <CarouselNextFloorPlans className="cursor-pointer" />
         </div>
       </Carousel>
     </div>
