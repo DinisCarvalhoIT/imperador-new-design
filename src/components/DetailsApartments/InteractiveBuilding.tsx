@@ -16,7 +16,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
-import { useTranslations } from "@/i18n/utils";
+import { useTranslations, useTranslatedPath } from "@/i18n/utils";
 import type { ui } from "@/i18n/ui";
 
 type ApartmentType = "T1" | "T2" | "T3";
@@ -206,6 +206,7 @@ export default function InteractiveBuilding({
   lang = "en",
 }: InteractiveBuildingProps) {
   const t = useTranslations(lang);
+  const translatePath = useTranslatedPath(lang);
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const VIEW_W = 1000;
   const VIEW_H = 1000;
@@ -1119,8 +1120,20 @@ export default function InteractiveBuilding({
                     <Button
                       className="w-[140px] sm:w-[160px] h-[26px] sm:h-[28px] uppercase bg-transparent border border-[#7192A2] cursor-pointer rounded-[6px] text-white tracking-wider hover:bg-[#7192A2] transition-colors font-montserrat text-sm md:text-base flex items-center justify-center"
                       onClick={() => {
-                        // Add navigation or action here
-                        console.log("VER MAIS clicked");
+                        if (!selected || !ALL_APARTMENTS[current]) return;
+                        
+                        const apartmentType = selected.type.toLowerCase(); // T1 -> t1, T2 -> t2, T3 -> t3
+                        const modelLetter = getModelLetter(selected.shapeIndex); // a, b, or c
+                        
+                        // Generate the path using useTranslatedPath
+                        const basePath = `/${apartmentType}`;
+                        const translatedPath = translatePath(basePath);
+                        
+                        // Add model query parameter
+                        const url = `${translatedPath}?model=${modelLetter}`;
+                        
+                        // Navigate to the typology page
+                        window.location.href = url;
                       }}
                     >
                       <span className="font-montserrat font-semibold md:text-[11px] text-[10px] leading-[26px] sm:leading-[28px] flex items-center text-center tracking-[0.15em] uppercase text-white">
