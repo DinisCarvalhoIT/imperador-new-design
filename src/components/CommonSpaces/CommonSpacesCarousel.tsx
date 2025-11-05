@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { ui } from "@/i18n/ui";
-import { ChevronRight } from "lucide-react";
 
 interface CommonSpace {
   id: string;
@@ -31,6 +30,7 @@ export default function CommonSpacesCarousel({
   const [api, setApi] = useState<CarouselApi>();
   const [mobileApi, setMobileApi] = useState<CarouselApi>();
   const isUserNavigatingRef = useRef(false);
+  const isMobileChangeRef = useRef(false);
   const autoplayPlugin = useMemo(
     () =>
       Autoplay({
@@ -40,25 +40,31 @@ export default function CommonSpacesCarousel({
     []
   );
 
-  // Sync carousel when activeIndex changes (only when user navigates)
+  // Sync desktop carousel when activeIndex changes
   useEffect(() => {
     if (!api) return;
-    // Only stop autoplay and scroll if this is user-initiated navigation
-    if (isUserNavigatingRef.current) {
+    
+    // If change came from mobile, sync desktop carousel
+    if (isMobileChangeRef.current) {
+      api.scrollTo(activeIndex);
+      isMobileChangeRef.current = false;
+    }
+    // If change came from user navigation on desktop, stop autoplay and scroll
+    else if (isUserNavigatingRef.current) {
       autoplayPlugin.stop();
       api.scrollTo(activeIndex);
       isUserNavigatingRef.current = false;
     }
   }, [api, activeIndex, autoplayPlugin]);
 
-  // Sync activeIndex when carousel is manually navigated
+  // Sync activeIndex when desktop carousel is manually navigated
   useEffect(() => {
     if (!api) return;
 
     const onSelect = () => {
       const selectedIndex = api.selectedScrollSnap();
-      // Only update activeIndex if not user navigating (to avoid conflicts)
-      if (!isUserNavigatingRef.current) {
+      // Only update activeIndex if not from user navigation or mobile change
+      if (!isUserNavigatingRef.current && !isMobileChangeRef.current) {
         setActiveIndex(selectedIndex);
       }
     };
@@ -70,14 +76,14 @@ export default function CommonSpacesCarousel({
       if (
         target.closest('[data-slot="carousel-previous"]') ||
         target.closest('[data-slot="carousel-next"]') ||
-        target.closest('button[data-slot]')
+        target.closest("button[data-slot]")
       ) {
         autoplayPlugin.stop();
       }
     };
 
     api.on("select", onSelect);
-    
+
     // Get the carousel container element
     const carouselNode = api.containerNode();
     if (carouselNode) {
@@ -92,11 +98,13 @@ export default function CommonSpacesCarousel({
     };
   }, [api, autoplayPlugin]);
 
-  // Sync mobile carousel
+  // Sync mobile carousel - when mobile changes, update activeIndex and mark it
   useEffect(() => {
     if (!mobileApi) return;
     const onSelect = () => {
       const selectedIndex = mobileApi.selectedScrollSnap();
+      // Mark that this change came from mobile
+      isMobileChangeRef.current = true;
       setActiveIndex(selectedIndex);
     };
     mobileApi.on("select", onSelect);
@@ -145,10 +153,7 @@ export default function CommonSpacesCarousel({
         >
           <CarouselContent className="ml-0">
             {spaces.map((space, index) => (
-              <CarouselItem
-                key={space.id}
-                className="pl-0 basis-full shrink-0"
-              >
+              <CarouselItem key={space.id} className="pl-0 basis-full shrink-0">
                 <div className="relative w-full h-[640px] overflow-hidden">
                   {/* Image */}
                   <div className="absolute inset-0">
@@ -198,14 +203,31 @@ export default function CommonSpacesCarousel({
                 autoplayPlugin.stop();
               }
             }}
-            className="absolute bottom-4  hover:text-white hover:bg-[#7192A2] rounded-full right-4 z-10 w-4 h-4 p-0 bg-transparent border-0 cursor-pointer hover:opacity-80 transition-opacity flex items-center justify-center"
+            className="absolute bottom-3 hover:text-white hover:bg-[#7192A2] rounded-full  right-4 z-10 w-8 h-8 p-0 bg-transparent border-0 cursor-pointer hover:opacity-80 transition-opacity flex items-center justify-center"
             aria-label="Next slide"
           >
-            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.5" y="0.5" width="16" height="16" rx="8" stroke="#7192A2"/>
-<path d="M10.8496 8.65295L7.55869 12.0436L7.26709 11.7288L10.2525 8.65295L7.26709 5.57706L7.55869 5.27662L10.8496 8.65295Z" fill="white" stroke="white" stroke-width="0.6"/>
-</svg>
-
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 25 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0.5"
+                y="0.5"
+                width="24"
+                height="24"
+                rx="12"
+                stroke="#7192A2"
+              />
+              <path
+                d="M16.0241 12.7295L11.0878 17.8154L10.6504 17.3433L15.1285 12.7295L10.6504 8.11565L11.0878 7.665L16.0241 12.7295Z"
+                fill="white"
+                stroke="white"
+                strokeWidth="0.6"
+              />
+            </svg>
           </button>
         </Carousel>
       </div>
@@ -220,7 +242,7 @@ export default function CommonSpacesCarousel({
               {t("common_spaces.title")}
             </div>
           </div>
-          
+
           {/* Content area with border line */}
           <div className="relative">
             {/* Continuous Left Border Line - Static background */}
@@ -238,31 +260,31 @@ export default function CommonSpacesCarousel({
             </div>
 
             <div className="space-y-10">
-            {spaces.map((space, index) => (
-              <div
-                key={space.id}
-                className="relative cursor-pointer transition-all duration-300 group"
-                onClick={() => handleSpaceClick(index)}
-              >
-                {/* Content */}
-                <div>
-                  <h3
-                    className={`font-playfairDisplay text-[48px] xl:text-[56px] leading-[56px] xl:leading-[68px] mb-4 transition-colors duration-300 ${getTitleColor(
-                      index
-                    )}`}
-                  >
-                    {space.title}
-                  </h3>
-                  <p
-                    className={`font-montserrat text-[16px] xl:text-[18px] leading-[140%] max-w-[627px] transition-colors duration-300 ${getDescriptionColor(
-                      index
-                    )}`}
-                  >
-                    {space.description}
-                  </p>
+              {spaces.map((space, index) => (
+                <div
+                  key={space.id}
+                  className="relative cursor-pointer transition-all duration-300 group"
+                  onClick={() => handleSpaceClick(index)}
+                >
+                  {/* Content */}
+                  <div>
+                    <h3
+                      className={`font-playfairDisplay text-[48px] xl:text-[56px] leading-[56px] xl:leading-[68px] mb-4 transition-colors duration-300 ${getTitleColor(
+                        index
+                      )}`}
+                    >
+                      {space.title}
+                    </h3>
+                    <p
+                      className={`font-montserrat text-[16px] xl:text-[18px] leading-[140%] max-w-[627px] transition-colors duration-300 ${getDescriptionColor(
+                        index
+                      )}`}
+                    >
+                      {space.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
             </div>
           </div>
         </div>
@@ -280,7 +302,10 @@ export default function CommonSpacesCarousel({
           >
             <CarouselContent className="h-full ml-0 flex items-center">
               {spaces.map((space, _) => (
-                <CarouselItem key={space.id} className="max-h-[960px] pl-0 basis-full flex items-center justify-center h-full">
+                <CarouselItem
+                  key={space.id}
+                  className="max-h-[960px] pl-0 basis-full flex items-center justify-center h-full"
+                >
                   <div className="relative w-full h-full">
                     <img
                       src={space.image}
