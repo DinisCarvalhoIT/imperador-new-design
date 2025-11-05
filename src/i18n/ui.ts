@@ -100,6 +100,12 @@ export const ui = {
     "keydetails.hospital.description": "Private Hospital",
     "keydetails.transport.title": "1 Minute",
     "keydetails.transport.description": "Public Transport",
+    "signiture.tagline": "ABOUT US",
+    "signiture.title_line1": "The Trust we",
+    "signiture.title_line2": "Build Together",
+    "signiture.description":
+      "Dinis & Carvalho is synonymous with trust, innovation and quality in Madeira's real estate market. With over 30 years of experience and more than 1,000 properties successfully built and marketed, we create unique spaces, designed in detail for those who value comfort, design, exclusivity and impeccable construction quality, always with close customer support.",
+    "signiture.logo_alt": "Imperador Logo",
   },
   pt: {
     "hero.title": "Olá Mundo",
@@ -195,5 +201,11 @@ export const ui = {
     "keydetails.hospital.description": "Hospital Privado",
     "keydetails.transport.title": "1 Minuto",
     "keydetails.transport.description": "Transportes Públicos",
+    "signiture.tagline": "SOBRE NÓS",
+    "signiture.title_line1": "A Confiança que",
+    "signiture.title_line2": "Construímos Juntos",
+    "signiture.description":
+      "A Dinis & Carvalho é sinónimo de confiança, inovação e qualidade no mercado imobiliário da Madeira. Com mais de 30 anos de experiência e mais de 1.000 imóveis construídos e comercializados com sucesso, criamos espaços únicos, pensados ao detalhe para quem valoriza conforto, design, exclusividade e uma qualidade de construção irrepreensível, sempre com um acompanhamento próximo ao cliente.",
+    "signiture.logo_alt": "Logo Imperador",
   },
 } as const;
