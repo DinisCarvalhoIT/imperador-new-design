@@ -2,6 +2,48 @@
 import { Image } from "astro:assets";
 import keyDetailsImage from "../../../public/KeyDetails/Rectangle.png";
 import logoImperador from "../../../public/HomePage/logoImperador.svg";
+import beachIcon from "../../../public/KeyDetails/beach.svg";
+import building from "../../../public/KeyDetails/building.svg";
+import coffee from "../../../public/KeyDetails/coffe.svg";
+import gym from "../../../public/KeyDetails/gym.svg";
+import pharmacy from "../../../public/KeyDetails/pharmacy.svg";
+import bus from "../../../public/KeyDetails/bus.svg";
+
+const dataKeyDetails = [
+  {
+    title: "5 Minutos",
+    description: "Praia Formosa |",
+    secondDescription: "Piscinas Naturais",
+    svgPath: beachIcon,
+  },
+  {
+    title: "5 Minutos",
+    description: "Centro Comercial",
+    secondDescription: "Fórum Madeira",
+    svgPath: building,
+  },
+  {
+    title: "1 Minuto",
+    description: "Restaurantes",
+    secondDescription: "Padarias | Pastelarias",
+    svgPath: coffee,
+  },
+  {
+    title: "3 Minutos",
+    description: "Ginásios",
+    svgPath: gym,
+  },
+  {
+    title: "5 Minutos",
+    description: "Hospital Privado",
+    svgPath: pharmacy,
+  },
+  {
+    title: "1 Minuto",
+    description: "Transportes Públicos",
+    svgPath: bus,
+  },
+];
 ---
 
 <section
@@ -25,7 +67,34 @@ import logoImperador from "../../../public/HomePage/logoImperador.svg";
     </div>
   </div>
 
-  <div class="z-10">
-    <Image src={logoImperador} alt="Imperador Logo" class="w-64 h-auto" />
+  <div
+    class="z-10 flex flex-col items-center gap-8 md:gap-12 px-4 py-8 md:py-12 max-w-7xl mx-auto"
+  >
+    <Image
+      src={logoImperador}
+      alt="Imperador Logo"
+      class="w-48 md:w-56 lg:w-64 h-auto"
+    />
+
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full">
+      {
+        dataKeyDetails.map((item) => (
+          <div class="flex flex-col items-center text-center gap-3 md:gap-4 p-4 md:p-6">
+            <Image
+              src={item.svgPath}
+              alt={item.title}
+              class="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16"
+            />
+            <h3 class="text-lg md:text-xl font-semibold text-[#B8C6CD] font-montserrat">
+              {item.title}
+            </h3>
+            <div class="text-sm md:text-base text-white font-montserrat">
+              <p>{item.description}</p>
+              {item.secondDescription && <p>{item.secondDescription}</p>}
+            </div>
+          </div>
+        ))
+      }
+    </div>
   </div>
 </section>
