@@ -18,6 +18,7 @@ type DataCarousel = {
   tableImage: string;
   tableImageStyle: string;
   mainTitle: string;
+  mobileMainTitle: string;
   subTitle: string;
 };
 
@@ -33,6 +34,7 @@ const dataCarousel: DataCarousel[] = [
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitle: "T1 - modelo A",
+    mobileMainTitle: "T1-A",
     subTitle: "1 Unidade - Piso Térreo",
   },
   {
@@ -46,6 +48,7 @@ const dataCarousel: DataCarousel[] = [
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[270px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitle: "T1 - modelo B",
+    mobileMainTitle: "T1-B",
     subTitle: "7 Unidades - Piso 1 a 7",
   },
   {
@@ -59,6 +62,7 @@ const dataCarousel: DataCarousel[] = [
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitle: "T1 - modelo C",
+    mobileMainTitle: "T1-C",
     subTitle: "7 Unidades - Piso 1 a 7",
   },
   {
@@ -72,6 +76,7 @@ const dataCarousel: DataCarousel[] = [
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[400px] h-full max-h-[330px] sm:max-h-[360px] md:max-h-[450px] lg:max-h-[450px] flex items-center justify-center",
     mainTitle: "T2 - modelo A",
+    mobileMainTitle: "T2-A",
     subTitle: "7 Unidades - Piso 1 a 7",
   },
   {
@@ -85,6 +90,7 @@ const dataCarousel: DataCarousel[] = [
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[400px] h-full max-h-[330px] sm:max-h-[360px] md:max-h-[450px] lg:max-h-[450px] flex items-center justify-center",
     mainTitle: "T2 - modelo B",
+    mobileMainTitle: "T2-B",
     subTitle: "7 Unidades - Piso 1 a 7",
   },
   {
@@ -98,6 +104,7 @@ const dataCarousel: DataCarousel[] = [
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[400px] h-full max-h-[370px] sm:max-h-[400px] md:max-h-[480px] lg:max-h-[450px] flex items-center justify-center",
     mainTitle: "T3 - modelo A",
+    mobileMainTitle: "T3-A",
     subTitle: "1 Unidade - Piso Térreo",
   },
   {
@@ -111,6 +118,7 @@ const dataCarousel: DataCarousel[] = [
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[400px] h-full max-h-[370px] sm:max-h-[400px] md:max-h-[480px] lg:max-h-[450px] flex items-center justify-center",
     mainTitle: "T3 - modelo B",
+    mobileMainTitle: "T3-B",
     subTitle: "1 Unidade - Piso Térreo",
   },
 ];
@@ -161,18 +169,19 @@ export default function FloorPlansCarousel() {
 
   return (
     <div className=" flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8  ">
-      <div className="w-full sm:w-[95%] md:w-[90%] lg:w-[96%] flex flex-row justify-center items-center gap-x-4">
+      <div className="w-full sm:w-[95%] md:w-[90%] lg:w-[96%] flex flex-row justify-center items-center md:gap-x-4 gap-x-2">
         {visibleTitles.map((data, idx) => (
           <React.Fragment key={data.index}>
             <div className="flex flex-col items-center">
               <div
-                className={`text-3xl text-white font-playfairDisplay transition-opacity duration-300 ${
+                className={`lg:text-3xl md:text-2xl text-xl text-white font-playfairDisplay transition-opacity duration-300 ${
                   data.index === current
                     ? "opacity-100 font-normal pb-3"
                     : "opacity-60 pb-3"
                 }`}
               >
-                {data.mainTitle}
+                <span className="md:hidden">{data.mobileMainTitle}</span>
+                <span className="hidden md:inline">{data.mainTitle}</span>
               </div>
               {data.index === current && (
                 <div className="w-full h-[5px] bg-[#F1B44A] rounded-full transition-all duration-300 top-1 relative z-10" />
@@ -180,11 +189,10 @@ export default function FloorPlansCarousel() {
             </div>
             {idx < visibleTitles.length - 1 && (
               <div
-                className="bg-[#C3871B] mb-5 xl:mx-20 mx-7"
+                className="bg-[#C3871B] mb-5"
                 style={{
-                  width: "49.14px",
-                  height: "2px",
-                  transform: "rotate(90deg)",
+                  width: "2px",
+                  height: "29.14px",
                 }}
               />
             )}
@@ -193,7 +201,7 @@ export default function FloorPlansCarousel() {
       </div>
       <Carousel
         setApi={setApi}
-        className="w-full sm:w-[95%] md:w-[85%] lg:w-[95%] 2xl:w-[86%] h-full sm:h-[95%] md:h-[90%] flex items-center justify-center"
+        className="w-full sm:w-[95%] md:w-[85%] lg:w-[95%] 2xl:w-[86%] h-full md:h-[90%] flex items-center justify-center"
       >
         <CarouselContent className="h-full flex items-center ">
           {dataCarousel.map((data, index) => (
@@ -201,7 +209,7 @@ export default function FloorPlansCarousel() {
               key={index}
               className="h-full flex items-center justify-center"
             >
-              <Card className="w-full max-w-[1250px] min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:h-[670px] bg-white/86 flex items-center justify-center">
+              <Card className="w-full max-w-[1250px] h-[940px] sm:h-[1080px] md:h-[1290px] lg:h-[670px] bg-white/86 flex items-center justify-center">
                 <CardContent className="grid grid-cols-1 lg:grid-cols-2 h-full w-full items-center justify-items-center p-2 sm:p-4 md:p-6 gap-4 lg:gap-0">
                   <div className="relative flex flex-col items-center justify-center h-full w-full order-1 lg:order-0">
                     <div className="w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[350px] xl:max-w-[500px] h-full max-h-[300px] sm:max-h-[400px] md:max-h-[500px] lg:max-h-[577px] flex items-center justify-center">
@@ -226,7 +234,12 @@ export default function FloorPlansCarousel() {
                   <div className="flex flex-col items-center justify-center gap-y-4 sm:gap-y-6 md:gap-y-7 h-full w-full order-2 lg:order-0">
                     <div className="flex flex-col items-center justify-center gap-y-1">
                       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#E1B260] font-normal font-playfairDisplay text-center">
-                        {data.mainTitle}
+                        <span className="lg:hidden">
+                          {data.mobileMainTitle}
+                        </span>
+                        <span className="hidden lg:inline">
+                          {data.mainTitle}
+                        </span>
                       </h1>
                       <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#024C67] font-playfairDisplay text-center">
                         {data.subTitle}
@@ -265,8 +278,8 @@ export default function FloorPlansCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPreviousFloorPlans />
-        <CarouselNextFloorPlans />
+        <CarouselPreviousFloorPlans className="hidden md:block" />
+        <CarouselNextFloorPlans className="hidden md:block" />
       </Carousel>
     </div>
   );
