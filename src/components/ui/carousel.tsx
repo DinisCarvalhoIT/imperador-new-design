@@ -241,7 +241,7 @@ function CarouselPreviousFloorPlans({
         src={"/FloorPlans/prevCarousel.svg"}
         width={40}
         height={40}
-        className="w-[40px] h-[40px]"
+        className="md:w-[40px] md:h-[40px] w-[30px] h-[30px]"
       />
 
       <span className="sr-only">Previous slide</span>
@@ -321,7 +321,7 @@ function CarouselNextFloorPlans({
         src={"/FloorPlans/nextCarousel.svg"}
         width={40}
         height={40}
-        className="w-[40px] h-[40px]"
+        className="md:w-[40px] md:h-[40px] w-[30px] h-[30px]"
       />
 
       <span className="sr-only">Next slide</span>

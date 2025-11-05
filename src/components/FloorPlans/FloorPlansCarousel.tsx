@@ -168,7 +168,7 @@ export default function FloorPlansCarousel() {
   const visibleTitles = getVisibleTitles();
 
   return (
-    <div className=" flex flex-col items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8  ">
+    <div className=" flex flex-col items-center justify-center p-4 md:p-6 lg:p-8  ">
       <div className="w-full sm:w-[95%] md:w-[90%] lg:w-[96%] flex flex-row justify-center items-center md:gap-x-4 gap-x-2">
         {visibleTitles.map((data, idx) => (
           <React.Fragment key={data.index}>
@@ -189,7 +189,7 @@ export default function FloorPlansCarousel() {
             </div>
             {idx < visibleTitles.length - 1 && (
               <div
-                className="bg-[#C3871B] mb-5"
+                className="bg-[#C3871B] mb-5 mx-1 sm:mx-5 md:mx-2 lg:mx-5"
                 style={{
                   width: "2px",
                   height: "29.14px",
@@ -278,8 +278,14 @@ export default function FloorPlansCarousel() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPreviousFloorPlans className="hidden md:block" />
-        <CarouselNextFloorPlans className="hidden md:block" />
+        <div className="md:hidden">
+          <CarouselPreviousFloorPlans className=" absolute -top-7 left-2 sm:left-15" />
+          <CarouselNextFloorPlans className="absolute -top-7 right-2 sm:right-15 " />
+        </div>
+        <div className="hidden md:block">
+          <CarouselPreviousFloorPlans />
+          <CarouselNextFloorPlans />
+        </div>
       </Carousel>
     </div>
   );
