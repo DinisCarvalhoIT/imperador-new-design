@@ -1,0 +1,162 @@
+---
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { Image } from "astro:assets";
+import zoneImg from "../../../public/Local/zone.png";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Split title into first 3 words and the rest
+const title = t("local.title");
+const titleWords = title.split(" ");
+const titleFirstLine = titleWords.slice(0, 3).join(" ");
+const titleSecondLine = titleWords.slice(3).join(" ");
+---
+
+<section
+  class="relative w-screen overflow-hidden left-1/2 -ml-[50vw] -mr-[50vw] bg-[#0b1d26]"
+>
+  <!-- Mobile: Stacked layout -->
+  <div class="lg:hidden flex flex-col w-full mx-auto overflow-hidden">
+    <!-- Text content section -->
+    <div
+      class="flex flex-col justify-center px-8 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10 w-full min-h-[158px] bg-[#0b1d26] pb-4 sm:pb-5 md:pb-6"
+    >
+      <!-- Tagline -->
+      <div
+        class="font-montserrat text-[#FBD784] text-[10px] sm:text-xs md:text-sm uppercase leading-[12px] tracking-[0.15em] mb-3 sm:mb-4 md:mb-4"
+      >
+        {t("local.tagline")}
+      </div>
+
+      <!-- Title -->
+      <h2
+        class="font-playfairDisplay text-white text-[25px] sm:text-3xl md:text-4xl leading-[30px] sm:leading-[1.2] mb-3 sm:mb-4 md:mb-5"
+      >
+        <span>{titleFirstLine}</span>
+        <br />
+        <span>{titleSecondLine}</span>
+      </h2>
+
+      <!-- Description -->
+      <p
+        class="font-montserrat text-[#B0C4CC] text-[11px] sm:text-sm md:text-base leading-[15px] sm:leading-[1.4] mb-4 sm:mb-5 md:mb-6"
+      >
+        {t("local.description")}
+      </p>
+
+      <!-- Address with marker -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <img
+          src="/Local/marker.svg"
+          alt=""
+          class="w-3 h-3 sm:w-5 sm:h-5 shrink-0"
+          aria-hidden="true"
+        />
+        <span
+          class="font-montserrat text-[#B0C4CC] text-[11px] sm:text-sm leading-[15px] sm:leading-[1.4] tracking-[0.02em]"
+        >
+          {t("local.address")}
+        </span>
+      </div>
+    </div>
+
+    <!-- Map section -->
+    <div class="relative w-full h-[202px] sm:h-[250px] md:h-[300px] overflow-hidden">
+      <!-- Background image -->
+      <Image
+        src={zoneImg}
+        alt={t("local.image_alt")}
+        class="h-full w-full object-cover"
+        widths={[1313, 1820]}
+        sizes="100vw"
+        loading="lazy"
+      />
+
+      <!-- Mobile gradient overlay - smaller gradient -->
+      <div
+        class="absolute h-1/3 inset-0 pointer-events-none"
+        style="background: linear-gradient(359.44deg, rgba(11, 29, 38, 0) 0%, #0B1D26 99.7%);"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Desktop: Original layout (side by side) -->
+  <div class="hidden lg:block relative h-[525px] w-full max-w-[1820px] mx-auto overflow-hidden">
+    <!-- Background image starting from left -->
+    <div class="absolute left-0 top-0 bottom-0 h-full">
+      <Image
+        src={zoneImg}
+        alt={t("local.image_alt")}
+        class="h-full object-contain object-left"
+        widths={[1313, 1820]}
+        sizes="70vw"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Gradient overlay extending from right, reaching further left - responsive to text width -->
+    <style>
+      .local-gradient-overlay {
+        background: linear-gradient(to left, #0b1d26 45%, rgba(11,29,38,0.85) 50%, rgba(11,29,38,0.5) 65%, rgba(11,29,38,0.2) 80%, transparent 100%);
+      }
+      @media (min-width: 1280px) {
+        .local-gradient-overlay {
+          background: linear-gradient(to left, #0b1d26 40%, rgba(11,29,38,0.85) 50%, rgba(11,29,38,0.5) 65%, rgba(11,29,38,0.2) 80%, transparent 100%);
+        }
+      }
+      @media (min-width: 1536px) {
+        .local-gradient-overlay {
+          background: linear-gradient(to left, #0b1d26 35%, rgba(11,29,38,0.85) 50%, rgba(11,29,38,0.5) 65%, rgba(11,29,38,0.2) 80%, transparent 100%);
+        }
+      }
+    </style>
+    <div
+      class="absolute right-0 top-0 bottom-0 w-full pointer-events-none local-gradient-overlay"
+    ></div>
+
+    <!-- Text content on top of gradient -->
+    <div
+      class="relative z-10 flex flex-col justify-center px-8 py-8 lg:px-10 xl:px-12 2xl:px-16 xl:py-10 ml-auto h-full w-[45%] xl:w-[40%] 2xl:w-[35%]"
+    >
+      <!-- Tagline -->
+      <div
+        class="font-montserrat text-[#FBD784] text-lg uppercase tracking-[6px] mb-6"
+      >
+        {t("local.tagline")}
+      </div>
+
+      <!-- Title -->
+      <h2
+        class="font-playfairDisplay text-white text-pretty text-4xl xl:text-[52px] leading-[1.19] mb-6"
+      >
+        <span>{titleFirstLine}</span>
+        <br />
+        <span>{titleSecondLine}</span>
+      </h2>
+
+      <!-- Description -->
+      <p
+        class="font-montserrat text-[#B0C4CC] text-lg leading-[1.4] mb-8 max-w-[627px]"
+      >
+        {t("local.description")}
+      </p>
+
+      <!-- Address with marker -->
+      <div class="flex items-center gap-3">
+        <img
+          src="/Local/marker.svg"
+          alt=""
+          class="w-5 h-5 shrink-0"
+          aria-hidden="true"
+        />
+        <span
+          class="font-montserrat text-white text-lg leading-[1.4] tracking-[0.02em]"
+        >
+          {t("local.address")}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
