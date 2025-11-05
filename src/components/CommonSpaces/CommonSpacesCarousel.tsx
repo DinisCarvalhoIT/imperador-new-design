@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { ui } from "@/i18n/ui";
+import { ChevronRight } from "lucide-react";
 
 interface CommonSpace {
   id: string;
@@ -28,6 +29,7 @@ export default function CommonSpacesCarousel({
 }: CommonSpacesCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
   const [api, setApi] = useState<CarouselApi>();
+  const [mobileApi, setMobileApi] = useState<CarouselApi>();
   const isUserNavigatingRef = useRef(false);
   const autoplayPlugin = useMemo(
     () =>
@@ -90,6 +92,19 @@ export default function CommonSpacesCarousel({
     };
   }, [api, autoplayPlugin]);
 
+  // Sync mobile carousel
+  useEffect(() => {
+    if (!mobileApi) return;
+    const onSelect = () => {
+      const selectedIndex = mobileApi.selectedScrollSnap();
+      setActiveIndex(selectedIndex);
+    };
+    mobileApi.on("select", onSelect);
+    return () => {
+      mobileApi.off("select", onSelect);
+    };
+  }, [mobileApi]);
+
   const handleSpaceClick = (index: number) => {
     // Stop autoplay when clicking on space items
     isUserNavigatingRef.current = true;
@@ -117,12 +132,91 @@ export default function CommonSpacesCarousel({
 
   return (
     <div className="relative w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-0">
+      {/* Mobile/Tablet - Horizontal Card Carousel */}
+      <div className="lg:hidden relative w-full overflow-hidden">
+        <Carousel
+          setApi={setMobileApi}
+          opts={{
+            align: "center",
+            loop: true,
+          }}
+          plugins={[autoplayPlugin]}
+          className="w-full"
+        >
+          <CarouselContent className="ml-0">
+            {spaces.map((space, index) => (
+              <CarouselItem
+                key={space.id}
+                className="pl-0 basis-full shrink-0"
+              >
+                <div className="relative w-full h-[640px] overflow-hidden">
+                  {/* Image */}
+                  <div className="absolute inset-0">
+                    <img
+                      src={space.image}
+                      alt={space.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Gradient Overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(11, 29, 38, 0) 58.78%, #0F3A4B 82.15%)",
+                    }}
+                  />
+
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+                    {/* Label */}
+                    <div className="mb-2">
+                      <div className="font-montserrat text-[#FBD784] uppercase text-[10px] leading-[12px] tracking-[0.15em]">
+                        {t("common_spaces.title")}
+                      </div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-playfairDisplay text-white text-[26px] leading-[68px] font-normal mb-2">
+                      {space.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="font-montserrat text-[#B0C4CC] text-[11px] leading-[140%] mb-4 ">
+                      {space.description}
+                    </p>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <button
+            onClick={() => {
+              if (mobileApi) {
+                mobileApi.scrollNext();
+                autoplayPlugin.stop();
+              }
+            }}
+            className="absolute bottom-4  hover:text-white hover:bg-[#7192A2] rounded-full right-4 z-10 w-4 h-4 p-0 bg-transparent border-0 cursor-pointer hover:opacity-80 transition-opacity flex items-center justify-center"
+            aria-label="Next slide"
+          >
+            <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="16" height="16" rx="8" stroke="#7192A2"/>
+<path d="M10.8496 8.65295L7.55869 12.0436L7.26709 11.7288L10.2525 8.65295L7.26709 5.57706L7.55869 5.27662L10.8496 8.65295Z" fill="white" stroke="white" stroke-width="0.6"/>
+</svg>
+
+          </button>
+        </Carousel>
+      </div>
+
+      {/* Desktop - Original Layout */}
+      <div className="hidden lg:grid grid-cols-2 gap-0">
         {/* Left Column - Text Content */}
-        <div className="relative pl-8 md:pl-12 lg:pl-[120px] xl:pl-[195px] pr-8 md:pr-12 lg:pr-16 xl:pr-24 pb-12 md:pb-16 lg:py-16 min-w-0">
+        <div className="relative pl-[120px] xl:pl-[195px] pr-16 xl:pr-24 py-16 min-w-0">
           {/* Section Title - Outside border line */}
-          <div className="mb-4 md:mb-8 lg:mb-12">
-            <div className="font-montserrat text-[#E7C873] uppercase text-[10px] md:text-[14px] lg:text-[18px] tracking-widest md:tracking-[4px] lg:tracking-[6px]">
+          <div className="mb-12">
+            <div className="font-montserrat text-[#E7C873] uppercase text-[18px] tracking-[6px]">
               {t("common_spaces.title")}
             </div>
           </div>
@@ -130,7 +224,7 @@ export default function CommonSpacesCarousel({
           {/* Content area with border line */}
           <div className="relative">
             {/* Continuous Left Border Line - Static background */}
-            <div className="hidden lg:block absolute left-[-89px] top-0 bottom-0 w-1">
+            <div className="absolute left-[-89px] top-0 bottom-0 w-1">
               {/* Static background line - no highlighting */}
               <div className="absolute inset-0 bg-[rgba(74,125,145,0.7)]" />
               {/* Sliding indicator that moves up and down */}
@@ -153,14 +247,14 @@ export default function CommonSpacesCarousel({
                 {/* Content */}
                 <div>
                   <h3
-                    className={`font-playfairDisplay text-[26px] md:text-[36px] lg:text-[48px] xl:text-[56px] leading-tight md:leading-[44px] lg:leading-[56px] xl:leading-[68px] mb-2 md:mb-3 lg:mb-4 transition-colors duration-300 ${getTitleColor(
+                    className={`font-playfairDisplay text-[48px] xl:text-[56px] leading-[56px] xl:leading-[68px] mb-4 transition-colors duration-300 ${getTitleColor(
                       index
                     )}`}
                   >
                     {space.title}
                   </h3>
                   <p
-                    className={`font-montserrat text-[11px] md:text-[14px] lg:text-[16px] xl:text-[18px] leading-[140%] max-w-full md:max-w-[85%] lg:max-w-[627px] transition-colors duration-300 ${getDescriptionColor(
+                    className={`font-montserrat text-[16px] xl:text-[18px] leading-[140%] max-w-[627px] transition-colors duration-300 ${getDescriptionColor(
                       index
                     )}`}
                   >
@@ -174,7 +268,7 @@ export default function CommonSpacesCarousel({
         </div>
 
         {/* Right Column - Image Carousel */}
-        <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] xl:h-full overflow-hidden min-w-0">
+        <div className="relative w-full h-full overflow-hidden min-w-0 flex items-center justify-center">
           <Carousel
             setApi={setApi}
             opts={{
@@ -182,11 +276,11 @@ export default function CommonSpacesCarousel({
               loop: true,
             }}
             plugins={[autoplayPlugin]}
-            className="w-full h-full"
+            className="w-full h-full flex items-center"
           >
-            <CarouselContent className="h-full ml-0">
+            <CarouselContent className="h-full ml-0 flex items-center">
               {spaces.map((space, _) => (
-                <CarouselItem key={space.id} className="max-h-[960px] pl-0 basis-full">
+                <CarouselItem key={space.id} className="max-h-[960px] pl-0 basis-full flex items-center justify-center h-full">
                   <div className="relative w-full h-full">
                     <img
                       src={space.image}
