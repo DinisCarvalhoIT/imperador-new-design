@@ -1,5 +1,31 @@
 ---
-
+import { Image } from "astro:assets";
+import keyDetailsImage from "../../../public/KeyDetails/Rectangle.png";
+import logoImperador from "../../../public/HomePage/logoImperador.svg";
 ---
 
-<section class="w-full min-h-screen">dadada</section>
+<section
+  class="w-full min-h-screen flex flex-col items-center justify-center relative"
+>
+  <div class="absolute inset-0 w-full h-full -z-10">
+    <Image
+      src={keyDetailsImage}
+      alt="Floor Plans"
+      class="w-full h-full object-cover"
+    />
+    <div
+      class="absolute inset-0 w-full h-full"
+      style="background: linear-gradient(359.44deg, rgba(11, 29, 38, 0) 0.43%, #092635 99.46%); transform: rotate(-180deg);"
+    >
+    </div>
+    <div
+      class="absolute inset-0 w-full h-full"
+      style="background: linear-gradient(359.44deg, rgba(11, 29, 38, 0) 0.43%, rgba(9, 38, 53, 0.9) 99.46%);"
+    >
+    </div>
+  </div>
+
+  <div class="z-10">
+    <Image src={logoImperador} alt="Imperador Logo" class="w-64 h-auto" />
+  </div>
+</section>
