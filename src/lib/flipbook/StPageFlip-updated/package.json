@@ -1,0 +1,58 @@
+{
+  "name": "page-flip",
+  "version": "2.2.0",
+  "module": "dist/js/page-flip.module.js",
+  "main": "dist/js/page-flip.module.js",
+  "browser": "dist/js/page-flip.browser.js",
+  "author": "oleg.litovski9@gmail.com",
+  "license": "MIT",
+  "description": "Powerful, simple and flexible JS Library for creating realistic and beautiful page turning effect",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nodlik/StPageFlip.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {},
+  "type": "module",
+  "homepage": "https://nodlik.github.io/StPageFlip/",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "css-loader": "^7.1.2",
+    "eslint": "^8.57.0",
+    "eslint-plugin-typescript": "^0.14.0",
+    "prettier": "^3.3.3",
+    "rollup": "^4.18.1",
+    "rollup-plugin-postcss": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typedoc": "^0.26.4",
+    "typescript": "latest",
+    "vite": "^6.1.0",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "dev": "vite",
+    "eslint": "eslint . --ext .ts",
+    "build-global": "npx webpack",
+    "build": "rollup -c",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "typescript",
+    "page",
+    "flip",
+    "canvas",
+    "book",
+    "reader",
+    "fold",
+    "frontend",
+    "javascript"
+  ]
+}
