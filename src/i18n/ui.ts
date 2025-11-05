@@ -84,7 +84,6 @@ export const ui = {
     "floorplans.t3_model_b_mobile": "T3-B",
     "floorplans.t3_model_b_subtitle": "1 Unit - Ground Floor",
     "floorplans.image_alt": "Floor Plan",
-<<<<<<< HEAD
     "keydetails.logo_alt": "Imperador Logo",
     "keydetails.beach.title": "5 Minutes",
     "keydetails.beach.description": "Praia Formosa |",
@@ -107,14 +106,12 @@ export const ui = {
     "signiture.description":
       "Dinis & Carvalho is synonymous with trust, innovation and quality in Madeira's real estate market. With over 30 years of experience and more than 1,000 properties successfully built and marketed, we create unique spaces, designed in detail for those who value comfort, design, exclusivity and impeccable construction quality, always with close customer support.",
     "signiture.logo_alt": "Imperador Logo",
-=======
     "local.tagline": "STRATEGIC LOCATION",
     "local.title": "The Imperador Building in the best location",
     "local.description":
       "Located in the noblest area of Funchal, our building offers a unique and exclusive living experience. Immersed in the vibrant atmosphere of the city, this place is a true refuge of luxury and convenience.",
     "local.address": "Rua dos Piornais, 9000-250 | FUNCHAL",
     "local.image_alt": "Funchal location map",
->>>>>>> 48f7714 (feat: created localization component of building)
   },
   pt: {
     "hero.title": "Olá Mundo",
@@ -194,7 +191,6 @@ export const ui = {
     "floorplans.t3_model_b_mobile": "T3-B",
     "floorplans.t3_model_b_subtitle": "1 Unidade - Piso Térreo",
     "floorplans.image_alt": "Planta do Apartamento",
-<<<<<<< HEAD
     "keydetails.logo_alt": "Logo Imperador",
     "keydetails.beach.title": "5 Minutos",
     "keydetails.beach.description": "Praia Formosa |",
@@ -217,13 +213,11 @@ export const ui = {
     "signiture.description":
       "A Dinis & Carvalho é sinónimo de confiança, inovação e qualidade no mercado imobiliário da Madeira. Com mais de 30 anos de experiência e mais de 1.000 imóveis construídos e comercializados com sucesso, criamos espaços únicos, pensados ao detalhe para quem valoriza conforto, design, exclusividade e uma qualidade de construção irrepreensível, sempre com um acompanhamento próximo ao cliente.",
     "signiture.logo_alt": "Logo Imperador",
-=======
     "local.tagline": "LOCALIZAÇÃO ESTRATÉGICA",
     "local.title": "O Edifício Imperador na melhor localização",
     "local.description":
       "Localizado na zona mais nobre do Funchal, o nosso edifício oferece uma experiência de vida única e exclusiva. Imerso na vibrante atmosfera da cidade, este lugar é um verdadeiro refúgio de luxo e conveniência.",
     "local.address": "Rua dos Piornais, 9000-250 | FUNCHAL",
     "local.image_alt": "Mapa da localização do Funchal",
->>>>>>> 48f7714 (feat: created localization component of building)
   },
 } as const;
