@@ -261,7 +261,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
         {/* Dialog Content with Carousel */}
         <DialogContent className="max-w-[98vw]! w-full sm:max-w-[98vw]! md:max-w-[98vw]! lg:max-w-[98vw]! xl:max-w-[98vw]! h-full bg-transparent border-none p-0 sm:p-1 md:p-2 flex flex-col">
           {/* Main Carousel */}
-          <div className="flex-1 flex items-center justify-center overflow-hidden relative -mt-2 sm:-mt-4 md:-mt-6 lg:-mt-8">
+          <div className="flex-1 flex items-center justify-center overflow-hidden relative pt-4 sm:pt-6 md:pt-8 lg:pt-10">
             <Carousel
               setApi={setMainApi}
               opts={{
@@ -270,7 +270,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
               }}
               className="w-full h-full max-w-full"
             >
-              <CarouselContent className="ml-0 h-full flex items-center">
+              <CarouselContent className="ml-0 h-full flex items-center pt-2 sm:pt-4">
                 {images.map((image, index) => (
                   <CarouselItem
                     key={`main-${index}`}
@@ -289,17 +289,17 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
               </CarouselContent>
               <CarouselPrevious 
                 size="icon"
-                className="left-1 sm:left-2 md:left-4 -translate-y-1/2 h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 rounded-full bg-black/50 hover:bg-black/70 text-white hover:text-white border-none transition-all" 
+                className="absolute cursor-pointer left-1 sm:left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" 
               />
               <CarouselNext 
                 size="icon"
-                className="right-1 sm:right-2 md:right-4 -translate-y-1/2 h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 rounded-full bg-black/50 hover:bg-black/70 text-white hover:text-white border-none transition-all" 
+                className="absolute cursor-pointer right-1 sm:right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" 
               />
             </Carousel>
           </div>
 
           {/* Thumbnail Carousel */}
-          <div className="w-full py-3 px-1 sm:px-2 md:px-3 shrink-0">
+          <div className="w-full py-4 sm:py-5 md:py-6 px-3 sm:px-4 md:px-6 lg:px-8 shrink-0 overflow-visible">
             <Carousel
               setApi={setThumbApi}
               opts={{
@@ -307,13 +307,13 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
                 containScroll: "keepSnaps",
                 dragFree: true,
               }}
-              className="w-full max-w-full"
+              className="w-full max-w-full overflow-visible"
             >
-              <CarouselContent className="ml-0 gap-2 sm:gap-3 justify-center items-center">
+              <CarouselContent className="ml-0 gap-2 sm:gap-3 justify-center items-center px-2 sm:px-3 md:px-4 py-2 overflow-visible">
                 {images.map((image, index) => (
                   <CarouselItem
                     key={`thumb-${index}`}
-                    className="pl-0 basis-auto"
+                    className="pl-0 basis-auto overflow-visible"
                   >
                     <Thumbnail
                       image={image}
