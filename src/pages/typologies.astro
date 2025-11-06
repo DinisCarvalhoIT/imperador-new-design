@@ -1,0 +1,31 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Footer from "@/components/Footer/Footer.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import HeroPage from "@/components/HeroPageTypologies/HeroPage.astro";
+import SummaryNumbers from "@/components/HeroPageTypologies/SummaryNumbers.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Get typology and model from query params
+const typology = Astro.url.searchParams.get("typology") || "t1";
+const model = Astro.url.searchParams.get("model") || "a";
+
+// Validate typology (t1, t2, t3)
+const validTypology = ["t1", "t2", "t3"].includes(typology.toLowerCase()) 
+  ? typology.toLowerCase() 
+  : "t1";
+
+// Validate model (a, b, c)
+const validModel = ["a", "b", "c"].includes(model.toLowerCase()) 
+  ? model.toLowerCase() 
+  : "a";
+---
+
+<Layout>
+  <HeroPage />
+  <SummaryNumbers />
+  <Footer />
+</Layout>
+

@@ -1,0 +1,83 @@
+---
+import VectorPointer from "../../../public/HomePage/pointNumbers.svg";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="w-full bg-transparent absolute -bottom-8 hidden sm:block">
+  <div
+    class="grid items-center justify-items-center text-white lg:w-[75%] w-[90%] mx-auto"
+    style="grid-template-columns: 1fr auto 1fr auto 1fr auto 1.5fr;"
+  >
+    <div class="font-boldn flex flex-col items-center justify-center">
+      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
+        >10</span
+      ><span class="font-montserrat text-center">{t("summary.floors")}</span
+      ><span class="font-montserrat text-center invisible">&nbsp;</span>
+    </div>
+    <VectorPointer />
+    <div class="font-boldn flex flex-col items-center justify-center">
+      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
+        >31</span
+      ><span class="font-montserrat text-center">{t("summary.apartments")}</span
+      ><span class="font-montserrat text-center">{t("summary.luxury")}</span>
+    </div>
+    <VectorPointer />
+    <div class="font-boldn flex flex-col items-center justify-center">
+      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
+        >64</span
+      ><span class="font-montserrat text-center"
+        >{t("summary.parking_line1")}</span
+      ><span class="font-montserrat text-center"
+        >{t("summary.parking_line2")}</span
+      >
+    </div>
+    <VectorPointer />
+    <div class="font-boldn flex flex-col items-center justify-center">
+      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
+        >5279.85</span
+      ><span class="font-montserrat text-center">{t("summary.area_line1")}</span
+      >
+      <span class="font-montserrat text-center">{t("summary.area_line2")}</span>
+    </div>
+  </div>
+</section>
+
+<section class="w-full sm:hidden block relative -mb-40 z-10">
+  <div
+    class="flex flex-col items-center justify-center w-[90%] mx-auto text-white gap-y-3 pt-4"
+  >
+    <div class="font-boldn flex flex-col items-center justify-center">
+      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
+        >10</span
+      ><span class="font-montserrat text-center">{t("summary.floors")}</span>
+    </div>
+    <VectorPointer />
+    <div class="font-boldn flex flex-col items-center justify-center">
+      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
+        >31</span
+      ><span class="font-montserrat text-center">{t("summary.apartments")}</span
+      ><span class="font-montserrat text-center">{t("summary.luxury")}</span>
+    </div>
+    <VectorPointer />
+    <div class="font-boldn flex flex-col items-center justify-center">
+      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
+        >64</span
+      ><span class="font-montserrat text-center"
+        >{t("summary.parking_line1")}</span
+      ><span class="font-montserrat text-center"
+        >{t("summary.parking_line2")}</span
+      >
+    </div>
+    <VectorPointer />
+    <div class="font-boldn flex flex-col items-center justify-center">
+      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
+        >5279.85</span
+      ><span class="font-montserrat text-center">{t("summary.area_line1")}</span
+      >
+      <span class="font-montserrat text-center">{t("summary.area_line2")}</span>
+    </div>
+  </div>
+</section>

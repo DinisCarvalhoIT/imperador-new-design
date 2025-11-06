@@ -1,0 +1,95 @@
+---
+import { Image } from "astro:assets";
+import heroImg from "../../../public/HomePage/homePageImage.png";
+import heroImgV2 from "../../../public/HomePage/homePageImagev2.png";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import logoImg from "../../../public/HomePage/logoImperador.svg";
+import ContactFormButton from "../Header/ContactFormButton.tsx";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="w-full h-screen relative">
+  <Image
+    src={heroImg}
+    alt={t("hero.image_alt")}
+    class="w-full h-full object-cover object-center"
+    widths={[640, 960, 1200, 1920, 2560]}
+    sizes="100vw"
+    loading="eager"
+    decoding="sync"
+    fetchpriority="high"
+  />
+  <div class="absolute inset-0 gradient-overlay"></div>
+
+  <div
+    class="absolute inset-0 sm:flex hidden flex-col items-center justify-center px-4 text-center"
+  >
+    <div
+      class="px-6 py-4 rounded-full"
+      style="background: radial-gradient(50% 50% at 50% 50%, rgba(11, 29, 38, 0.6) 0%, rgba(18, 38, 52, 0) 100%); transform: rotate(-6.5deg);"
+    >
+      <div
+        class="text-white text-lg md:text-xl lg:text-2xl font-montserrat tracking-widest font-medium"
+      >
+        {t("hero.welcome")}
+      </div>
+      <div
+        class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfairDisplay font-italic"
+      >
+        {t("hero.title_line1")}
+      </div>
+      <div
+        class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfairDisplay font-italic"
+      >
+        {t("hero.title_line2")}
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="absolute inset-0 flex sm:hidden flex-col items-center justify-between px-4 text-center py-8"
+  >
+    <div class="flex-1 flex items-center justify-center">
+      <div
+        class="px-6 py-4 rounded-full flex flex-col items-center justify-center"
+        style="background: radial-gradient(50% 50% at 50% 50%, rgba(11, 29, 38, 0.6) 0%, rgba(18, 38, 52, 0) 100%); transform: rotate(-6.5deg);"
+      >
+        <div
+          class="text-white sm:text-lg text-sm font-montserrat tracking-widest font-semibold"
+        >
+          {t("hero.welcome_mobile")}
+        </div>
+        <Image
+          src={logoImg}
+          alt={t("header.logo_alt")}
+          width={241}
+          height={114}
+          loading="lazy"
+        />
+        <div
+          class="text-white text-3xl font-playfairDisplay font-italic flex flex-col items-center justify-center"
+        >
+          <span>{t("hero.title_mobile_line1")}</span>
+          <span>{t("hero.title_mobile_line2")}</span>
+          <span>{t("hero.title_mobile_line3")}</span>
+        </div>
+      </div>
+    </div>
+    <div class="pb-4">
+      <ContactFormButton
+        classNameButtonStyle="bg-transparent border border-white hover:bg-white hover:text-black tracking-wide w-[200px] h-[40px] text-md font-montserrat text-white rounded-md font-medium p-0 tracking-widest"
+        buttonText={t("header.schedule_visit")}
+        lang={lang}
+        client:load
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .gradient-overlay {
+    background: linear-gradient(180deg, rgba(11, 29, 38, 0) 2.14%, #0B1D26 40.11%);
+  }
+</style>
