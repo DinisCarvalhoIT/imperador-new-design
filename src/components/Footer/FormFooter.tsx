@@ -16,9 +16,15 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  name: z.string().min(1).max(50),
-  email: z.string().email(),
-  message: z.string().min(1).max(500),
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .max(50, "Name must be less than 50 characters"),
+  email: z.string().email("Invalid email address"),
+  message: z
+    .string()
+    .min(1, "Message is required")
+    .max(500, "Message must be less than 500 characters"),
 });
 
 export default function FormFooter() {
@@ -36,32 +42,42 @@ export default function FormFooter() {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nome</FormLabel>
-              <FormControl>
-                <Input placeholder="Nome" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input type="email" placeholder={"email"} {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="">
+        <div className="grid grid-cols-2 w-full items-center justify-items-center gap-x-3 pb-3">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    className="bg-white/84 border border-[#a3a3a0] text-sm text-black font-montserrat tracking-widest font-light"
+                    placeholder="Nome"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    className="bg-white/84 border border-[#a3a3a0] text-sm text-black font-montserrat tracking-widest font-light"
+                    type="email"
+                    placeholder={"Email"}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <FormField
           control={form.control}
@@ -69,14 +85,25 @@ export default function FormFooter() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea placeholder={"Mensagem"} {...field} />
+                <Textarea
+                  className="bg-white/84 border border-[#a3a3a0] h-[90px] text-sm sm:text-base text-black font-montserrat tracking-widest font-light resize-none"
+                  placeholder={"Mensagem"}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-center mt-3">
+          <Button
+            className="text-white text-base bg-[#7192A2] hover:bg-[#7192A2]/80 hover:border-2 w-full font-montserrat font-semibold cursor-pointer"
+            type="submit"
+          >
+            {"Agendar Visita"}
+          </Button>
+        </div>
       </form>
     </Form>
   );
