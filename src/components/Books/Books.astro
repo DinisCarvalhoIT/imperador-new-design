@@ -1,14 +1,68 @@
 ---
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 import BooksTriggers from "./BooksTriggers";
+import { mainBookImages, finishesBookPTImages, finishesBookENImages } from "./bookImages";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// Get cover images (first image in each array)
+const mainBookImg = mainBookImages[0];
+const finishesBookPTImg = finishesBookPTImages[0];
+const finishesBookENImg = finishesBookENImages[0];
+
+// Process images to webp and get URLs with specific dimensions
+const getImageUrl = async (image: any, width: number, height: number) => {
+  const processed = await getImage({
+    src: image,
+    format: "webp",
+    quality: 95,
+    width: width,
+    height: height,
+  });
+  return processed.src;
+};
+
+// Process all cover images with display size + 200px for better quality
+// First book: Mobile 400x283 -> 600x483, Desktop 747x529 -> 947x729
+// Second book: Mobile 200x283 -> 400x483, Desktop 374x529 -> 574x729
+const mainBookCoverMobile = await getImageUrl(mainBookImg, 600, 483);
+const mainBookCoverDesktop = await getImageUrl(mainBookImg, 947, 729);
+const finishesBookCoverPTMobile = await getImageUrl(finishesBookPTImg, 400, 483);
+const finishesBookCoverPTDesktop = await getImageUrl(finishesBookPTImg, 574, 729);
+const finishesBookCoverENMobile = await getImageUrl(finishesBookENImg, 400, 483);
+const finishesBookCoverENDesktop = await getImageUrl(finishesBookENImg, 574, 729);
+
+// Process all book pages for flipbook (using desktop size + 200px for quality)
+// Main book: 947x729 (44 pages)
+const mainBookPages = await Promise.all(
+  mainBookImages.map((img) => getImageUrl(img, 1920, 1080))
+);
+
+// Finishes book PT: 574x729 (16 pages)
+const finishesBookPTPages = await Promise.all(
+  finishesBookPTImages.map((img) => getImageUrl(img, 1920, 1080))
+);
+
+// Finishes book EN: 574x729 (16 pages)
+const finishesBookENPages = await Promise.all(
+  finishesBookENImages.map((img) => getImageUrl(img, 1920, 1080))
+);
 ---
 
-<section class="h-screen m-auto w-full flex items-center justify-center">
-  <div class="flex flex-col p-4 py-16 xl:flex-row gap-7 xl:p-0 items-center justify-center">
-    <BooksTriggers client:load />
-  </div>
+<section class="w-full flex h-[calc(100vw+100px)] max-h-screen items-center justify-center py-16 md:py-24">
+  <BooksTriggers 
+    client:load 
+    lang={lang} 
+    mainBookCoverMobile={mainBookCoverMobile}
+    mainBookCoverDesktop={mainBookCoverDesktop}
+    finishesBookCoverPTMobile={finishesBookCoverPTMobile}
+    finishesBookCoverPTDesktop={finishesBookCoverPTDesktop}
+    finishesBookCoverENMobile={finishesBookCoverENMobile}
+    finishesBookCoverENDesktop={finishesBookCoverENDesktop}
+    mainBookPages={mainBookPages}
+    finishesBookPTPages={finishesBookPTPages}
+    finishesBookENPages={finishesBookENPages}
+  />
 </section>

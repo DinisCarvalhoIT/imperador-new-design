@@ -173,4 +173,17 @@
     touch-action: pan-y;
     transition: none !important;
   }
+
+  /* PageFlip Book Styles */
+  .page {
+    padding: 0;
+    background-color: #fff;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .page img {
+    user-select: none;
+    pointer-events: none;
+  }
 }

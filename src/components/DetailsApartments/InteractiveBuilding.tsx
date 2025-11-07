@@ -1126,11 +1126,11 @@ export default function InteractiveBuilding({
                         const modelLetter = getModelLetter(selected.shapeIndex); // a, b, or c
                         
                         // Generate the path using useTranslatedPath
-                        const basePath = `/typologies`;
+                        const basePath = `/${apartmentType}`;
                         const translatedPath = translatePath(basePath);
                         
-                        // Add typology and model query parameters
-                        const url = `${translatedPath}?typology=${apartmentType}&model=${modelLetter}`;
+                        // Add model query parameter
+                        const url = `${translatedPath}?model=${modelLetter}`;
                         
                         // Navigate to the typology page
                         window.location.href = url;

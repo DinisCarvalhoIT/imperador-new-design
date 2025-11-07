@@ -1,0 +1,20 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Footer from "@/components/Footer/Footer.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import HeroPage from "@/components/HeroPageTypologies/HeroPage.astro";
+import SummaryNumbers from "@/components/HeroPageTypologies/SummaryNumbers.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Get model from query params
+const model = Astro.url.searchParams.get("model") || "a";
+---
+
+<Layout>
+  <HeroPage />
+  <SummaryNumbers />
+  <Footer />
+</Layout>
+
