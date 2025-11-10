@@ -7,23 +7,34 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 // Import gallery images
-import gallery1Img from "../../../public/gallery/gallery1.png";
-import gallery2Img from "../../../public/gallery/gallery2.png";
-import gallery3Img from "../../../public/gallery/gallery3.png";
-import gallery4Img from "../../../public/gallery/gallery4.png";
-import gallery5Img from "../../../public/gallery/gallery5.png";
-import gallery6Img from "../../../public/gallery/gallery6.png";
-import gallery7Img from "../../../public/gallery/gallery7.png";
-import gallery8Img from "../../../public/gallery/gallery8.png";
+import gallery1Img from "../../../public/gallery/Imperador_Interior1.jpg";
+import gallery2Img from "../../../public/gallery/Imperador_Interior2.jpg";
+import gallery3Img from "../../../public/gallery/Imperador_Interior3.jpg";
+import gallery4Img from "../../../public/gallery/Imperador_Interior4.jpg";
+import gallery5Img from "../../../public/gallery/Imperador_Interior5.jpg";
+import gallery6Img from "../../../public/gallery/Imperador_Interior6.jpg";
+import gallery7Img from "../../../public/gallery/Imperador_Interior7.jpg";
+import gallery8Img from "../../../public/gallery/Imperador_Interior8.jpg";
+import gallery9Img from "../../../public/gallery/Imperador_Interior9.jpg";
+import gallery10Img from "../../../public/gallery/Imperador_Interior10.jpg";
+import gallery11Img from "../../../public/gallery/Imperador_Interior11.jpg";
+import gallery12Img from "../../../public/gallery/Imperador_Interior12.jpg";
+import gallery13Img from "../../../public/gallery/Imperador_Interior13.jpg";
+import gallery14Img from "../../../public/gallery/Imperador_Interior14.jpg";
+import gallery15Img from "../../../public/gallery/Imperador_Interior15.jpg";
+import gallery16Img from "../../../public/gallery/Imperador_Interior16.jpg";
+import gallery17Img from "../../../public/gallery/Imperador_Interior17.jpg";
 
-const imageSources = [gallery1Img, gallery2Img, gallery3Img, gallery4Img, gallery5Img, gallery6Img, gallery7Img, gallery8Img];
+const imageSources = [gallery1Img, gallery2Img, gallery3Img, gallery4Img, gallery5Img, gallery6Img, gallery7Img, gallery8Img, gallery9Img, gallery10Img, gallery11Img, gallery12Img, gallery13Img, gallery14Img, gallery15Img, gallery16Img, gallery17Img];
 
 // Process images to webp and get URLs for React component
 const getImageUrl = async (image: any) => {
   const processed = await getImage({
     src: image,
     format: "webp",
-    quality: 95,
+    width: 1520,
+    height: 820,
+    quality: 90,
   });
   return processed.src;
 };

@@ -7,7 +7,7 @@ import {
   DialogOverlay,
   DialogPortal,
 } from "@/components/ui/dialog";
-import FlipbookViewerClient from "./FlipbookViewerClient";
+import PDFViewerClient from "./PDFViewerClient";
 
 interface BooksTriggersProps {
   lang: string;
@@ -148,7 +148,7 @@ export default function BooksTriggers({
           <DialogOverlay className="bg-black/80 backdrop-blur-sm" />
           <div className="fixed inset-0 z-50 w-full h-full">
             <div className="relative w-full h-full flex items-center justify-center">
-              <DialogClose className="absolute top-4 right-4 z-100 rounded-full bg-white/90 hover:bg-white p-2 transition-colors">
+              <DialogClose className="absolute top-16 right-4 z-100 rounded-full bg-white/90 hover:bg-white p-2 transition-colors">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -168,7 +168,7 @@ export default function BooksTriggers({
               </DialogClose>
               {openMainBook && (
                 <div className="w-full h-full">
-                  <FlipbookViewerClient
+                  <PDFViewerClient
                     pdfUrl={mainBookPdfPath}
                     className="h-full w-full"
                   />
@@ -184,7 +184,8 @@ export default function BooksTriggers({
         <DialogPortal>
           <DialogOverlay className="bg-black/80 backdrop-blur-sm" />
           <div className="fixed inset-0 z-50 w-full h-full">
-              <DialogClose className="absolute top-4 right-4 z-100 rounded-full bg-white/90 hover:bg-white p-2 transition-colors">
+            <div className="relative w-full h-full flex items-center justify-center">
+              <DialogClose className="absolute top-16 right-4 z-100 rounded-full bg-white/90 hover:bg-white p-2 transition-colors">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -203,13 +204,14 @@ export default function BooksTriggers({
                 <span className="sr-only">Close</span>
               </DialogClose>
               {openFinishesBook && (
-                <div className="w-full h-screen">
-                  <FlipbookViewerClient
+                <div className="w-full h-full">
+                  <PDFViewerClient
                     pdfUrl={finishesBookPdfPath}
                     className="h-full w-full"
                   />
-              </div>
-            )}
+                </div>
+              )}
+            </div>
           </div>
         </DialogPortal>
       </Dialog>
