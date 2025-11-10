@@ -2,6 +2,8 @@
 import "../styles/global.css";
 import { getLangFromUrl } from "../i18n/utils";
 import Header from "@/components/Header/Header.astro";
+import Footer from "@/components/Footer/Footer.astro";
+import MySideBar from "@/components/Header/mySideBar.tsx";
 const lang = getLangFromUrl(Astro.url);
 ---
 
@@ -23,8 +25,10 @@ const lang = getLangFromUrl(Astro.url);
     <title>Astro Basics</title>
   </head>
   <body class="bg-[#0B1D26]">
+    <MySideBar client:load />
     <Header />
     <slot />
+    <Footer />
   </body>
 </html>
 

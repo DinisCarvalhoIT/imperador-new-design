@@ -18,17 +18,28 @@ const t = useTranslations(lang);
     id="header-large"
     class="grid grid-cols-3 justify-items-center w-full pt-1 relative z-10"
   >
-    <div class="flex items-start justify-center gap-x-2 pt-8">
-      <Image
-        src={whatsappIcon}
-        alt={t("header.whatsapp_alt")}
-        width={24}
-        height={24}
-        loading="lazy"
+    <div class="flex items-start justify-center xl:gap-x-8 pt-8">
+      <div class="flex items-center justify-center gap-x-2">
+        <Image
+          src={whatsappIcon}
+          alt={t("header.whatsapp_alt")}
+          width={24}
+          height={24}
+          loading="lazy"
+          class="xl:block hidden"
+        />
+        <p
+          class="text-white text-base lg:text-lg font-poppins font-light hidden xl:block"
+        >
+          + 351 965 611 642
+        </p>
+      </div>
+      <ContactFormButton
+        classNameButtonStyle="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
+        buttonText={t("header.schedule_visit")}
+        lang={lang}
+        client:load
       />
-      <p class="text-white text-base lg:text-lg font-poppins">
-        + 351 965 611 642
-      </p>
     </div>
     <div>
       <Image
@@ -40,15 +51,27 @@ const t = useTranslations(lang);
         loading="lazy"
       />
     </div>
-    <div class="flex items-start justify-center pt-8">
-      <div class="flex items-center justify-center gap-x-6">
-        <ContactFormButton
-          classNameButtonStyle="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
-          buttonText={t("header.schedule_visit")}
-          lang={lang}
-          client:load
-        />
-
+    <div
+      class="flex items-start justify-end xl:justify-center pt-8 justify-self-end xl:justify-self-center w-full pr-5"
+    >
+      <div
+        class="flex items-center justify-end xl:justify-center 2xl:gap-x-8 gap-x-6"
+      >
+        <div
+          class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+        >
+          TIPOLOGIAS
+        </div>
+        <div
+          class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+        >
+          GALERIA
+        </div>
+        <div
+          class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+        >
+          LOCALIZAÇÃO
+        </div>
         <LocaleSwitcher />
       </div>
     </div>
@@ -69,14 +92,35 @@ const t = useTranslations(lang);
     </div>
 
     <div class="flex items-center justify-end">
-      <div class="flex items-center justify-end gap-x-6">
+      <div
+        class="flex items-center justify-end 2xl:gap-x-8 xl:gap-x-6 gap-x-24"
+      >
         <ContactFormButton
           classNameButtonStyle="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[130px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium p-0"
           buttonText={t("header.schedule_visit")}
           lang={lang}
           client:load
         />
-        <LocaleSwitcher />
+        <div
+          class="flex items-center justify-end xl:justify-center 2xl:gap-x-8 gap-x-6"
+        >
+          <div
+            class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+          >
+            TIPOLOGIAS
+          </div>
+          <div
+            class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+          >
+            GALERIA
+          </div>
+          <div
+            class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+          >
+            LOCALIZAÇÃO
+          </div>
+          <LocaleSwitcher />
+        </div>
       </div>
     </div>
   </div>

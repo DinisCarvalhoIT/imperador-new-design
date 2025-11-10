@@ -150,24 +150,24 @@
       transform: translateY(0);
     }
   }
-  
+
   /* Embla Carousel */
   .embla__viewport {
     overflow: hidden;
   }
-  
+
   .embla__container {
     display: flex;
     touch-action: pan-y;
     transition: height 0.2s;
   }
-  
+
   .embla__slide {
     flex: 0 0 auto;
     min-width: 0;
     height: auto;
   }
-  
+
   .embla-thumbs__container {
     display: flex;
     touch-action: pan-y;
@@ -181,7 +181,7 @@
     overflow: hidden;
     position: relative;
   }
-  
+
   .page img {
     user-select: none;
     pointer-events: none;
