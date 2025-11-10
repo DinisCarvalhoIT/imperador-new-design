@@ -1,0 +1,148 @@
+---
+import { getLangFromUrl } from "@/i18n/utils";
+
+// Get current language
+const lang = getLangFromUrl(Astro.url);
+
+// Define tipologia options with their respective page paths
+const tipologias = [
+  { label: "T1", path: `/${lang}/tipologia/t1` },
+  { label: "T2", path: `/${lang}/tipologia/t2` },
+  { label: "T3", path: `/${lang}/tipologia/t3` },
+];
+
+// Generate unique ID for this instance
+const uniqueId = Math.random().toString(36).substr(2, 9);
+---
+
+<script define:vars={{ uniqueId }}>
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("TipologiaSwitcher initializing with uniqueId:", uniqueId);
+
+    const dropdownButton = document.getElementById(
+      "tipologiaButton-" + uniqueId
+    );
+    const dropdownList = document.getElementById("tipologiaList-" + uniqueId);
+    const dropdownIcon = document.getElementById("tipologiaIcon-" + uniqueId);
+
+    console.log("Found elements:", {
+      dropdownButton: !!dropdownButton,
+      dropdownList: !!dropdownList,
+      dropdownIcon: !!dropdownIcon,
+    });
+
+    if (!dropdownButton || !dropdownList || !dropdownIcon) {
+      console.error("Dropdown elements not found for uniqueId:", uniqueId);
+      return;
+    }
+
+    dropdownButton.addEventListener("click", () => {
+      dropdownList.classList.toggle("hidden");
+      dropdownList.classList.toggle("opacity-0");
+      dropdownList.classList.toggle("transform");
+      dropdownList.classList.toggle("scale-95");
+      dropdownIcon.classList.toggle("rotate-180");
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!dropdownButton.contains(event.target)) {
+        dropdownList.classList.add("hidden");
+        dropdownList.classList.add("opacity-0");
+        dropdownList.classList.add("transform");
+        dropdownList.classList.add("scale-95");
+        dropdownIcon.classList.remove("rotate-180");
+      }
+    });
+
+    dropdownList.addEventListener("click", (event) => {
+      const targetElement = event.target;
+
+      // Only handle clicks on the link elements, not the list items
+      if (targetElement.tagName === "A" || targetElement.closest("a")) {
+        // Close the dropdown immediately
+        dropdownList.classList.add("hidden");
+        dropdownList.classList.add("opacity-0");
+        dropdownList.classList.add("transform");
+        dropdownList.classList.add("scale-95");
+        dropdownIcon.classList.remove("rotate-180");
+
+        // Let the default link navigation happen
+        return true;
+      }
+    });
+
+    document.addEventListener("scroll", () => {
+      const header = document.getElementById("header-container");
+      const dropdownList = document.getElementById("tipologiaList-" + uniqueId);
+
+      if (!dropdownList) return;
+
+      const items = dropdownList.querySelectorAll("li");
+
+      if (header?.dataset.scrolled === "true") {
+        // scrolled → black borders
+        items.forEach((li) => {
+          li.classList.remove("bg-black");
+          li.classList.remove("border-white");
+          li.classList.add("border-black");
+          li.classList.add("bg-white");
+        });
+      } else {
+        // top → white borders
+        items.forEach((li) => {
+          li.classList.remove("bg-white");
+          li.classList.remove("border-black");
+          li.classList.add("border-white");
+          li.classList.add("bg-black");
+        });
+      }
+    });
+  }); // End of DOMContentLoaded
+</script>
+
+<div class="relative z-30" data-unique-id={uniqueId}>
+  <button
+    id={"tipologiaButton-" + uniqueId}
+    type="button"
+    class="bg-transparent m-0 font-montserrat font-medium flex items-center gap-x-1 header-item text-white cursor-pointer relative group pb-1"
+  >
+    <span>TIPOLOGIAS</span>
+    <svg
+      id={"tipologiaIcon-" + uniqueId}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-chevron-down h-4 w-4 opacity-100 transition-transform duration-300"
+      aria-hidden="true"
+    >
+      <path d="m6 9 6 6 6-6"></path>
+    </svg>
+    <span
+      class="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-yellow-400 via-amber-500 to-yellow-600 transition-all duration-300 ease-out group-hover:w-full"
+    ></span>
+  </button>
+  <div>
+    <ul
+      id={"tipologiaList-" + uniqueId}
+      class="absolute left-0 bg-transparent rounded-lg w-[120px] mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium text-sm"
+    >
+      {
+        tipologias.map((tipologia) => {
+          return (
+            <a href={tipologia.path}>
+              <li class="p-2 flex items-center justify-center cursor-pointer bg-transparent border border-white hover:bg-gray-100/30 text-white font-montserrat">
+                {tipologia.label}
+              </li>
+            </a>
+          );
+        })
+      }
+    </ul>
+  </div>
+</div>

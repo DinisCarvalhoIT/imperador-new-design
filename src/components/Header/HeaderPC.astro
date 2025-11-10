@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import logoImg from "../../../public/HomePage/logoImperador.svg";
 import whatsappIcon from "../../../public/HomePage/whatsapp.svg";
 import LocaleSwitcher from "./LocaleSwitcher.astro";
+import TipologiaSwitcher from "./TipologiaSwitcher.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import ContactFormButton from "./ContactFormButton";
 
@@ -57,20 +58,24 @@ const t = useTranslations(lang);
       <div
         class="flex items-center justify-end xl:justify-center 2xl:gap-x-8 gap-x-6"
       >
-        <div
-          class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
-        >
-          TIPOLOGIAS
+        <div class="hidden xl:block">
+          <TipologiaSwitcher />
         </div>
         <div
-          class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+          class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer relative group pb-1"
         >
           GALERIA
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-yellow-400 via-amber-500 to-yellow-600 transition-all duration-300 ease-out group-hover:w-full"
+          ></span>
         </div>
         <div
-          class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+          class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer relative group pb-1"
         >
           LOCALIZAÇÃO
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-yellow-400 via-amber-500 to-yellow-600 transition-all duration-300 ease-out group-hover:w-full"
+          ></span>
         </div>
         <LocaleSwitcher />
       </div>
@@ -104,20 +109,24 @@ const t = useTranslations(lang);
         <div
           class="flex items-center justify-end xl:justify-center 2xl:gap-x-8 gap-x-6"
         >
-          <div
-            class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
-          >
-            TIPOLOGIAS
+          <div class="hidden xl:block">
+            <TipologiaSwitcher />
           </div>
           <div
-            class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+            class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer relative group pb-1"
           >
             GALERIA
+            <span
+              class="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-yellow-400 via-amber-500 to-yellow-600 transition-all duration-300 ease-out group-hover:w-full"
+            ></span>
           </div>
           <div
-            class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer"
+            class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer relative group pb-1"
           >
             LOCALIZAÇÃO
+            <span
+              class="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-yellow-400 via-amber-500 to-yellow-600 transition-all duration-300 ease-out group-hover:w-full"
+            ></span>
           </div>
           <LocaleSwitcher />
         </div>
