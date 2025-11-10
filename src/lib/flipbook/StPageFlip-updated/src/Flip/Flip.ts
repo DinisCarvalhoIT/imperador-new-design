@@ -72,9 +72,43 @@ export class Flip {
         this.setState(FlippingState.USER_FOLD);
 
         // If the process has not started yet
-        if (this.calc === null) this.start(globalPos);
+        if (this.calc === null) {
+            if (!this.start(globalPos)) return; // Exit if start fails
+        }
 
-        this.do(this.render.convertToPage(globalPos));
+        // Get page position from global position
+        const targetPagePos = this.render.convertToPage(globalPos);
+        const rect = this.getBoundsRect();
+        const settings = this.app.getSettings();
+        
+        // Determine Y position based on animation mode and settings
+        let finalY: number;
+        if (settings.animationMode === 'corner') {
+            // Corner mode: use Y position from mouse (allows corner movement)
+            finalY = Math.max(1, Math.min(rect.height - 1, targetPagePos.y));
+        } else {
+            // Page mode: lock Y to corner edge if lockYOnDrag is enabled
+            if (settings.lockYOnDrag) {
+                const isBottomCorner = this.calc.getCorner() === FlipCorner.BOTTOM;
+                finalY = isBottomCorner ? rect.height - 1 : 1;
+            } else {
+                // Allow Y movement for whole page edge
+                finalY = Math.max(1, Math.min(rect.height - 1, targetPagePos.y));
+            }
+        }
+        
+        // For dragging, allow X to move freely to enable page turning
+        // Don't constrain X - allow it to go negative to trigger page turn
+        // This allows dragging all the way to the other side
+        const finalX = targetPagePos.x;
+        
+        // Pass position for page movement
+        const pagePos: Point = {
+            x: finalX,
+            y: finalY
+        };
+
+        this.do(pagePos);
     }
 
     /**
@@ -83,7 +117,14 @@ export class Flip {
      * @param globalPos - Touch Point Coordinates (relative window)
      */
     public flip(globalPos: Point): void {
-        if (this.app.getSettings().disableFlipByClick && !this.isPointOnCorners(globalPos)) return;
+        const settings = this.app.getSettings();
+        if (settings.disableFlipByClick) {
+            // Use appropriate check based on animation mode
+            const isOnHoverArea = settings.animationMode === 'corner' 
+                ? this.isPointOnCorners(globalPos)
+                : this.isPointOnPageEdge(globalPos);
+            if (!isOnHoverArea) return;
+        }
 
         // the flipiing process is already running
         if (this.calc !== null) this.render.finishAnimation();
@@ -94,21 +135,30 @@ export class Flip {
 
         this.setState(FlippingState.FLIPPING);
 
-        // Margin from top to start flipping
-        const topMargins = rect.height / 10;
+        // Determine Y position based on animation mode
+        let yStart: number;
+        let yDest: number;
+        let startX: number;
 
-        // Defining animation start points
-        const yStart =
-            this.calc.getCorner() === FlipCorner.BOTTOM ? rect.height - topMargins : topMargins;
-
-        const yDest = this.calc.getCorner() === FlipCorner.BOTTOM ? rect.height : 0;
+        if (settings.animationMode === 'corner') {
+            // Corner mode: use margin-based positioning (original behavior)
+            const topMargins = rect.height / 10;
+            yStart = this.calc.getCorner() === FlipCorner.BOTTOM ? rect.height - topMargins : topMargins;
+            yDest = this.calc.getCorner() === FlipCorner.BOTTOM ? rect.height : 0;
+            startX = rect.pageWidth - topMargins;
+        } else {
+            // Page mode: lock Y to the edge for whole page movement
+            yStart = this.calc.getCorner() === FlipCorner.BOTTOM ? rect.height - 1 : 1;
+            yDest = this.calc.getCorner() === FlipCorner.BOTTOM ? rect.height : 0;
+            startX = rect.pageWidth - 1; // Start from the edge
+        }
 
         // Сalculations for these points
-        this.calc.calc({ x: rect.pageWidth - topMargins, y: yStart });
+        this.calc.calc({ x: startX, y: yStart });
 
         // Run flipping animation
         this.animateFlippingTo(
-            { x: rect.pageWidth - topMargins, y: yStart },
+            { x: startX, y: yStart },
             { x: -rect.pageWidth, y: yDest },
             true,
         );
@@ -126,12 +176,31 @@ export class Flip {
 
         const bookPos = this.render.convertToBook(globalPos);
         const rect = this.getBoundsRect();
+        const settings = this.app.getSettings();
 
         // Find the direction of flipping
         const direction = this.getDirectionByPoint(bookPos);
 
         // Find the active corner
-        const flipCorner = bookPos.y >= rect.height / 2 ? FlipCorner.BOTTOM : FlipCorner.TOP;
+        // For page mode, use a dead zone in the center to prevent random switching
+        let flipCorner: FlipCorner;
+        if (settings.animationMode === 'page') {
+            const centerDeadZone = rect.height * 0.1; // 10% dead zone in center
+            const centerTop = rect.height / 2 - centerDeadZone;
+            const centerBottom = rect.height / 2 + centerDeadZone;
+            
+            if (bookPos.y < centerTop) {
+                flipCorner = FlipCorner.TOP;
+            } else if (bookPos.y > centerBottom) {
+                flipCorner = FlipCorner.BOTTOM;
+            } else {
+                // In dead zone - default to bottom for consistency
+                flipCorner = FlipCorner.BOTTOM;
+            }
+        } else {
+            // Corner mode: use original logic
+            flipCorner = bookPos.y >= rect.height / 2 ? FlipCorner.BOTTOM : FlipCorner.TOP;
+        }
 
         if (!this.checkDirection(direction)) return false;
 
@@ -298,48 +367,118 @@ export class Flip {
 
         const rect = this.getBoundsRect();
         const pageWidth = rect.pageWidth;
+        const settings = this.app.getSettings();
 
-        if (this.isPointOnCorners(globalPos)) {
+        // Use appropriate check based on animation mode
+        const isOnHoverArea = settings.animationMode === 'corner' 
+            ? this.isPointOnCorners(globalPos)
+            : this.isPointOnPageEdge(globalPos);
+
+        if (isOnHoverArea) {
             if (this.calc === null) {
                 if (!this.start(globalPos)) return;
 
                 this.setState(FlippingState.FOLD_CORNER);
 
-                this.calc.calc({ x: pageWidth - 1, y: 1 });
+                // Use the corner that was determined in start() to ensure consistency
+                // This prevents random switching when hovering near the center
+                const isBottomCorner = this.calc.getCorner() === FlipCorner.BOTTOM;
+                
+                // Determine Y position based on animation mode
+                let lockedY: number;
+                if (settings.animationMode === 'corner') {
+                    // Corner mode: use Y from mouse position (allows corner movement)
+                    const pagePos = this.render.convertToPage(globalPos);
+                    lockedY = Math.max(1, Math.min(rect.height - 1, pagePos.y));
+                } else {
+                    // Page mode: lock Y to corner edge
+                    lockedY = isBottomCorner ? rect.height - 1 : 1;
+                }
+                
+                // Calculate initial fold position based on animation mode
+                let foldDistance: number;
+                if (settings.animationMode === 'corner') {
+                    // Corner mode: small fold (50px like original)
+                    foldDistance = 50;
+                } else {
+                    // Page mode: use configured fold distance
+                    foldDistance = pageWidth * 0.15; // 15% of page width for whole edge movement
+                }
+                
+                const initialX = pageWidth - 1;
+                const targetX = pageWidth - foldDistance;
 
-                const fixedCornerSize = 50;
-                const yStart = this.calc.getCorner() === FlipCorner.BOTTOM ? rect.height - 1 : 1;
-
-                const yDest =
-                    this.calc.getCorner() === FlipCorner.BOTTOM
-                        ? rect.height - fixedCornerSize
-                        : fixedCornerSize;
+                this.calc.calc({ x: initialX, y: lockedY });
 
                 // Initialize smoothed position
                 const pagePos = this.render.convertToPage(globalPos);
-                this.smoothedCornerPos = { ...pagePos };
+                this.smoothedCornerPos = { 
+                    x: pagePos.x, 
+                    y: lockedY
+                };
 
+                // Animate to initial fold position
                 this.animateFlippingTo(
-                    { x: pageWidth - 1, y: yStart },
-                    { x: pageWidth - fixedCornerSize, y: yDest },
+                    { x: initialX, y: lockedY },
+                    { x: targetX, y: lockedY },
                     false,
                     false,
                 );
             } else {
-                // Smooth corner position to mouse
+                // Smooth position to mouse
                 const targetPagePos = this.render.convertToPage(globalPos);
-                const smoothing = this.app.getSettings().cornerSmoothing || 0.15;
+                const smoothing = settings.cornerSmoothing || 0.15;
+                
+                // Determine Y position based on animation mode
+                // Use existing corner from calc to prevent switching when hovering near center
+                let lockedY: number;
+                if (settings.animationMode === 'corner') {
+                    // Corner mode: use Y from mouse position (allows corner movement)
+                    lockedY = Math.max(1, Math.min(rect.height - 1, targetPagePos.y));
+                } else {
+                    // Page mode: lock Y to corner edge using the existing corner from calc
+                    // This prevents random switching between top/bottom when hovering center
+                    const isBottomCorner = this.calc.getCorner() === FlipCorner.BOTTOM;
+                    lockedY = isBottomCorner ? rect.height - 1 : 1;
+                }
 
                 // Initialize smoothed position if not set
                 if (this.smoothedCornerPos === null) {
-                    this.smoothedCornerPos = { ...targetPagePos };
+                    this.smoothedCornerPos = { 
+                        x: targetPagePos.x, 
+                        y: lockedY 
+                    };
                 }
 
                 // Linear interpolation (lerp) for smooth movement
-                this.smoothedCornerPos = {
-                    x: this.smoothedCornerPos.x + (targetPagePos.x - this.smoothedCornerPos.x) * (1 - smoothing),
-                    y: this.smoothedCornerPos.y + (targetPagePos.y - this.smoothedCornerPos.y) * (1 - smoothing),
-                };
+                if (settings.animationMode === 'corner') {
+                    // Corner mode: smooth both X and Y
+                    this.smoothedCornerPos = {
+                        x: this.smoothedCornerPos.x + (targetPagePos.x - this.smoothedCornerPos.x) * (1 - smoothing),
+                        y: this.smoothedCornerPos.y + (targetPagePos.y - this.smoothedCornerPos.y) * (1 - smoothing),
+                    };
+                } else {
+                    // Page mode: only smooth X, lock Y
+                    this.smoothedCornerPos = {
+                        x: this.smoothedCornerPos.x + (targetPagePos.x - this.smoothedCornerPos.x) * (1 - smoothing),
+                        y: lockedY, // Always lock Y to corner position
+                    };
+                }
+
+                // Constrain X to fold range based on animation mode
+                if (settings.animationMode === 'corner') {
+                    // Corner mode: small fold area
+                    const maxFoldDistance = 50;
+                    const minX = pageWidth - maxFoldDistance;
+                    const maxX = pageWidth - 1;
+                    this.smoothedCornerPos.x = Math.max(minX, Math.min(maxX, this.smoothedCornerPos.x));
+                } else {
+                    // Page mode: use configured max fold distance
+                    const maxFoldDistance = pageWidth * (settings.maxHoverFoldDistance || 0.25);
+                    const minX = pageWidth - maxFoldDistance;
+                    const maxX = pageWidth - 1;
+                    this.smoothedCornerPos.x = Math.max(minX, Math.min(maxX, this.smoothedCornerPos.x));
+                }
 
                 this.render.startAnimationRenderLoop(() => {
                     this.do(this.smoothedCornerPos);
@@ -531,6 +670,32 @@ export class Flip {
             bookPos.y < rect.height &&
             (bookPos.x < operatingDistance || bookPos.x > rect.width - operatingDistance) &&
             (bookPos.y < operatingDistance || bookPos.y > rect.height - operatingDistance)
+        );
+    }
+
+    /**
+     * Check if the point is on the whole edge of the page (for page fold mode)
+     * This checks the entire left or right edge, not just corners
+     *
+     * @param globalPos - Touch Point Coordinates (relative window)
+     * @returns {boolean} True if point is on page edge
+     */
+    private isPointOnPageEdge(globalPos: Point): boolean {
+        const rect = this.getBoundsRect();
+        const pageWidth = rect.pageWidth;
+
+        const operatingDistance = Math.sqrt(Math.pow(pageWidth, 2) + Math.pow(rect.height, 2)) / 4;
+
+        const bookPos = this.render.convertToBook(globalPos);
+
+        // Check if point is within bounds and on the left or right edge
+        // For page mode, we check the entire edge (Y can be anywhere)
+        return (
+            bookPos.x > 0 &&
+            bookPos.y > 0 &&
+            bookPos.x < rect.width &&
+            bookPos.y < rect.height &&
+            (bookPos.x < operatingDistance || bookPos.x > rect.width - operatingDistance)
         );
     }
 }

@@ -197,6 +197,21 @@ export class PageFlip extends EventObject {
      */
     public turnToPage(page: number): void {
         this.pages.show(page);
+        
+        // Trigger HTMLUI animation functions if using HTMLUI
+        if (this.ui instanceof HTMLUI) {
+            const htmlUI = this.ui as HTMLUI;
+            const orientation = this.render.getOrientation();
+            const pageCount = this.pages.getPageCount();
+            
+            if (orientation === Orientation.LANDSCAPE && page === 0) {
+                htmlUI.firstPageCenter();
+            } else if (orientation === Orientation.LANDSCAPE && page === pageCount - 1) {
+                htmlUI.firstPageEndCenter();
+            } else {
+                htmlUI.firstPageCenterReverse();
+            }
+        }
     }
 
     /**

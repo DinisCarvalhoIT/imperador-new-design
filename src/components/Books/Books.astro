@@ -7,7 +7,7 @@ import { mainBookImages, finishesBookPTImages, finishesBookENImages } from "./bo
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-// Get cover images (first image in each array)
+// Get cover images (first image in each array) - keep these for button covers
 const mainBookImg = mainBookImages[0];
 const finishesBookPTImg = finishesBookPTImages[0];
 const finishesBookENImg = finishesBookENImages[0];
@@ -34,21 +34,10 @@ const finishesBookCoverPTDesktop = await getImageUrl(finishesBookPTImg, 574, 729
 const finishesBookCoverENMobile = await getImageUrl(finishesBookENImg, 400, 483);
 const finishesBookCoverENDesktop = await getImageUrl(finishesBookENImg, 574, 729);
 
-// Process all book pages for flipbook (using desktop size + 200px for quality)
-// Main book: 947x729 (44 pages)
-const mainBookPages = await Promise.all(
-  mainBookImages.map((img) => getImageUrl(img, 1920, 1080))
-);
-
-// Finishes book PT: 574x729 (16 pages)
-const finishesBookPTPages = await Promise.all(
-  finishesBookPTImages.map((img) => getImageUrl(img, 1920, 1080))
-);
-
-// Finishes book EN: 574x729 (16 pages)
-const finishesBookENPages = await Promise.all(
-  finishesBookENImages.map((img) => getImageUrl(img, 1920, 1080))
-);
+// PDF paths for the books
+const mainBookPdfPath = "/book/Livro Imperador/LIVRO IMPERADOR_PT.pdf";
+const finishesBookPTPdfPath = "/book/Mapa de Acabamento/MAPA DE ACABAMENTOS PT.pdf";
+const finishesBookENPdfPath = "/book/Mapa de Acabamento/EN/MAPA DE ACABAMENTOS EN.pdf";
 ---
 
 <section class="w-full flex h-[calc(100vw+100px)] max-h-screen items-center justify-center py-16 md:py-24">
@@ -61,8 +50,8 @@ const finishesBookENPages = await Promise.all(
     finishesBookCoverPTDesktop={finishesBookCoverPTDesktop}
     finishesBookCoverENMobile={finishesBookCoverENMobile}
     finishesBookCoverENDesktop={finishesBookCoverENDesktop}
-    mainBookPages={mainBookPages}
-    finishesBookPTPages={finishesBookPTPages}
-    finishesBookENPages={finishesBookENPages}
+    mainBookPdfPath={mainBookPdfPath}
+    finishesBookPTPdfPath={finishesBookPTPdfPath}
+    finishesBookENPdfPath={finishesBookENPdfPath}
   />
 </section>

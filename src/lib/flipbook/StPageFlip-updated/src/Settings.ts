@@ -66,6 +66,15 @@ export interface FlipSetting {
 
     /** Smoothing factor for corner position (0-1, higher = smoother but slower). 0 = instant, 1 = maximum smoothness */
     cornerSmoothing: number;
+
+    /** Animation mode: 'corner' for corner-only animation, 'page' for whole page edge animation */
+    animationMode: 'corner' | 'page';
+
+    /** Maximum hover fold distance as percentage of page width (0-1). Only applies to hover, not drag */
+    maxHoverFoldDistance: number;
+
+    /** Whether to lock Y position during drag to prevent vertical movement */
+    lockYOnDrag: boolean;
 }
 
 export class Settings {
@@ -95,6 +104,9 @@ export class Settings {
         disableFlipByClick: false,
         easing: 'ease-out',
         cornerSmoothing: 0.15,
+        animationMode: 'page', // Default to whole page edge animation
+        maxHoverFoldDistance: 0.25, // 25% of page width for hover
+        lockYOnDrag: true, // Lock Y to prevent vertical movement during drag
     };
 
     /**
@@ -118,6 +130,20 @@ export class Settings {
         if (result.cornerSmoothing !== undefined) {
             if (result.cornerSmoothing < 0 || result.cornerSmoothing > 1) {
                 throw new Error('cornerSmoothing must be between 0 and 1');
+            }
+        }
+
+        // Validate animation mode
+        if (result.animationMode !== undefined) {
+            if (result.animationMode !== 'corner' && result.animationMode !== 'page') {
+                throw new Error('animationMode must be either "corner" or "page"');
+            }
+        }
+
+        // Validate maxHoverFoldDistance (0-1 range)
+        if (result.maxHoverFoldDistance !== undefined) {
+            if (result.maxHoverFoldDistance < 0 || result.maxHoverFoldDistance > 1) {
+                throw new Error('maxHoverFoldDistance must be between 0 and 1');
             }
         }
 

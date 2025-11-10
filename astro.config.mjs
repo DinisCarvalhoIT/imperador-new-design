@@ -13,7 +13,13 @@ const compilerConfig = {
 // https://astro.build/config
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    ssr: {
+      external: ['pdfjs-dist']
+    },
+    optimizeDeps: {
+      exclude: ['pdfjs-dist']
+    }
   },
 
   integrations: [react({
