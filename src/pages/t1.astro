@@ -1,20 +1,77 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Footer from "@/components/Footer/Footer.astro";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import HeroPage from "@/components/HeroPageTypologies/HeroPage.astro";
+import heroImg from "../../public/T1/t1_heroPage.png";
 import SummaryNumbers from "@/components/HeroPageTypologies/SummaryNumbers.astro";
+import FloorPlans from "@/components/HeroPageTypologies/FloorPlans.astro";
+import Gallery from "@/components/Gallery/Gallery.astro";
+import Local from "@/components/Local/Local.astro";
+import Books from "@/components/Books/Books.astro";
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-
-// Get model from query params
-const model = Astro.url.searchParams.get("model") || "a";
+const dataCarousel = [
+  {
+    id: "floor-plan-1",
+    floorPlanImage: "/FloorPlans/T1_Modelo_A.png",
+    smallImageCollumnTable: true,
+    smallImageStyle:
+      "hidden lg:flex w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[171px] lg:h-[89px]",
+    smallFloorPlanImage: "/FloorPlans/T1_Modelo_A_Small.svg",
+    tableImage: "/FloorPlans/T1_Modelo_A_Table.svg",
+    tableImageStyle:
+      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
+    mainTitleKey: "floorplans.t1_model_a",
+    mobileTitleKey: "floorplans.t1_model_a_mobile",
+    subTitleKey: "floorplans.t1_model_a_subtitle",
+  },
+  {
+    id: "floor-plan-2",
+    floorPlanImage: "/FloorPlans/T1_Modelo_B.png",
+    smallImageCollumnTable: false,
+    smallImageStyle:
+      "hidden lg:flex w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[171px] lg:h-[89px] mx-auto",
+    smallFloorPlanImage: "/FloorPlans/T1_Modelo_B_Small.svg",
+    tableImage: "/FloorPlans/T1_Modelo_B_Table.svg",
+    tableImageStyle:
+      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[270px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
+    mainTitleKey: "floorplans.t1_model_b",
+    mobileTitleKey: "floorplans.t1_model_b_mobile",
+    subTitleKey: "floorplans.t1_model_b_subtitle",
+  },
+  {
+    id: "floor-plan-3",
+    floorPlanImage: "/FloorPlans/T1_Modelo_C.png",
+    smallImageCollumnTable: false,
+    smallImageStyle:
+      "hidden lg:flex w-[100px] h-[52px] sm:w-[120px] sm:h-[62px] md:w-[140px] md:h-[73px] lg:w-[171px] lg:h-[89px] mx-auto",
+    smallFloorPlanImage: "/FloorPlans/T1_Modelo_C_Small.svg",
+    tableImage: "/FloorPlans/T1_Modelo_C_Table.svg",
+    tableImageStyle:
+      "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
+    mainTitleKey: "floorplans.t1_model_c",
+    mobileTitleKey: "floorplans.t1_model_c_mobile",
+    subTitleKey: "floorplans.t1_model_c_subtitle",
+  },
+];
 ---
 
 <Layout>
-  <HeroPage />
-  <SummaryNumbers />
-  <Footer />
+  <HeroPage
+    imageSrc={heroImg}
+    text1="Tipologias T1"
+    text2="Elegância elevada à Perfeição"
+  />
+  <SummaryNumbers
+    number1="1"
+    label1="Suite"
+    number2="2"
+    label2="Casas de Banho"
+    number3="2"
+    label3="Lugares de Estacionamento"
+    number4="+ 132 m²"
+    label4="Área Bruta de Construção"
+  />
+  <FloorPlans dataCarousel={dataCarousel} />
+  <Gallery />
+  <Local />
+  <Books />
 </Layout>
-

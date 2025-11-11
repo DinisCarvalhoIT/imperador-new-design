@@ -1,9 +1,19 @@
 ---
 import VectorPointer from "../../../public/HomePage/pointNumbers.svg";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+interface Props {
+  number1: string;
+  label1: string;
+  number2: string;
+  label2: string;
+  number3: string;
+  label3: string;
+  number4: string;
+  label4: string;
+}
+
+const { number1, label1, number2, label2, number3, label3, number4, label4 } =
+  Astro.props;
 ---
 
 <section class="w-full bg-transparent absolute -bottom-8 hidden sm:block">
@@ -13,34 +23,26 @@ const t = useTranslations(lang);
   >
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >10</span
-      ><span class="font-montserrat text-center">{t("summary.floors")}</span
-      ><span class="font-montserrat text-center invisible">&nbsp;</span>
+        >{number1}</span
+      ><span class="font-montserrat text-center" set:html={label1} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >31</span
-      ><span class="font-montserrat text-center">{t("summary.apartments")}</span
-      ><span class="font-montserrat text-center">{t("summary.luxury")}</span>
+        >{number2}</span
+      ><span class="font-montserrat text-center" set:html={label2} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >64</span
-      ><span class="font-montserrat text-center"
-        >{t("summary.parking_line1")}</span
-      ><span class="font-montserrat text-center"
-        >{t("summary.parking_line2")}</span
-      >
+        >{number3}</span
+      ><span class="font-montserrat text-center" set:html={label3} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >5279.85</span
-      ><span class="font-montserrat text-center">{t("summary.area_line1")}</span
-      >
-      <span class="font-montserrat text-center">{t("summary.area_line2")}</span>
+        >{number4}</span
+      ><span class="font-montserrat text-center" set:html={label4} />
     </div>
   </div>
 </section>
@@ -51,33 +53,26 @@ const t = useTranslations(lang);
   >
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >10</span
-      ><span class="font-montserrat text-center">{t("summary.floors")}</span>
+        >{number1}</span
+      ><span class="font-montserrat text-center" set:html={label1} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >31</span
-      ><span class="font-montserrat text-center">{t("summary.apartments")}</span
-      ><span class="font-montserrat text-center">{t("summary.luxury")}</span>
+        >{number2}</span
+      ><span class="font-montserrat text-center" set:html={label2} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >64</span
-      ><span class="font-montserrat text-center"
-        >{t("summary.parking_line1")}</span
-      ><span class="font-montserrat text-center"
-        >{t("summary.parking_line2")}</span
-      >
+        >{number3}</span
+      ><span class="font-montserrat text-center" set:html={label3} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
       <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >5279.85</span
-      ><span class="font-montserrat text-center">{t("summary.area_line1")}</span
-      >
-      <span class="font-montserrat text-center">{t("summary.area_line2")}</span>
+        >{number4}</span
+      ><span class="font-montserrat text-center" set:html={label4} />
     </div>
   </div>
 </section>
