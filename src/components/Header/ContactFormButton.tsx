@@ -66,8 +66,24 @@ export default function ContactFormButton({
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    try {
+      const response = await fetch("/api/request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+      console.log("data", data);
+      toast.success("vai mamar");
+      setIsModalOpen(false);
+      form.reset();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   }
   return (
     <>
