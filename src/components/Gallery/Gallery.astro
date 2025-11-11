@@ -7,60 +7,171 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 // Import gallery images
-import gallery1Img from "../../../public/gallery/Imperador_Interior1.jpg";
-import gallery2Img from "../../../public/gallery/Imperador_Interior2.jpg";
-import gallery3Img from "../../../public/gallery/Imperador_Interior3.jpg";
-import gallery4Img from "../../../public/gallery/Imperador_Interior4.jpg";
-import gallery5Img from "../../../public/gallery/Imperador_Interior5.jpg";
-import gallery6Img from "../../../public/gallery/Imperador_Interior6.jpg";
-import gallery7Img from "../../../public/gallery/Imperador_Interior7.jpg";
-import gallery8Img from "../../../public/gallery/Imperador_Interior8.jpg";
-import gallery9Img from "../../../public/gallery/Imperador_Interior9.jpg";
-import gallery10Img from "../../../public/gallery/Imperador_Interior10.jpg";
-import gallery11Img from "../../../public/gallery/Imperador_Interior11.jpg";
-import gallery12Img from "../../../public/gallery/Imperador_Interior12.jpg";
-import gallery13Img from "../../../public/gallery/Imperador_Interior13.jpg";
-import gallery14Img from "../../../public/gallery/Imperador_Interior14.jpg";
-import gallery15Img from "../../../public/gallery/Imperador_Interior15.jpg";
-import gallery16Img from "../../../public/gallery/Imperador_Interior16.jpg";
-import gallery17Img from "../../../public/gallery/Imperador_Interior17.jpg";
+import gallery1Img from "../../../public/Gallery/Imperador_Interior1.jpg";
+import gallery2Img from "../../../public/Gallery/Imperador_Interior2.jpg";
+import gallery3Img from "../../../public/Gallery/Imperador_Interior3.jpg";
+import gallery4Img from "../../../public/Gallery/Imperador_Interior4.jpg";
+import gallery5Img from "../../../public/Gallery/Imperador_Interior5.jpg";
+import gallery6Img from "../../../public/Gallery/Imperador_Interior6.jpg";
+import gallery7Img from "../../../public/Gallery/Imperador_Interior7.jpg";
+import gallery8Img from "../../../public/Gallery/Imperador_Interior8.jpg";
+import gallery9Img from "../../../public/Gallery/Imperador_Interior9.jpg";
+import gallery10Img from "../../../public/Gallery/Imperador_Interior10.jpg";
+import gallery11Img from "../../../public/Gallery/Imperador_Interior11.jpg";
+import gallery12Img from "../../../public/Gallery/Imperador_Interior12.jpg";
+import gallery13Img from "../../../public/Gallery/Imperador_Interior13.jpg";
+import gallery14Img from "../../../public/Gallery/Imperador_Interior14.jpg";
+import gallery15Img from "../../../public/Gallery/Imperador_Interior15.jpg";
+import gallery16Img from "../../../public/Gallery/Imperador_Interior16.jpg";
+import gallery17Img from "../../../public/Gallery/Imperador_Interior17.jpg";
+import gallery18Img from "../../../public/Gallery/Imperador_Exterior01.jpg";
+import gallery19Img from "../../../public/Gallery/Imperador_Exterior02.jpg";
+import gallery20Img from "../../../public/Gallery/Imperador_Exterior03.jpg";
+import gallery21Img from "../../../public/Gallery/Imperador_Exterior04.jpg";
+import gallery22Img from "../../../public/Gallery/Imperador_Exterior05.jpg";
+import gallery23Img from "../../../public/Gallery/Imperador_Exterior06.jpg";
+import gallery24Img from "../../../public/Gallery/Imperador_Exterior07.jpg";
+import gallery25Img from "../../../public/Gallery/Imperador_Exterior08.jpg";
+import gallery26Img from "../../../public/Gallery/Imperador_Exterior09.jpg";
+import gallery27Img from "../../../public/Gallery/Imperador_Exterior10.jpg";
+import gallery28Img from "../../../public/Gallery/Imperador_Exterior11.jpg";
+import gallery29Img from "../../../public/Gallery/Imperador_Exterior12.jpg";
+import gallery30Img from "../../../public/Gallery/Imperador_Exterior13.jpg";
+import gallery31Img from "../../../public/Gallery/Imperador_Exterior14.jpg";
+import gallery32Img from "../../../public/Gallery/Imperador_Exterior15.jpg";
+import gallery33Img from "../../../public/Gallery/Imperador_Exterior16.jpg";
 
-const imageSources = [gallery1Img, gallery2Img, gallery3Img, gallery4Img, gallery5Img, gallery6Img, gallery7Img, gallery8Img, gallery9Img, gallery10Img, gallery11Img, gallery12Img, gallery13Img, gallery14Img, gallery15Img, gallery16Img, gallery17Img];
+const imageSources = [
+  gallery1Img,
+  gallery2Img,
+  gallery3Img,
+  gallery4Img,
+  gallery5Img,
+  gallery6Img,
+  gallery7Img,
+  gallery8Img,
+  gallery9Img,
+  gallery10Img,
+  gallery11Img,
+  gallery12Img,
+  gallery13Img,
+  gallery14Img,
+  gallery15Img,
+  gallery16Img,
+  gallery17Img,
+  gallery18Img,
+  gallery19Img,
+  gallery20Img,
+  gallery21Img,
+  gallery22Img,
+  gallery23Img,
+  gallery24Img,
+  gallery25Img,
+  gallery26Img,
+  gallery27Img,
+  gallery28Img,
+  gallery29Img,
+  gallery30Img,
+  gallery31Img,
+  gallery32Img,
+  gallery33Img,
+];
 
-// Process images to webp and get URLs for React component
-const getImageUrl = async (image: any) => {
+// Thumbnail resolution configuration for each image by index
+// Customize the width and height for each image's thumbnail in the gallery grid
+// Index corresponds to the order in imageSources array (0-based)
+const thumbnailConfig: { width: number; height: number }[] = [
+  { width: 1200, height: 800 },  // 0: Imperador_Interior1.jpg
+  { width: 1400, height: 900 },  // 1: Imperador_Interior2.jpg
+  { width: 800, height: 600 },   // 2: Imperador_Interior3.jpg
+  { width: 800, height: 600 },    // 3: Imperador_Interior4.jpg
+  { width: 800, height: 600 },   // 4: Imperador_Interior5.jpg
+  { width: 1000, height: 1400 },   // 5: Imperador_Interior6.jpg
+  { width: 800, height: 600 },   // 6: Imperador_Interior7.jpg
+  { width: 800, height: 600 },   // 7: Imperador_Interior8.jpg
+  { width: 800, height: 600 },   // 8: Imperador_Interior9.jpg
+  { width: 800, height: 600 },   // 9: Imperador_Interior10.jpg
+  { width: 800, height: 600 },   // 10: Imperador_Interior11.jpg
+  { width: 800, height: 600 },   // 11: Imperador_Interior12.jpg
+  { width: 800, height: 600 },   // 12: Imperador_Interior13.jpg
+  { width: 800, height: 600 },   // 13: Imperador_Interior14.jpg
+  { width: 800, height: 600 },   // 14: Imperador_Interior15.jpg
+  { width: 800, height: 600 },   // 15: Imperador_Interior16.jpg
+  { width: 550, height: 550 },   // 16: Imperador_Interior17.jpg
+  { width: 800, height: 600 },   // 17: Imperador_Exterior01.jpg
+  { width: 800, height: 600 },   // 18: Imperador_Exterior02.jpg
+  { width: 800, height: 600 },   // 19: Imperador_Exterior03.jpg
+  { width: 800, height: 600 },   // 20: Imperador_Exterior04.jpg
+  { width: 800, height: 600 },   // 21: Imperador_Exterior05.jpg
+  { width: 800, height: 600 },   // 22: Imperador_Exterior06.jpg
+  { width: 800, height: 600 },   // 23: Imperador_Exterior07.jpg
+  { width: 800, height: 600 },   // 24: Imperador_Exterior08.jpg
+  { width: 800, height: 600 },   // 25: Imperador_Exterior09.jpg
+  { width: 800, height: 600 },   // 26: Imperador_Exterior10.jpg
+  { width: 800, height: 600 },   // 27: Imperador_Exterior11.jpg
+  { width: 800, height: 600 },   // 28: Imperador_Exterior12.jpg
+  { width: 800, height: 600 },   // 29: Imperador_Exterior13.jpg
+  { width: 800, height: 600 },   // 30: Imperador_Exterior14.jpg
+  { width: 800, height: 600 },   // 31: Imperador_Exterior15.jpg
+  { width: 800, height: 600 },   // 32: Imperador_Exterior16.jpg
+];
+
+// Default thumbnail dimensions (used if index out of bounds)
+const DEFAULT_THUMBNAIL = { width: 1400, height: 900 };
+
+// Process images to webp - create thumbnails for grid and full-size for carousel
+const getThumbnailUrl = async (image: any, index: number) => {
+  // Get custom dimensions by index or use default
+  const dimensions = thumbnailConfig[index] || DEFAULT_THUMBNAIL;
+
   const processed = await getImage({
     src: image,
     format: "webp",
-    width: 1520,
-    height: 820,
+    width: dimensions.width,
+    height: dimensions.height,
+    quality: 85,
+  });
+  return processed.src;
+};
+
+const getFullSizeUrl = async (image: any) => {
+  const processed = await getImage({
+    src: image,
+    format: "webp",
+    width: 1600,
+    height: 1200,
     quality: 90,
   });
   return processed.src;
 };
 
-// Process all images to get URLs for the carousel
-const galleryImages = await Promise.all(
-  imageSources.map(img => getImageUrl(img))
+// Process all images to get URLs for thumbnails (grid) and full-size (carousel)
+const galleryThumbnails = await Promise.all(
+  imageSources.map((img, index) => getThumbnailUrl(img, index))
+);
+
+const galleryFullSize = await Promise.all(
+  imageSources.map((img) => getFullSizeUrl(img))
 );
 ---
 
-<section
-  class=" w-full bg-[#0B1D26]"
-  id="gallery"
->
+<section class="w-full bg-[#0B1D26]" id="gallery">
   <div class="w-full mx-auto px-4 py-16 md:px-8 lg:px-[134px]">
     {/* Section Header */}
     <div class="text-center mb-8 md:mb-12">
-      <div class="font-montserrat text-[#FBD784] uppercase text-[14px] md:text-[16px] lg:text-[18px] tracking-[4px] md:tracking-[6px] mb-4">
+      <div
+        class="font-montserrat text-[#FBD784] uppercase text-[14px] md:text-[16px] lg:text-[18px] tracking-[4px] md:tracking-[6px] mb-4"
+      >
         {t("gallery.tagline")}
       </div>
-      <h2 class="font-playfairDisplay text-[36px] md:text-[48px] lg:text-[58px] leading-[44px] md:leading-[56px] lg:leading-[68px] text-white text-center">
+      <h2
+        class="font-playfairDisplay text-[36px] md:text-[48px] lg:text-[58px] leading-[44px] md:leading-[56px] lg:leading-[68px] text-white text-center"
+      >
         {t("gallery.title")}
       </h2>
     </div>
 
     {/* Gallery Grid - Masonry Layout with Dialog */}
-    <GalleryGrid client:load images={galleryImages} />
+    <GalleryGrid client:load thumbnails={galleryThumbnails} fullSize={galleryFullSize} />
   </div>
 </section>

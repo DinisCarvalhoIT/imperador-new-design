@@ -11,7 +11,8 @@ import {
 import { cn } from "@/lib/utils";
 
 interface GalleryGridProps {
-  images: string[];
+  thumbnails: string[];
+  fullSize: string[];
 }
 
 interface ThumbnailProps {
@@ -48,7 +49,7 @@ function Thumbnail({ image, index, selected, onClick }: ThumbnailProps) {
   );
 }
 
-export default function GalleryGrid({ images }: GalleryGridProps) {
+export default function GalleryGrid({ thumbnails, fullSize }: GalleryGridProps) {
   const [open, setOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainApi, setMainApi] = useState<CarouselApi>();
@@ -98,42 +99,129 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
         <div className="relative">
           {/* Gallery Grid Layout */}
           <div className="w-full mx-auto">
-            {/* Row 1 */}
-            <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full pb-3">
-              {/* Large Image Left */}
-              <div
-                className="relative flex-none cursor-pointer group w-full sm:w-[58.43%] overflow-hidden"
-                onClick={() => handleImageClick(0)}
-              >
-                <img
-                  src={images[0]}
-                  alt="Gallery image 1"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                />
-              </div>
-
-              {/* Right Stack - Two Images */}
-              <div className="flex flex-col gap-3 flex-none w-full sm:w-[40.72%]">
+            {/* Desktop Layout (lg and above) */}
+            <div className="hidden lg:block">
+              {/* Row 1 */}
+              <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full pb-3">
+                {/* Large Image Left */}
                 <div
-                  className="relative cursor-pointer group overflow-hidden"
-                  style={{ aspectRatio: "575 / 280" }}
+                  className="relative flex-none cursor-pointer group w-full sm:w-[58.43%] overflow-hidden"
                   onClick={() => handleImageClick(1)}
                 >
                   <img
-                    src={images[1]}
-                    alt="Gallery image 2"
+                    src={thumbnails[1]}
+                    alt="Gallery image 1"
                     className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                    loading="lazy"
                   />
                 </div>
+
+                {/* Right Stack - Two Images */}
+                <div className="flex flex-col gap-3 flex-none w-full sm:w-[40.72%]">
+                  <div
+                    className="relative cursor-pointer group overflow-hidden"
+                    style={{ aspectRatio: "575 / 280" }}
+                    onClick={() => handleImageClick(0)}
+                  >
+                    <img
+                      src={thumbnails[0]}
+                      alt="Gallery image 2"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div
+                    className="relative cursor-pointer group overflow-hidden"
+                    style={{ aspectRatio: "575 / 280" }}
+                    onClick={() => handleImageClick(9)}
+                  >
+                    <img
+                      src={thumbnails[9]}
+                      alt="Gallery image 3"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 2 */}
+              <div className="flex flex-col lg:flex-row items-start w-full">
+                {/* Left Grid - 4 Images */}
+                <div className="flex flex-row flex-wrap gap-3 flex-none w-full lg:w-[68.13%] ">
+                  <div
+                    className="relative cursor-pointer group"
+                    style={{
+                      width: "59.77%",
+                      aspectRatio: "575 / 281",
+                    }}
+                    onClick={() => handleImageClick(10)}
+                  >
+                    <img
+                      src={thumbnails[10]}
+                      alt="Gallery image 4"
+                      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div
+                    className="relative cursor-pointer group"
+                    style={{
+                      width: "37.73%",
+                      aspectRatio: "363 / 281",
+                    }}
+                    onClick={() => handleImageClick(12)}
+                  >
+                    <img
+                      src={thumbnails[12]}
+                      alt="Gallery image 5"
+                      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div
+                    className="relative cursor-pointer group"
+                    style={{
+                      width: "31.99%",
+                      aspectRatio: "308 / 282",
+                    }}
+                    onClick={() => handleImageClick(16)}
+                  >
+                    <img
+                      src={thumbnails[16]}
+                      alt="Gallery image 6"
+                      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div
+                    className="relative cursor-pointer group"
+                    style={{
+                      width: "65.49%",
+                      aspectRatio: "630 / 281",
+                    }}
+                    onClick={() => handleImageClick(2)}
+                  >
+                    <img
+                      src={thumbnails[2]}
+                      alt="Gallery image 7"
+                      className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Large Image Right */}
                 <div
-                  className="relative cursor-pointer group overflow-hidden"
-                  style={{ aspectRatio: "575 / 280" }}
-                  onClick={() => handleImageClick(2)}
+                  className="relative flex-none cursor-pointer group w-full lg:w-[31.87%] overflow-hidden"
+                  style={{ aspectRatio: "450 / 575" }}
+                  onClick={() => handleImageClick(5)}
                 >
                   <img
-                    src={images[2]}
-                    alt="Gallery image 3"
+                    src={thumbnails[5]}
+                    alt="Gallery image 8"
                     className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
                     loading="lazy"
                   />
@@ -141,87 +229,137 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
               </div>
             </div>
 
-            {/* Row 2 */}
-            <div className="flex flex-col lg:flex-row items-start gap-3 w-full">
-              {/* Left Grid - 4 Images */}
-              <div className="flex flex-row flex-wrap gap-3 flex-none w-full lg:w-[68.13%]">
+            {/* Mobile/Tablet Layout (below lg) */}
+            <div className="block lg:hidden">
+              {/* Row 1: Image 1 alone */}
+              <div className="w-full pb-3">
                 <div
-                  className="relative cursor-pointer group"
-                  style={{
-                    width: "59.77%",
-                    aspectRatio: "575 / 281",
-                  }}
-                  onClick={() => handleImageClick(3)}
+                  className="relative cursor-pointer group overflow-hidden"
+                  style={{ aspectRatio: "575 / 280" }}
+                  onClick={() => handleImageClick(1)}
                 >
                   <img
-                    src={images[3]}
-                    alt="Gallery image 4"
-                    className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div
-                  className="relative cursor-pointer group"
-                  style={{
-                    width: "37.73%",
-                    aspectRatio: "363 / 281",
-                  }}
-                  onClick={() => handleImageClick(4)}
-                >
-                  <img
-                    src={images[4]}
-                    alt="Gallery image 5"
-                    className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div
-                  className="relative cursor-pointer group"
-                  style={{
-                    width: "31.99%",
-                    aspectRatio: "308 / 282",
-                  }}
-                  onClick={() => handleImageClick(5)}
-                >
-                  <img
-                    src={images[5]}
-                    alt="Gallery image 6"
-                    className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div
-                  className="relative cursor-pointer group"
-                  style={{
-                    width: "65.49%",
-                    aspectRatio: "630 / 281",
-                  }}
-                  onClick={() => handleImageClick(6)}
-                >
-                  <img
-                    src={images[6]}
-                    alt="Gallery image 7"
-                    className="w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                    src={thumbnails[1]}
+                    alt="Gallery image 1"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
                     loading="lazy"
                   />
                 </div>
               </div>
 
-              {/* Large Image Right */}
-              <div
-                className="relative flex-none cursor-pointer group w-full lg:w-[31.87%] overflow-hidden"
-                style={{ aspectRatio: "450 / 575" }}
-                onClick={() => handleImageClick(7)}
-              >
-                <img
-                  src={images[7]}
-                  alt="Gallery image 8"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
-                  loading="lazy"
-                />
+              {/* Row 2: Image 0 (75%) + Image 16 (25%) */}
+              <div className="flex gap-3 w-full pb-3">
+                <div
+                  className="relative cursor-pointer group overflow-hidden"
+                  style={{ width: "70%", aspectRatio: "575 / 280" }}
+                  onClick={() => handleImageClick(0)}
+                >
+                  <img
+                    src={thumbnails[0]}
+                    alt="Gallery image 0"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
+                <div
+                  className="relative cursor-pointer group overflow-hidden"
+                  style={{ width: "30%", aspectRatio: "575 / 280" }}
+                  onClick={() => handleImageClick(16)}
+                >
+                  <img
+                    src={thumbnails[16]}
+                    alt="Gallery image 16"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Row 3: Image 10 (top left) + Image 11 (bottom left) + Image 5 (right, full height) */}
+              <div className="flex gap-3 w-full pb-3 items-stretch">
+                {/* Left Stack */}
+                <div className="flex flex-col gap-3 flex-1">
+                  <div
+                    className="relative cursor-pointer group overflow-hidden"
+                    style={{ aspectRatio: "575 / 280" }}
+                    onClick={() => handleImageClick(10)}
+                  >
+                    <img
+                      src={thumbnails[10]}
+                      alt="Gallery image 10"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div
+                    className="relative cursor-pointer group overflow-hidden"
+                    style={{ aspectRatio: "575 / 280" }}
+                    onClick={() => handleImageClick(11)}
+                  >
+                    <img
+                      src={thumbnails[11]}
+                      alt="Gallery image 11"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                {/* Right Image - Full Height */}
+                <div
+                  className="relative cursor-pointer group overflow-hidden flex-1 self-stretch"
+                  onClick={() => handleImageClick(5)}
+                >
+                  <img
+                    src={thumbnails[5]}
+                    alt="Gallery image 5"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Row 4: Image 9 + Image 2 */}
+              <div className="flex gap-3 w-full pb-3">
+                <div
+                  className="relative cursor-pointer group overflow-hidden"
+                  style={{ width: "35%", aspectRatio: "575 / 280" }}
+                  onClick={() => handleImageClick(9)}
+                >
+                  <img
+                    src={thumbnails[9]}
+                    alt="Gallery image 9"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
+                <div
+                  className="relative cursor-pointer group overflow-hidden"
+                  style={{ width: "65%", aspectRatio: "630 / 281" }}
+                  onClick={() => handleImageClick(2)}
+                >
+                  <img
+                    src={thumbnails[2]}
+                    alt="Gallery image 2"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Row 5: Image 6 (full width) */}
+              <div className="w-full pb-3">
+                <div
+                  className="relative cursor-pointer group overflow-hidden"
+                  style={{ aspectRatio: "575 / 280" }}
+                  onClick={() => handleImageClick(6)}
+                >
+                  <img
+                    src={thumbnails[6]}
+                    alt="Gallery image 6"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity"
+                    loading="lazy"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -271,16 +409,17 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
               className="w-full h-full max-w-full"
             >
               <CarouselContent className="ml-0 h-full flex items-center pt-2 sm:pt-4">
-                {images.map((image, index) => (
+                {fullSize.map((image, index) => (
                   <CarouselItem
                     key={`main-${index}`}
                     className="flex items-center justify-center w-full h-full pl-0 basis-full"
                   >
-                    <div className="relative w-full h-full flex items-center justify-center">
+                    <div className="relative w-full h-full flex items-center justify-center max-w-[90vw] max-h-[75vh]">
                       <img
                         src={image}
                         alt={`Gallery image ${index + 1}`}
-                        className="max-w-full max-h-full object-contain"
+                        className="max-w-full max-h-full w-auto h-auto object-contain"
+                        style={{ maxWidth: "90vw", maxHeight: "75vh" }}
                         loading={index <= 1 ? "eager" : "lazy"}
                       />
                     </div>
@@ -299,21 +438,23 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
           </div>
 
           {/* Thumbnail Carousel */}
-          <div className="w-full py-4 sm:py-5 md:py-6 px-3 sm:px-4 md:px-6 lg:px-8 shrink-0 overflow-visible">
+          <div className="w-full py-4 sm:py-5 md:py-6 px-3 sm:px-4 md:px-6 lg:px-8 shrink-0">
             <Carousel
               setApi={setThumbApi}
               opts={{
-                align: "center",
-                containScroll: "keepSnaps",
+                align: "start",
+                containScroll: "trimSnaps",
                 dragFree: true,
+                skipSnaps: false,
+                watchDrag: true,
               }}
-              className="w-full max-w-full overflow-visible"
+              className="w-full max-w-full"
             >
-              <CarouselContent className="ml-0 gap-2 sm:gap-3 justify-center items-center px-2 sm:px-3 md:px-4 py-2 overflow-visible">
-                {images.map((image, index) => (
+              <CarouselContent className="ml-0 gap-2 sm:gap-3 justify-start items-center px-2 sm:px-3 md:px-4 py-2 -mr-2 sm:-mr-3 md:-mr-4">
+                {thumbnails.map((image, index) => (
                   <CarouselItem
                     key={`thumb-${index}`}
-                    className="pl-0 basis-auto overflow-visible"
+                    className="pl-0 basis-auto"
                   >
                     <Thumbnail
                       image={image}
