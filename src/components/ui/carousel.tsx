@@ -328,6 +328,78 @@ function CarouselNextFloorPlans({
   );
 }
 
+function CarouselPreviousApartmentDetails({
+  className,
+  variant = "outline",
+  size = "icon",
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { orientation, scrollPrev, canScrollPrev } = useCarousel();
+
+  return (
+    <Button
+      data-slot="carousel-previous"
+      variant={null}
+      size={size}
+      className={cn(
+        "absolute size-10 rounded-full cursor-pointer bg-transparent hover:bg-transparent",
+        orientation === "horizontal"
+          ? "bottom-4 left-4 lg:bottom-8 lg:left-8"
+          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollPrev}
+      onClick={scrollPrev}
+      {...props}
+    >
+      <img
+        src={"/FloorPlans/prevCarousel.svg"}
+        width={40}
+        height={40}
+        className="md:w-[50px] md:h-[50px] w-[35px] h-[35px]"
+        alt="Previous"
+      />
+      <span className="sr-only">Previous slide</span>
+    </Button>
+  );
+}
+
+function CarouselNextApartmentDetails({
+  className,
+  variant = "outline",
+  size = "icon",
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { orientation, scrollNext, canScrollNext } = useCarousel();
+
+  return (
+    <Button
+      data-slot="carousel-next"
+      variant={null}
+      size={size}
+      className={cn(
+        "absolute size-10 rounded-full cursor-pointer bg-transparent hover:bg-transparent",
+        orientation === "horizontal"
+          ? "bottom-4 right-4 lg:bottom-8 lg:right-8"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+        className
+      )}
+      disabled={!canScrollNext}
+      onClick={scrollNext}
+      {...props}
+    >
+      <img
+        src={"/FloorPlans/nextCarousel.svg"}
+        width={40}
+        height={40}
+        className="md:w-[50px] md:h-[50px] w-[35px] h-[35px]"
+        alt="Next"
+      />
+      <span className="sr-only">Next slide</span>
+    </Button>
+  );
+}
+
 export {
   type CarouselApi,
   Carousel,
@@ -336,5 +408,7 @@ export {
   CarouselPrevious,
   CarouselPreviousFloorPlans,
   CarouselNextFloorPlans,
+  CarouselPreviousApartmentDetails,
+  CarouselNextApartmentDetails,
   CarouselNext,
 };

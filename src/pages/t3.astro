@@ -1,29 +1,41 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Footer from "@/components/Footer/Footer.astro";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import HeroPage from "@/components/HeroPageTypologies/HeroPage.astro";
+import heroImg from "../../public/T1/t1_heroPage.png";
+import SummaryNumbers from "@/components/HeroPageTypologies/SummaryNumbers.astro";
+import SynchronizedTypologyCarousels from "@/components/HeroPageTypologies/SynchronizedTypologyCarousels.astro";
+import Gallery from "@/components/Gallery/Gallery.astro";
+import Local from "@/components/Local/Local.astro";
+import Books from "@/components/Books/Books.astro";
+import { t3ApartmentDetails, t3FloorPlans } from "@/data/apartmentModels";
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-
-// Get model from query params
-const model = Astro.url.searchParams.get("model") || "a";
+// Use T3 specific models only
+const apartmentDetailsData = t3ApartmentDetails;
+const floorPlansData = t3FloorPlans;
 ---
 
 <Layout>
-  <main class="min-h-screen pt-20 pb-12 px-4 md:px-8 lg:px-16">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-white text-4xl md:text-6xl font-playfairDisplay mb-8">
-        T3 Typology
-      </h1>
-      <p class="text-white/80 text-lg mb-4">
-        Model: {model.toUpperCase()}
-      </p>
-      <p class="text-white/60">
-        {t("details_apartments.see_more")} - This is the T3 apartment page.
-      </p>
-    </div>
-  </main>
-  <Footer />
+  <HeroPage
+    imageSrc={heroImg}
+    text1="Tipologias T3"
+    text2="Elegância elevada à Perfeição"
+  />
+  <SummaryNumbers
+    number1="3"
+    label1="Suite"
+    number2="4"
+    label2="Casas de Banho"
+    number3="2"
+    label3="Lugares de Estacionamento"
+    number4="+ 196 m²"
+    label4="Área Bruta de Construção"
+  />
+  <SynchronizedTypologyCarousels
+    apartmentDetailsData={apartmentDetailsData}
+    floorPlansData={floorPlansData}
+  />
+  <Gallery />
+  <Local />
+  <Books />
 </Layout>
 

@@ -1,0 +1,47 @@
+---
+import { getLangFromUrl } from "@/i18n/utils";
+import SynchronizedCarousels from "./SynchronizedCarousels";
+import { getModelIndexFromUrl } from "@/data/apartmentModels";
+
+interface ApartmentDetail {
+  id: string;
+  apartmentImage: string;
+  mainTitleKey: string;
+  subTitleKey: string;
+  features: {
+    titleKey: string;
+    descriptionKey?: string;
+  }[];
+}
+
+interface FloorPlanItem {
+  id: string;
+  floorPlanImage: string;
+  smallImageCollumnTable: boolean;
+  smallImageStyle: string;
+  smallFloorPlanImage: string;
+  tableImage: string;
+  tableImageStyle: string;
+  mainTitleKey: string;
+  mobileTitleKey: string;
+  subTitleKey: string;
+}
+
+interface Props {
+  apartmentDetailsData: ApartmentDetail[];
+  floorPlansData: FloorPlanItem[];
+}
+
+const { apartmentDetailsData, floorPlansData } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const initialIndex = getModelIndexFromUrl(Astro.url.searchParams);
+---
+
+<SynchronizedCarousels
+  lang={lang}
+  apartmentDetailsData={apartmentDetailsData}
+  floorPlansData={floorPlansData}
+  initialIndex={initialIndex}
+  client:load
+/>
+

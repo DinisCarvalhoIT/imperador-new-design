@@ -26,19 +26,46 @@ export type DataCarousel = {
 type FloorPlansCarouselProps = {
   lang: keyof typeof ui;
   dataCarousel: DataCarousel[];
+  currentIndex?: number;
+  onIndexChange?: (index: number) => void;
 };
 
 // absolute inset-0 ---- no primeiro div itnha
 export default function FloorPlansCarousel({
   lang,
   dataCarousel,
+  currentIndex,
+  onIndexChange,
 }: FloorPlansCarouselProps) {
   const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(currentIndex ?? 0);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   const t = (key: keyof (typeof ui)[typeof lang]) => {
     return ui[lang][key];
   };
+
+  // Initialize carousel to the correct index when API is ready (only once on mount)
+  // Use requestAnimationFrame to ensure carousel is fully ready, and scrollTo with true to jump immediately
+  useEffect(() => {
+    if (api && !isInitialized && currentIndex !== undefined) {
+      requestAnimationFrame(() => {
+        if (api) {
+          api.scrollTo(currentIndex, true); // true = jump immediately without animation
+          setCurrent(currentIndex);
+          setIsInitialized(true);
+        }
+      });
+    }
+  }, [api, currentIndex, isInitialized]);
+
+  // Sync with external currentIndex changes (after initialization)
+  useEffect(() => {
+    if (api && isInitialized && currentIndex !== undefined && currentIndex !== current) {
+      setCurrent(currentIndex);
+      api.scrollTo(currentIndex);
+    }
+  }, [currentIndex, api, isInitialized, current]);
 
   useEffect(() => {
     if (!api) return;
@@ -46,9 +73,13 @@ export default function FloorPlansCarousel({
     setCurrent(api.selectedScrollSnap());
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
+      const newIndex = api.selectedScrollSnap();
+      setCurrent(newIndex);
+      if (onIndexChange) {
+        onIndexChange(newIndex);
+      }
     });
-  }, [api]);
+  }, [api, onIndexChange]);
 
   const getVisibleTitles = () => {
     const totalSlides = dataCarousel.length;
