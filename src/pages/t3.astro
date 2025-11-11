@@ -8,13 +8,27 @@ import Gallery from "@/components/Gallery/Gallery.astro";
 import Local from "@/components/Local/Local.astro";
 import Books from "@/components/Books/Books.astro";
 import { t3ApartmentDetails, t3FloorPlans } from "@/data/apartmentModels";
+import { getLangFromUrl } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const pageTitle = lang === "en"
+  ? "T3 Apartments - Imperador Building | Luxury 3-Bedroom Apartments in Funchal"
+  : "Apartamentos T3 - Edifício Imperador | Apartamentos de 3 Quartos de Luxo no Funchal";
+const pageDescription = lang === "en"
+  ? "Experience T3 luxury apartments at Imperador Building in Funchal. 3 suite bedrooms, 4 bathrooms, 2 parking spaces, and over 196m² of gross construction area. Spacious luxury living with premium finishes."
+  : "Experimente apartamentos de luxo T3 no Edifício Imperador no Funchal. 3 quartos suite, 4 casas de banho, 2 lugares de estacionamento e mais de 196m² de área bruta de construção. Vida de luxo espaçosa com acabamentos premium.";
+
+const breadcrumbs = [
+  { name: lang === "en" ? "Home" : "Início", url: lang === "en" ? "/" : "/pt" },
+  { name: "T3 Apartments", url: lang === "en" ? "/t3" : "/pt/t3" }
+];
 
 // Use T3 specific models only
 const apartmentDetailsData = t3ApartmentDetails;
 const floorPlansData = t3FloorPlans;
 ---
 
-<Layout>
+<Layout title={pageTitle} description={pageDescription} ogImage="/T1/t1_heroPage.png" breadcrumbs={breadcrumbs}>
   <HeroPage
     imageSrc={heroImg}
     text1="Tipologias T3"

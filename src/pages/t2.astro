@@ -8,13 +8,27 @@ import Gallery from "@/components/Gallery/Gallery.astro";
 import Local from "@/components/Local/Local.astro";
 import Books from "@/components/Books/Books.astro";
 import { t2ApartmentDetails, t2FloorPlans } from "@/data/apartmentModels";
+import { getLangFromUrl } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const pageTitle = lang === "en"
+  ? "T2 Apartments - Imperador Building | Luxury 2-Bedroom Apartments in Funchal"
+  : "Apartamentos T2 - Edifício Imperador | Apartamentos de 2 Quartos de Luxo no Funchal";
+const pageDescription = lang === "en"
+  ? "Explore T2 luxury apartments at Imperador Building in Funchal. 2 suite bedrooms, 3 bathrooms, 2 parking spaces, and over 154m² of gross construction area. Premium amenities and contemporary design."
+  : "Explore apartamentos de luxo T2 no Edifício Imperador no Funchal. 2 quartos suite, 3 casas de banho, 2 lugares de estacionamento e mais de 154m² de área bruta de construção. Comodidades premium e design contemporâneo.";
+
+const breadcrumbs = [
+  { name: lang === "en" ? "Home" : "Início", url: lang === "en" ? "/" : "/pt" },
+  { name: "T2 Apartments", url: lang === "en" ? "/t2" : "/pt/t2" }
+];
 
 // Use T2 specific models only
 const apartmentDetailsData = t2ApartmentDetails;
 const floorPlansData = t2FloorPlans;
 ---
 
-<Layout>
+<Layout title={pageTitle} description={pageDescription} ogImage="/T1/t1_heroPage.png" breadcrumbs={breadcrumbs}>
   <HeroPage
     imageSrc={heroImg}
     text1="Tipologias T2"

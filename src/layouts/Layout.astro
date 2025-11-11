@@ -5,6 +5,15 @@ import Header from "@/components/Header/Header.astro";
 import Footer from "@/components/Footer/Footer.astro";
 import MySideBar from "@/components/Header/mySideBar.tsx";
 import { Toaster } from "@/components/ui/sonner";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  breadcrumbs?: Array<{ name: string; url: string }>;
+}
+
+const { title, description, ogImage: customOgImage, breadcrumbs } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -18,24 +27,223 @@ const sidebarTranslations = {
   schedule_visit: t("sidebar.schedule_visit"),
   close: t("sidebar.close"),
 };
+
+// Metadata configuration
+const siteName = "Imperador Building";
+const defaultDescription = lang === "en" 
+  ? "New luxury apartments in the most prestigious area of Funchal. Contemporary architecture, high-quality finishes, and exclusive amenities. Discover your perfect home in Madeira."
+  : "Novos apartamentos de luxo na área mais prestigiada do Funchal. Arquitetura contemporânea, acabamentos de alta qualidade e comodidades exclusivas. Descubra a sua casa perfeita na Madeira.";
+const defaultTitle = lang === "en"
+  ? "Imperador Building - Luxury Apartments in Funchal, Madeira"
+  : "Edifício Imperador - Apartamentos de Luxo no Funchal, Madeira";
+
+const siteDescription = description || defaultDescription;
+const siteTitle = title || defaultTitle;
+const siteUrl = Astro.site?.href || "https://imperador-building.com";
+const currentUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = customOgImage ? new URL(customOgImage, siteUrl).href : new URL("/HomePage/homePageImage.png", siteUrl).href;
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{siteTitle}</title>
+    <meta name="title" content={siteTitle} />
+    <meta name="description" content={siteDescription} />
+    <meta name="keywords" content={lang === "en" ? "luxury apartments, Funchal, Madeira, real estate, Imperador Building, luxury living, Portugal" : "apartamentos de luxo, Funchal, Madeira, imobiliária, Edifício Imperador, vida de luxo, Portugal"} />
+    <meta name="author" content="Dinis & Carvalho" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content={lang === "en" ? "English" : "Portuguese"} />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={currentUrl} />
+    
+    <!-- Favicons -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={siteDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "pt_PT"} />
+    <meta property="og:locale:alternate" content={lang === "en" ? "pt_PT" : "en_US"} />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={currentUrl} />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={siteDescription} />
+    <meta name="twitter:image" content={ogImage} />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#0B1D26" />
+    <meta name="msapplication-TileColor" content="#0B1D26" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content={siteName} />
+    
+    <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
+    
     <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Montserrat:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playpen+Sans:wght@100..800&display=swap"
       rel="stylesheet"
     />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ResidentialComplex",
+      "name": siteName,
+      "description": siteDescription,
+      "url": siteUrl,
+      "image": ogImage,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua dos Piornais",
+        "addressLocality": "Funchal",
+        "postalCode": "9000-250",
+        "addressCountry": "PT"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "32.6500",
+        "longitude": "-16.9167"
+      },
+      "telephone": "+351 965 611 642",
+      "priceRange": "$$$",
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Infinity Pool",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Rooftop",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Garden",
+          "value": true
+        }
+      ],
+      "numberOfAccommodationUnits": {
+        "@type": "QuantitativeValue",
+        "value": "23"
+      },
+      "developer": {
+        "@type": "Organization",
+        "name": "Dinis & Carvalho",
+        "url": siteUrl
+      },
+      "sameAs": [
+        siteUrl
+      ]
+    })} />
+    
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Dinis & Carvalho",
+      "url": siteUrl,
+      "logo": new URL("/HomePage/logoImperador.svg", siteUrl).href,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+351-965-611-642",
+        "contactType": "Sales",
+        "availableLanguage": ["en", "pt"]
+      }
+    })} />
+    
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": siteName,
+      "url": siteUrl,
+      "description": siteDescription,
+      "inLanguage": [lang === "en" ? "en" : "pt", lang === "en" ? "pt" : "en"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${siteUrl}/?q={search_term_string}`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+    
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SiteNavigationElement",
+      "name": lang === "en" ? "Main Navigation" : "Navegação Principal",
+      "url": siteUrl,
+      "hasPart": [
+        {
+          "@type": "WebPageElement",
+          "name": lang === "en" ? "Home" : "Início",
+          "url": lang === "en" ? siteUrl : `${siteUrl}/pt`
+        },
+        {
+          "@type": "WebPageElement",
+          "name": "T1 Apartments",
+          "url": lang === "en" ? `${siteUrl}/t1` : `${siteUrl}/pt/t1`,
+          "description": lang === "en" ? "Luxury 1-bedroom apartments" : "Apartamentos de luxo com 1 quarto"
+        },
+        {
+          "@type": "WebPageElement",
+          "name": "T2 Apartments",
+          "url": lang === "en" ? `${siteUrl}/t2` : `${siteUrl}/pt/t2`,
+          "description": lang === "en" ? "Luxury 2-bedroom apartments" : "Apartamentos de luxo com 2 quartos"
+        },
+        {
+          "@type": "WebPageElement",
+          "name": "T3 Apartments",
+          "url": lang === "en" ? `${siteUrl}/t3` : `${siteUrl}/pt/t3`,
+          "description": lang === "en" ? "Luxury 3-bedroom apartments" : "Apartamentos de luxo com 3 quartos"
+        },
+        {
+          "@type": "WebPageElement",
+          "name": lang === "en" ? "Gallery" : "Galeria",
+          "url": `${siteUrl}#gallery`,
+          "description": lang === "en" ? "View our photo gallery" : "Veja a nossa galeria de fotos"
+        },
+        {
+          "@type": "WebPageElement",
+          "name": lang === "en" ? "Location" : "Localização",
+          "url": `${siteUrl}#location`,
+          "description": lang === "en" ? "Building location and map" : "Localização do edifício e mapa"
+        }
+      ]
+    })} />
+    
+    {breadcrumbs && breadcrumbs.length > 0 && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbs.map((crumb, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": crumb.name,
+          "item": new URL(crumb.url, siteUrl).href
+        }))
+      })} />
+    )}
   </head>
   <body class="bg-[#0B1D26]">
     <MySideBar client:load translations={sidebarTranslations} lang={lang} />
