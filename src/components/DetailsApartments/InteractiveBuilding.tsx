@@ -939,11 +939,11 @@ export default function InteractiveBuilding({
                   x
                 </Button>
               </SheetClose>
-              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-2 md:px-8 py-4 sm:py-6 lg:py-8 min-h-0">
+              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-2 md:px-8 py-2 sm:py-4 lg:py-4 min-h-0">
                 {/* Mobile Carousel - Floor Plan Images */}
                 <Carousel
                   setApi={setMobileApi}
-                  className="w-full pb-4 sm:pb-6 relative pt-4 sm:pt-6 shrink min-h-0 lg:hidden"
+                  className="w-full pb-1 sm:pb-2 relative pt-1 sm:pt-2 shrink-0 lg:hidden"
                   opts={{
                     align: "center",
                     loop: true,
@@ -957,11 +957,11 @@ export default function InteractiveBuilding({
                           className="pl-0 basis-full shrink-0"
                         >
                           <div className="flex justify-center items-center w-full">
-                            <div className="relative w-full max-w-[400px] sm:max-w-[500px] md:max-w-[550px]">
+                            <div className="relative w-full max-w-[350px] sm:max-w-[400px] md:max-w-[450px]">
                               <img
                                 src={getApartmentImagePath(apartment.type, apartment.modelIndex)}
                                 alt={`${apartment.type} Model ${getModelLetter(apartment.modelIndex).toUpperCase()} floor plan`}
-                                className="w-full h-auto object-contain max-h-[410px]"
+                                className="w-full h-auto object-contain max-h-[200px] sm:max-h-[240px] md:max-h-[280px]"
                                 loading="eager"
                                 decoding="async"
                               />
@@ -979,7 +979,7 @@ export default function InteractiveBuilding({
                 {/* Desktop Carousel - Floor Plan Images */}
                 <Carousel
                   setApi={setApi}
-                  className="hidden lg:block w-full relative pt-4 pb-2 shrink min-h-0"
+                  className="hidden lg:block w-full relative pt-1 pb-1 shrink-0"
                   opts={{
                     align: "center",
                     loop: true,
@@ -993,11 +993,11 @@ export default function InteractiveBuilding({
                           className="pl-0 basis-full shrink-0"
                         >
                           <div className="flex justify-center items-center w-full">
-                            <div className="relative w-full max-w-[450px] xl:max-w-[500px] max-h-[410px] flex items-center justify-center">
+                            <div className="relative w-full max-w-[380px] xl:max-w-[420px] max-h-[220px] xl:max-h-[260px] flex items-center justify-center">
                               <img
                                 src={getApartmentImagePath(apartment.type, apartment.modelIndex)}
                                 alt={`${apartment.type} Model ${getModelLetter(apartment.modelIndex).toUpperCase()} floor plan`}
-                                className="w-full h-auto max-h-[410px] object-contain"
+                                className="w-full h-auto max-h-[220px] xl:max-h-[260px] object-contain"
                                 loading="eager"
                                 decoding="async"
                               />
@@ -1011,7 +1011,7 @@ export default function InteractiveBuilding({
 
 
                   {/* Text below floor plan for mobile */}
-                  <div className="text-center items-center justify-center self-center flex flex-col gap-0 pt-6 sm:pt-8 lg:hidden">
+                  <div className="text-center items-center justify-center self-center flex flex-col gap-0 pt-2 sm:pt-3 lg:hidden shrink-0">
                     {ALL_APARTMENTS[current] && (
                       <>
                         <h2 className="text-[#E1B260] mb-0">
@@ -1057,7 +1057,7 @@ export default function InteractiveBuilding({
                   </div>
 
                   {/* Title Section - Below Carousel for desktop */}
-                  <div className="hidden lg:flex items-center justify-center w-full pt-6 pb-4 relative px-16 xl:px-20">
+                  <div className="hidden lg:flex items-center justify-center w-full pt-2 pb-2 relative px-16 xl:px-20 shrink-0">
                     <Button
                       type="button"
                       onClick={() => api?.scrollPrev()}
@@ -1147,12 +1147,12 @@ export default function InteractiveBuilding({
                   </div>
 
                 {/* Content Container - All content below carousel */}
-                <div className="shrink-0 pt-6 sm:pt-8 lg:pt-8">
+                <div className="shrink-0 pt-2 sm:pt-3 lg:pt-2">
                   {/* Stats Grid - Mobile: 2x2 layout, Desktop: 3 columns */}
-                  <div className="lg:grid lg:grid-rows-2 lg:pb-8 lg:grid-cols-[1fr_8px_1fr_36px_1fr] lg:items-center lg:justify-center">
+                  <div className="lg:grid lg:grid-rows-2 lg:pb-4 lg:grid-cols-[1fr_8px_1fr_36px_1fr] lg:items-center lg:justify-center">
                     {/* Mobile: Two flex rows with separators */}
-                    <div className="lg:hidden relative pb-6 sm:pb-8">
-                      <div className="flex flex-col gap-6 sm:gap-8 items-center">
+                    <div className="lg:hidden relative pb-3 sm:pb-4">
+                      <div className="flex flex-col gap-4 sm:gap-5 items-center">
                         {/* Row 1: Suites and Parking */}
                         <div className="flex items-center justify-center gap-4 sm:gap-6 w-full">
                           {/* Suites */}
