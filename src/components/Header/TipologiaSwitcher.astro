@@ -1,8 +1,9 @@
 ---
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 // Get current language
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 // Define tipologia options with their respective page paths
 const tipologias = [
@@ -106,7 +107,7 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
     type="button"
     class="bg-transparent m-0 font-montserrat font-medium flex items-center gap-x-1 header-item text-white cursor-pointer relative group pb-1"
   >
-    <span>TIPOLOGIAS</span>
+    <span>{t("header.tipologias")}</span>
     <svg
       id={"tipologiaIcon-" + uniqueId}
       xmlns="http://www.w3.org/2000/svg"
