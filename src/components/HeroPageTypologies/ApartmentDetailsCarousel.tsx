@@ -242,12 +242,12 @@ export default function ApartmentDetailsCarousel({
         {/* Left Side - Content */}
         <div className="flex-1 flex z-1 flex-col justify-center space-y-6 lg:space-y-8 text-white px-4 lg:px-8">
           {/* Tagline */}
-          <div className="font-montserrat text-xs sm:text-sm md:text-base lg:text-lg uppercase text-[#FBD784] tracking-[4px] lg:tracking-[6px]">
+          <div className="font-montserrat text-[10px] sm:text-xs md:text-sm lg:text-base uppercase text-[#FBD784] tracking-[3px] lg:tracking-[5px]">
             {t("apartment_details.tagline")}
           </div>
 
           {/* Title */}
-          <h1 className="font-playfairDisplay text-3xl sm:text-4xl md:text-5xl lg:text-[58px] leading-tight lg:leading-[68px] text-white font-normal mb-2 lg:mb-3">
+          <h1 className="font-playfairDisplay text-2xl sm:text-3xl md:text-4xl lg:text-[44px] leading-tight lg:leading-[52px] text-white font-normal mb-2 lg:mb-3">
             {(() => {
               // Render mainTitleKey, replacing numbers and '-' with specific styles and spacing
               const mainTitle = t(currentData.mainTitleKey as keyof (typeof ui)[typeof lang]);
@@ -259,7 +259,7 @@ export default function ApartmentDetailsCarousel({
                   return (
                     <span
                       key={idx}
-                      className="font-playpenSans text-[21px] lg:text-[48px] mx-2"
+                      className="font-playpenSans text-[16px] lg:text-[36px] mx-2"
                       style={{ verticalAlign: "middle" }}
                     >
                       -
@@ -292,7 +292,7 @@ export default function ApartmentDetailsCarousel({
           </h1>
 
           {/* Subtitle */}
-          <p className="text-[#B0C4CC] leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
+          <p className="text-[#B0C4CC] leading-[24px] md:leading-[40px] text-[15px] md:text-[32px]">
             {(() => {
               const subtitleText = t(
                 currentData.subTitleKey as keyof (typeof ui)[typeof lang]
@@ -304,15 +304,15 @@ export default function ApartmentDetailsCarousel({
                   {formatted.unitsNumber &&
                     formatted.unitsNumber.length > 0 && (
                       <>
-                        <span className="font-libreCaslonDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
+                        <span className="font-libreCaslonDisplay leading-[24px] md:leading-[40px] text-[15px] md:text-[32px]">
                           {formatted.unitsNumber}{" "}
                         </span>
                         {formatted.unitsWord && (
-                          <span className="font-playfairDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
+                          <span className="font-playfairDisplay leading-[24px] md:leading-[40px] text-[15px] md:text-[32px]">
                             {formatted.unitsWord}{" "}
                           </span>
                         )}
-                        <span className="font-playpenSans text-[19px] md:text-[32px] leading-[30px] md:leading-[52px]">
+                        <span className="font-playpenSans text-[15px] md:text-[24px] leading-[24px] md:leading-[40px]">
                           -{" "}
                         </span>
                       </>
@@ -324,7 +324,7 @@ export default function ApartmentDetailsCarousel({
                         part.isNumber
                           ? "font-libreCaslonDisplay"
                           : "font-playfairDisplay"
-                      } leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]`}
+                      } leading-[24px] md:leading-[40px] text-[15px] md:text-[32px]`}
                     >
                       {part.text}
                       {i < arr.length - 1 ? " " : ""}
@@ -347,7 +347,7 @@ export default function ApartmentDetailsCarousel({
                   height={20}
                 />
                 <div className="flex-1">
-                  <div className="text-xl sm:text-2xl md:text-3xl lg:text-[32px] leading-[140%] text-white font-normal">
+                  <div className="text-lg sm:text-xl md:text-2xl lg:text-[24px] leading-[140%] text-white font-normal">
                     {(() => {
                       const titleText = t(
                         feature.titleKey as keyof (typeof ui)[typeof lang]
@@ -387,7 +387,7 @@ export default function ApartmentDetailsCarousel({
                     })()}
                   </div>
                   {feature.descriptionKey && (
-                    <div className="font-montserrat text-pretty text-base sm:text-lg md:text-xl lg:text-[20px] leading-[140%] text-[#B0C4CC] font-normal mt-1">
+                    <div className="font-montserrat text-pretty text-sm sm:text-base md:text-lg lg:text-[15px] leading-[140%] text-[#B0C4CC] font-normal mt-1">
                       {(() => {
                         const descriptionText = t(
                           feature.descriptionKey as keyof (typeof ui)[typeof lang]
