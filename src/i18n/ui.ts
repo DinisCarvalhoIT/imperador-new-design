@@ -34,6 +34,8 @@ export const ui = {
     "contact.validation.message_required": "Message is required",
     "contact.validation.message_max":
       "Message must be less than 500 characters",
+    "contact.toast.success": "Success! Message sent successfully.",
+    "contact.toast.error": "Error! Failed to send the message.",
     "summary.floors": "Floors",
     "summary.apartments": "Apartments",
     "summary.luxury": "Luxury",
@@ -209,6 +211,8 @@ export const ui = {
     "contact.validation.message_required": "A mensagem é obrigatória",
     "contact.validation.message_max":
       "A mensagem deve ter menos de 500 caracteres",
+    "contact.toast.success": "Sucesso! Mensagem enviada com sucesso.",
+    "contact.toast.error": "Erro! Falha ao enviar a mensagem.",
     "summary.floors": "Pisos",
     "summary.apartments": "Apartamentos",
     "summary.luxury": "de Luxo",

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +9,6 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState, useEffect, type FormEvent } from "react";
 import { toast } from "sonner";
@@ -18,10 +18,8 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import logoImg from "/HomePage/logoImperador.svg?url";
@@ -76,12 +74,15 @@ export default function ContactFormButton({
         },
         body: JSON.stringify(values),
       });
-      const data = await response.json();
-      console.log("data", data);
-      toast.success("vai mamar");
-      setIsModalOpen(false);
-      form.reset();
+      if (response.ok) {
+        toast.success(t("contact.toast.success"));
+        setIsModalOpen(false);
+        form.reset();
+      } else {
+        toast.error(t("contact.toast.error"));
+      }
     } catch (error) {
+      toast.error(t("contact.toast.error"));
       console.error("Error submitting form:", error);
     }
   }
@@ -162,8 +163,13 @@ export default function ContactFormButton({
                 <Button
                   className="text-white text-sm sm:text-base md:text-lg lg:text-xl bg-[#7192A2] hover:bg-[#7192A2]/80 hover:border-2 w-full max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] h-[44px] sm:h-[48px] md:h-[52px] font-montserrat font-semibold cursor-pointer"
                   type="submit"
+                  disabled={form.formState.isSubmitting}
                 >
-                  {t("contact.submit_button")}
+                  {form.formState.isSubmitting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    t("contact.submit_button")
+                  )}
                 </Button>
               </div>
               <img
