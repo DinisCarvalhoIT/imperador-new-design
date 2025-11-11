@@ -289,14 +289,14 @@ export default function InteractiveBuilding({
     if (model.isGroundFloor) {
       const floorsText = t("details_apartments.ground_floor");
       const parts = floorsText.split(" ");
-      return parts.map((part, i) => ({ text: part, isNumber: !isNaN(Number(part)) }));
+      return parts.map((part: string) => ({ text: part, isNumber: !isNaN(Number(part)) }));
     }
     if (model.floorRange) {
       const floorsText = t("details_apartments.floor_range")
         .replace("{from}", model.floorRange.from.toString())
         .replace("{to}", model.floorRange.to.toString());
       const parts = floorsText.split(" ");
-      return parts.map((part, i) => ({ text: part, isNumber: !isNaN(Number(part)) }));
+      return parts.map((part: string) => ({ text: part, isNumber: !isNaN(Number(part)) }));
     }
     return [];
   }
@@ -1041,7 +1041,7 @@ export default function InteractiveBuilding({
                           <span className="font-playpenSans md:text-[32px] text-[19px] md:leading-[52px] leading-[30px]">
                           | {" "}
                           </span>{" "}
-                          {formatFloorsForRender(ALL_APARTMENTS[current].model).map((part, i, arr) => (
+                          {formatFloorsForRender(ALL_APARTMENTS[current].model).map((part: { text: string; isNumber: boolean }, i: number, arr: { text: string; isNumber: boolean }[]) => (
                             <span
                               key={i}
                               className={`${
@@ -1109,7 +1109,7 @@ export default function InteractiveBuilding({
                             <span className="font-playpenSans text-[32px] leading-[52px]">
                             - {" "}
                             </span>{" "}
-                            {formatFloorsForRender(ALL_APARTMENTS[current].model).map((part, i, arr) => (
+                            {formatFloorsForRender(ALL_APARTMENTS[current].model).map((part: { text: string; isNumber: boolean }, i: number, arr: { text: string; isNumber: boolean }[]) => (
                               <span
                                 key={i}
                                 className={`${

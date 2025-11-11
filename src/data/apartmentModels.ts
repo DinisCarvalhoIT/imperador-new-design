@@ -44,10 +44,6 @@ const commonFeatures = [
     titleKey: "apartment_details.nzeb",
     descriptionKey: "apartment_details.nzeb_description",
   },
-  {
-    titleKey: "apartment_details.parking",
-    descriptionKey: "apartment_details.parking_description",
-  },
 ];
 
 // T1 Models (A, B, C)
@@ -57,21 +53,27 @@ export const t1ApartmentDetails: ApartmentDetail[] = [
     apartmentImage: "/detailsApartments/T1_modeloA.png",
     mainTitleKey: "apartment_details.t1_model_a",
     subTitleKey: "apartment_details.t1_model_a_subtitle",
-    features: commonFeatures,
+    features: [...commonFeatures, {
+      titleKey: "apartment_details.parking2",
+    }],
   },
   {
     id: "t1-model-b",
     apartmentImage: "/detailsApartments/T1_modeloB.png",
     mainTitleKey: "apartment_details.t1_model_b",
     subTitleKey: "apartment_details.t1_model_b_subtitle",
-    features: commonFeatures,
+    features: [...commonFeatures, {
+      titleKey: "apartment_details.parking2",
+    }],
   },
   {
     id: "t1-model-c",
     apartmentImage: "/detailsApartments/T1_modeloC.png",
     mainTitleKey: "apartment_details.t1_model_c",
     subTitleKey: "apartment_details.t1_model_c_subtitle",
-    features: commonFeatures,
+    features: [...commonFeatures, {
+      titleKey: "apartment_details.parking3",
+    }],
   },
 ];
 
@@ -127,14 +129,18 @@ export const t2ApartmentDetails: ApartmentDetail[] = [
     apartmentImage: "/detailsApartments/T2_modeloA.png",
     mainTitleKey: "apartment_details.t2_model_a",
     subTitleKey: "apartment_details.t2_model_a_subtitle",
-    features: commonFeatures,
+    features: [...commonFeatures, {
+      titleKey: "apartment_details.parking2",
+    }],
   },
   {
     id: "t2-model-b",
     apartmentImage: "/detailsApartments/T2_modeloB.png",
     mainTitleKey: "apartment_details.t2_model_b",
     subTitleKey: "apartment_details.t2_model_b_subtitle",
-    features: commonFeatures,
+    features: [...commonFeatures, {
+      titleKey: "apartment_details.parking2",
+    }],
   },
 ];
 
@@ -176,14 +182,18 @@ export const t3ApartmentDetails: ApartmentDetail[] = [
     apartmentImage: "/detailsApartments/T3_modeloA.png",
     mainTitleKey: "apartment_details.t3_model_a",
     subTitleKey: "apartment_details.t3_model_a_subtitle",
-    features: commonFeatures,
+    features: [...commonFeatures, {
+      titleKey: "apartment_details.parking3",
+    }],
   },
   {
     id: "t3-model-b",
     apartmentImage: "/detailsApartments/T3_modeloB.png",
     mainTitleKey: "apartment_details.t3_model_b",
     subTitleKey: "apartment_details.t3_model_b_subtitle",
-    features: commonFeatures,
+    features: [...commonFeatures, {
+      titleKey: "apartment_details.parking3",
+    }],
   },
 ];
 

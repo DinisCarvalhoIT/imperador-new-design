@@ -136,7 +136,7 @@ export default function CommonSpacesCarousel({
     return "text-[rgba(113,146,162,0.21)]";
   };
 
-  const t = (key: keyof typeof ui.en) => ui[lang][key] || ui.en[key];
+  const t = (key: keyof typeof ui[typeof lang]) => ui[lang][key] || ui.en[key];
 
   return (
     <div className="relative w-full">
