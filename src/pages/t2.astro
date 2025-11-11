@@ -1,26 +1,29 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import HeroPage from "@/components/HeroPageTypologies/HeroPage.astro";
-import heroImg from "../../public/T1/t1_heroPage.png";
+import heroImg from "../../public/T1/e6 5.png";
 import SummaryNumbers from "@/components/HeroPageTypologies/SummaryNumbers.astro";
 import SynchronizedTypologyCarousels from "@/components/HeroPageTypologies/SynchronizedTypologyCarousels.astro";
 import Gallery from "@/components/Gallery/Gallery.astro";
 import Local from "@/components/Local/Local.astro";
 import Books from "@/components/Books/Books.astro";
 import { t2ApartmentDetails, t2FloorPlans } from "@/data/apartmentModels";
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
-const pageTitle = lang === "en"
-  ? "T2 Apartments - Imperador Building | Luxury 2-Bedroom Apartments in Funchal"
-  : "Apartamentos T2 - Edifício Imperador | Apartamentos de 2 Quartos de Luxo no Funchal";
-const pageDescription = lang === "en"
-  ? "Explore T2 luxury apartments at Imperador Building in Funchal. 2 suite bedrooms, 3 bathrooms, 2 parking spaces, and over 154m² of gross construction area. Premium amenities and contemporary design."
-  : "Explore apartamentos de luxo T2 no Edifício Imperador no Funchal. 2 quartos suite, 3 casas de banho, 2 lugares de estacionamento e mais de 154m² de área bruta de construção. Comodidades premium e design contemporâneo.";
+const t = useTranslations(lang);
+const pageTitle =
+  lang === "en"
+    ? "T2 Apartments - Imperador Building | Luxury 2-Bedroom Apartments in Funchal"
+    : "Apartamentos T2 - Edifício Imperador | Apartamentos de 2 Quartos de Luxo no Funchal";
+const pageDescription =
+  lang === "en"
+    ? "Explore T2 luxury apartments at Imperador Building in Funchal. 2 suite bedrooms, 3 bathrooms, 2 parking spaces, and over 154m² of gross construction area. Premium amenities and contemporary design."
+    : "Explore apartamentos de luxo T2 no Edifício Imperador no Funchal. 2 quartos suite, 3 casas de banho, 2 lugares de estacionamento e mais de 154m² de área bruta de construção. Comodidades premium e design contemporâneo.";
 
 const breadcrumbs = [
   { name: lang === "en" ? "Home" : "Início", url: lang === "en" ? "/" : "/pt" },
-  { name: "T2 Apartments", url: lang === "en" ? "/t2" : "/pt/t2" }
+  { name: "T2 Apartments", url: lang === "en" ? "/t2" : "/pt/t2" },
 ];
 
 // Use T2 specific models only
@@ -28,21 +31,32 @@ const apartmentDetailsData = t2ApartmentDetails;
 const floorPlansData = t2FloorPlans;
 ---
 
-<Layout title={pageTitle} description={pageDescription} ogImage="/T1/t1_heroPage.png" breadcrumbs={breadcrumbs}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogImage="/T1/t1_heroPage.png"
+  breadcrumbs={breadcrumbs}
+>
   <HeroPage
     imageSrc={heroImg}
-    text1="Tipologias T2"
-    text2="Elegância elevada à Perfeição"
+    text1={t("t2.hero.title")}
+    text2={t("t2.hero.subtitle")}
+    text1_mobile={t("t2.hero.title_mobile")}
+    text2_mobile={t("t2.hero.subtitle_mobile_line1")}
+    text3_mobile={t("t2.hero.subtitle_mobile_line2")}
   />
   <SummaryNumbers
-    number1="2"
-    label1="Suite"
-    number2="3"
-    label2="Casas de Banho"
-    number3="2"
-    label3="Lugares de Estacionamento"
-    number4="+ 154 m²"
-    label4="Área Bruta de Construção"
+    number1="28"
+    label1={t("t2.summary.suites")}
+    number2="42"
+    label2_1={t("t2.summary.bathrooms")}
+    label2_2=""
+    number3="28"
+    label3_1={t("t2.summary.parking_line1")}
+    label3_2={t("t2.summary.parking_line2")}
+    number4="+ 132m²"
+    label4_1={t("t2.summary.area_line1")}
+    label4_2={t("t2.summary.area_line2")}
   />
   <SynchronizedTypologyCarousels
     apartmentDetailsData={apartmentDetailsData}
@@ -52,4 +66,3 @@ const floorPlansData = t2FloorPlans;
   <Local />
   <Books />
 </Layout>
-

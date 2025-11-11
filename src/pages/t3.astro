@@ -1,26 +1,29 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import HeroPage from "@/components/HeroPageTypologies/HeroPage.astro";
-import heroImg from "../../public/T1/t1_heroPage.png";
+import heroImg from "../../public/T1/e6 1.png";
 import SummaryNumbers from "@/components/HeroPageTypologies/SummaryNumbers.astro";
 import SynchronizedTypologyCarousels from "@/components/HeroPageTypologies/SynchronizedTypologyCarousels.astro";
 import Gallery from "@/components/Gallery/Gallery.astro";
 import Local from "@/components/Local/Local.astro";
 import Books from "@/components/Books/Books.astro";
 import { t3ApartmentDetails, t3FloorPlans } from "@/data/apartmentModels";
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
-const pageTitle = lang === "en"
-  ? "T3 Apartments - Imperador Building | Luxury 3-Bedroom Apartments in Funchal"
-  : "Apartamentos T3 - Edifício Imperador | Apartamentos de 3 Quartos de Luxo no Funchal";
-const pageDescription = lang === "en"
-  ? "Experience T3 luxury apartments at Imperador Building in Funchal. 3 suite bedrooms, 4 bathrooms, 2 parking spaces, and over 196m² of gross construction area. Spacious luxury living with premium finishes."
-  : "Experimente apartamentos de luxo T3 no Edifício Imperador no Funchal. 3 quartos suite, 4 casas de banho, 2 lugares de estacionamento e mais de 196m² de área bruta de construção. Vida de luxo espaçosa com acabamentos premium.";
+const t = useTranslations(lang);
+const pageTitle =
+  lang === "en"
+    ? "T3 Apartments - Imperador Building | Luxury 3-Bedroom Apartments in Funchal"
+    : "Apartamentos T3 - Edifício Imperador | Apartamentos de 3 Quartos de Luxo no Funchal";
+const pageDescription =
+  lang === "en"
+    ? "Experience T3 luxury apartments at Imperador Building in Funchal. 3 suite bedrooms, 4 bathrooms, 2 parking spaces, and over 196m² of gross construction area. Spacious luxury living with premium finishes."
+    : "Experimente apartamentos de luxo T3 no Edifício Imperador no Funchal. 3 quartos suite, 4 casas de banho, 2 lugares de estacionamento e mais de 196m² de área bruta de construção. Vida de luxo espaçosa com acabamentos premium.";
 
 const breadcrumbs = [
   { name: lang === "en" ? "Home" : "Início", url: lang === "en" ? "/" : "/pt" },
-  { name: "T3 Apartments", url: lang === "en" ? "/t3" : "/pt/t3" }
+  { name: "T3 Apartments", url: lang === "en" ? "/t3" : "/pt/t3" },
 ];
 
 // Use T3 specific models only
@@ -28,21 +31,32 @@ const apartmentDetailsData = t3ApartmentDetails;
 const floorPlansData = t3FloorPlans;
 ---
 
-<Layout title={pageTitle} description={pageDescription} ogImage="/T1/t1_heroPage.png" breadcrumbs={breadcrumbs}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogImage="/T1/t1_heroPage.png"
+  breadcrumbs={breadcrumbs}
+>
   <HeroPage
     imageSrc={heroImg}
-    text1="Tipologias T3"
-    text2="Elegância elevada à Perfeição"
+    text1={t("t3.hero.title")}
+    text2={t("t3.hero.subtitle")}
+    text1_mobile={t("t3.hero.title_mobile")}
+    text2_mobile={t("t3.hero.subtitle_mobile_line1")}
+    text3_mobile={t("t3.hero.subtitle_mobile_line2")}
   />
   <SummaryNumbers
-    number1="3"
-    label1="Suite"
-    number2="4"
-    label2="Casas de Banho"
-    number3="2"
-    label3="Lugares de Estacionamento"
-    number4="+ 196 m²"
-    label4="Área Bruta de Construção"
+    number1="6"
+    label1={t("t3.summary.suites")}
+    number2="24"
+    label2_1={t("t3.summary.bathrooms")}
+    label2_2=""
+    number3="6"
+    label3_1={t("t3.summary.parking_line1")}
+    label3_2={t("t3.summary.parking_line2")}
+    number4="+ 132m²"
+    label4_1={t("t3.summary.area_line1")}
+    label4_2={t("t3.summary.area_line2")}
   />
   <SynchronizedTypologyCarousels
     apartmentDetailsData={apartmentDetailsData}
@@ -52,4 +66,3 @@ const floorPlansData = t3FloorPlans;
   <Local />
   <Books />
 </Layout>
-

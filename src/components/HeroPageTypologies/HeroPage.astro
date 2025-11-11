@@ -13,7 +13,7 @@ interface Props {
   text3_mobile: string;
 }
 
-const { imageSrc, text2, text1_mobile, text2_mobile, text3_mobile } =
+const { imageSrc, text2, text1, text1_mobile, text2_mobile, text3_mobile } =
   Astro.props;
 ---
 
@@ -38,7 +38,11 @@ const { imageSrc, text2, text1_mobile, text2_mobile, text3_mobile } =
       class="px-6 py-4 rounded-full"
       style="background: radial-gradient(50% 50% at 50% 50%, rgba(11, 29, 38, 0.4) 0%, rgba(18, 38, 52, 0) 100%);"
     >
-      <ImageTypologies class={"mx-auto"} />
+      <div
+        class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-libreCaslonDisplay"
+      >
+        {text1}
+      </div>
       <div
         class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfairDisplay italic"
       >

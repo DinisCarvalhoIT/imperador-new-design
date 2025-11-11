@@ -11,19 +11,22 @@ import number1Svg from "../../public/T1/number_one.svg";
 import number2Svg from "../../public/T1/number_two.svg";
 import number132vg from "../../public/T1/132m.svg";
 import { t1ApartmentDetails, t1FloorPlans } from "@/data/apartmentModels";
-import { getLangFromUrl } from "@/i18n/utils";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
-const pageTitle = lang === "en"
-  ? "T1 Apartments - Imperador Building | Luxury 1-Bedroom Apartments in Funchal"
-  : "Apartamentos T1 - Edifício Imperador | Apartamentos de 1 Quarto de Luxo no Funchal";
-const pageDescription = lang === "en"
-  ? "Discover T1 luxury apartments at Imperador Building in Funchal. 1 suite bedroom, 2 bathrooms, 2 parking spaces, and 132m² of gross construction area. Contemporary design with premium finishes."
-  : "Descubra apartamentos de luxo T1 no Edifício Imperador no Funchal. 1 quarto suite, 2 casas de banho, 2 lugares de estacionamento e 132m² de área bruta de construção. Design contemporâneo com acabamentos premium.";
+const t = useTranslations(lang);
+const pageTitle =
+  lang === "en"
+    ? "T1 Apartments - Imperador Building | Luxury 1-Bedroom Apartments in Funchal"
+    : "Apartamentos T1 - Edifício Imperador | Apartamentos de 1 Quarto de Luxo no Funchal";
+const pageDescription =
+  lang === "en"
+    ? "Discover T1 luxury apartments at Imperador Building in Funchal. 1 suite bedroom, 2 bathrooms, 2 parking spaces, and 132m² of gross construction area. Contemporary design with premium finishes."
+    : "Descubra apartamentos de luxo T1 no Edifício Imperador no Funchal. 1 quarto suite, 2 casas de banho, 2 lugares de estacionamento e 132m² de área bruta de construção. Design contemporâneo com acabamentos premium.";
 
 const breadcrumbs = [
   { name: lang === "en" ? "Home" : "Início", url: lang === "en" ? "/" : "/pt" },
-  { name: "T1 Apartments", url: lang === "en" ? "/t1" : "/pt/t1" }
+  { name: "T1 Apartments", url: lang === "en" ? "/t1" : "/pt/t1" },
 ];
 
 // Use T1 specific models only
@@ -31,27 +34,32 @@ const apartmentDetailsData = t1ApartmentDetails;
 const floorPlansData = t1FloorPlans;
 ---
 
-<Layout title={pageTitle} description={pageDescription} ogImage="/T1/t1_heroPage.png" breadcrumbs={breadcrumbs}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogImage="/T1/t1_heroPage.png"
+  breadcrumbs={breadcrumbs}
+>
   <HeroPage
     imageSrc={heroImg}
-    text1="Tipologias T1"
-    text2="Elegância elevada à Perfeição"
-    text1_mobile="Tipologias T1"
-    text2_mobile="Elegância elevada"
-    text3_mobile="à Perfeição"
+    text1={t("t1.hero.title")}
+    text2={t("t1.hero.subtitle")}
+    text1_mobile={t("t1.hero.title_mobile")}
+    text2_mobile={t("t1.hero.subtitle_mobile_line1")}
+    text3_mobile={t("t1.hero.subtitle_mobile_line2")}
   />
   <SummaryNumbers
-    number1={number1Svg}
-    label1="Suite"
-    number2={number2Svg}
-    label2_1="Casas de"
-    label2_2="Banho"
-    number3={number2Svg}
-    label3_1="Lugares de"
-    label3_2="Estacionamento"
-    number4={number132vg}
-    label4_1="Área Bruta de"
-    label4_2="Construção"
+    number1="15"
+    label1={t("t1.summary.suites")}
+    number2="30"
+    label2_1={t("t1.summary.bathrooms")}
+    label2_2=""
+    number3="30"
+    label3_1={t("t1.summary.parking_line1")}
+    label3_2={t("t1.summary.parking_line2")}
+    number4="+ 132m²"
+    label4_1={t("t1.summary.area_line1")}
+    label4_2={t("t1.summary.area_line2")}
   />
   <SynchronizedTypologyCarousels
     apartmentDetailsData={apartmentDetailsData}

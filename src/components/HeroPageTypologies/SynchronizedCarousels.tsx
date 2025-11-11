@@ -3,7 +3,10 @@ import ApartmentDetailsCarousel from "./ApartmentDetailsCarousel";
 import FloorPlansCarousel from "@/components/FloorPlans/FloorPlansCarousel";
 import type { ApartmentDetail } from "./ApartmentDetailsCarousel";
 import { ui } from "@/i18n/ui";
-import { getModelIndexFromUrl, getModelStringFromIndex } from "@/data/apartmentModels";
+import {
+  getModelIndexFromUrl,
+  getModelStringFromIndex,
+} from "@/data/apartmentModels";
 
 export type FloorPlanItem = {
   id: string;
@@ -49,7 +52,7 @@ export default function SynchronizedCarousels({
   // Update URL when index changes
   const handleIndexChange = (newIndex: number) => {
     setCurrentIndex(newIndex);
-    
+
     if (typeof window !== "undefined") {
       const modelString = getModelStringFromIndex(newIndex);
       const url = new URL(window.location.href);
@@ -73,7 +76,7 @@ export default function SynchronizedCarousels({
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-20">
       {/* Apartment Details Section */}
       <section className="w-full min-h-screen flex items-center justify-center relative bg-[#0B1D26]">
         <div className="absolute inset-0 w-full h-full -z-10 opacity-30">
@@ -110,4 +113,3 @@ export default function SynchronizedCarousels({
     </div>
   );
 }
-
