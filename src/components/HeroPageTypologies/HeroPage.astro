@@ -1,22 +1,29 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import ImageTypologies from "../../../public/T1/Modo_de_isolamento.svg";
+import ImageTypologiesMobile from "../../../public/T1/tipologia_mobile.svg";
 
 interface Props {
   imageSrc: ImageMetadata;
   text1: string;
   text2: string;
+  text1_mobile: string;
+  text2_mobile: string;
+  text3_mobile: string;
 }
 
-const { imageSrc, text1, text2 } = Astro.props;
+const { imageSrc, text2, text1_mobile, text2_mobile, text3_mobile } =
+  Astro.props;
 ---
 
-<section class="w-full h-screen relative">
+<section class="w-full md:h-screen h-[500px] relative">
   <Image
     src={imageSrc}
     alt="Hero image"
     class="w-full h-full object-cover object-center"
     widths={[640, 960, 1200, 1920, 2560]}
+    height={400}
     sizes="100vw"
     loading="eager"
     decoding="sync"
@@ -31,15 +38,31 @@ const { imageSrc, text1, text2 } = Astro.props;
       class="px-6 py-4 rounded-full"
       style="background: radial-gradient(50% 50% at 50% 50%, rgba(11, 29, 38, 0.4) 0%, rgba(18, 38, 52, 0) 100%);"
     >
+      <ImageTypologies class={"mx-auto"} />
       <div
-        class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfairDisplay font-italic"
-      >
-        {text1}
-      </div>
-      <div
-        class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfairDisplay font-italic"
+        class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-playfairDisplay italic"
       >
         {text2}
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="absolute inset-0 flex sm:hidden flex-col items-center justify-between px-4 text-center py-8"
+  >
+    <div class="flex-1 flex items-end justify-center">
+      <div
+        class="px-6 py-4 rounded-full flex flex-col items-center justify-center"
+        style="background: radial-gradient(50% 50% at 50% 50%, rgba(11, 29, 38, 0.4) 0%, rgba(18, 38, 52, 0) 100%);"
+      >
+        <ImageTypologiesMobile class={"mx-auto w-[260px] h-[60px]"} />
+
+        <div
+          class="text-white text-3xl font-playfairDisplay flex flex-col items-center justify-center italic"
+        >
+          <span>{text2_mobile}</span>
+          <span>{text3_mobile}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -50,9 +73,9 @@ const { imageSrc, text1, text2 } = Astro.props;
     /* Mobile gradient (default) */
     background: linear-gradient(
       180deg,
-      rgba(11, 29, 38, 0) 2.87%,
-      rgba(11, 29, 38, 0.572115) 64.87%,
-      #0b1d26 80.26%
+      rgba(11, 29, 38, 0) 22.87%,
+      rgba(11, 29, 38, 0.572115) 84.87%,
+      #0b1d26 95.26%
     );
   }
 

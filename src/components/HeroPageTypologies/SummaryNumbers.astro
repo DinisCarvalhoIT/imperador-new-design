@@ -1,19 +1,34 @@
 ---
 import VectorPointer from "../../../public/HomePage/pointNumbers.svg";
+import type { ImageMetadata } from "astro";
 
 interface Props {
-  number1: string;
+  number1: ImageMetadata;
   label1: string;
-  number2: string;
-  label2: string;
-  number3: string;
-  label3: string;
-  number4: string;
-  label4: string;
+  number2: ImageMetadata;
+  label2_1: string;
+  label2_2: string;
+  number3: ImageMetadata;
+  label3_1: string;
+  label3_2: string;
+  number4: ImageMetadata;
+  label4_1: string;
+  label4_2: string;
 }
 
-const { number1, label1, number2, label2, number3, label3, number4, label4 } =
-  Astro.props;
+const {
+  number1,
+  label1,
+  number2,
+  label2_1,
+  label2_2,
+  number3,
+  label3_1,
+  label3_2,
+  number4,
+  label4_1,
+  label4_2,
+} = Astro.props;
 ---
 
 <section class="w-full bg-transparent absolute -bottom-8 hidden sm:block">
@@ -22,57 +37,58 @@ const { number1, label1, number2, label2, number3, label3, number4, label4 } =
     style="grid-template-columns: 1fr auto 1fr auto 1fr auto 1.5fr;"
   >
     <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >{number1}</span
-      ><span class="font-montserrat text-center" set:html={label1} />
+      <img src={number1.src} alt="" class="h-10 md:h-12 lg:h-14 pb-3" />
+      <span
+        class="font-playfairDisplay text-2xl text-center"
+        set:html={label1}
+      />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >{number2}</span
-      ><span class="font-montserrat text-center" set:html={label2} />
+      <img src={number2.src} alt="" class="h-10 md:h-12 lg:h-14 pb-3" />
+      <span class="font-montserrat text-center" set:html={label2_1} />
+      <span class="font-montserrat text-center" set:html={label2_2} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >{number3}</span
-      ><span class="font-montserrat text-center" set:html={label3} />
+      <img src={number3.src} alt="" class="h-10 md:h-12 lg:h-14 pb-3" />
+      <span class="font-montserrat text-center" set:html={label3_1} />
+      <span class="font-montserrat text-center" set:html={label3_2} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >{number4}</span
-      ><span class="font-montserrat text-center" set:html={label4} />
+      <img src={number4.src} alt="" class="h-10 md:h-12 lg:h-14 pb-3" />
+      <span class="font-montserrat text-center" set:html={label4_1} />
+      <span class="font-montserrat text-center" set:html={label4_2} />
     </div>
   </div>
 </section>
 
-<section class="w-full sm:hidden block relative -mb-40 z-10">
+<section class="w-full sm:hidden block relative z-10 bottom-10">
   <div
     class="flex flex-col items-center justify-center w-[90%] mx-auto text-white gap-y-3 pt-4"
   >
     <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >{number1}</span
-      ><span class="font-montserrat text-center" set:html={label1} />
+      <img src={number1.src} alt="" class="h-10 pb-1" />
+      <span class="font-montserrat text-center" set:html={label1} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >{number2}</span
-      ><span class="font-montserrat text-center" set:html={label2} />
+      <img src={number2.src} alt="" class="h-10 pb-1" />
+      <span class="font-montserrat text-center" set:html={label2_1} />
+      <span class="font-montserrat text-center" set:html={label2_2} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >{number3}</span
-      ><span class="font-montserrat text-center" set:html={label3} />
+      <img src={number3.src} alt="" class="h-10 pb-1" />
+      <span class="font-montserrat text-center" set:html={label3_1} />
+      <span class="font-montserrat text-center" set:html={label3_2} />
     </div>
     <VectorPointer />
     <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >{number4}</span
-      ><span class="font-montserrat text-center" set:html={label4} />
+      <img src={number4.src} alt="" class="h-10 pb-1" />
+      <span class="font-montserrat text-center" set:html={label4_1} />
+      <span class="font-montserrat text-center" set:html={label4_2} />
     </div>
   </div>
 </section>

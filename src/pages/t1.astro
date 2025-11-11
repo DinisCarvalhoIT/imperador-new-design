@@ -7,7 +7,9 @@ import FloorPlans from "@/components/HeroPageTypologies/FloorPlans.astro";
 import Gallery from "@/components/Gallery/Gallery.astro";
 import Local from "@/components/Local/Local.astro";
 import Books from "@/components/Books/Books.astro";
-
+import number1Svg from "../../public/T1/number_one.svg";
+import number2Svg from "../../public/T1/number_two.svg";
+import number132vg from "../../public/T1/132m.svg";
 const dataCarousel = [
   {
     id: "floor-plan-1",
@@ -59,16 +61,22 @@ const dataCarousel = [
     imageSrc={heroImg}
     text1="Tipologias T1"
     text2="Elegância elevada à Perfeição"
+    text1_mobile="Tipologias T1"
+    text2_mobile="Elegância elevada"
+    text3_mobile="à Perfeição"
   />
   <SummaryNumbers
-    number1="1"
+    number1={number1Svg}
     label1="Suite"
-    number2="2"
-    label2="Casas de Banho"
-    number3="2"
-    label3="Lugares de Estacionamento"
-    number4="+ 132 m²"
-    label4="Área Bruta de Construção"
+    number2={number2Svg}
+    label2_1="Casas de"
+    label2_2="Banho"
+    number3={number2Svg}
+    label3_1="Lugares de"
+    label3_2="Estacionamento"
+    number4={number132vg}
+    label4_1="Área Bruta de"
+    label4_2="Construção"
   />
   <FloorPlans dataCarousel={dataCarousel} />
   <Gallery />
