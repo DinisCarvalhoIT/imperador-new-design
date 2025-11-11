@@ -63,12 +63,12 @@ export default function BooksTriggers({
 
   return (
     <>
-      <ScrollArea className="w-full whitespace-nowrap">
-        <div className="flex gap-4 md:gap-7 pl-4 pr-4 md:pr-0 xl:pr-0 pb-6 xl:pb-2 pt-2 w-max xl:w-full xl:max-w-none xl:justify-center">
+      <ScrollArea className="w-full whitespace-nowrap xl:whitespace-normal">
+        <div className="flex gap-3 md:gap-7 px-4 xl:px-0 pb-6 xl:pb-2 pt-2 w-max mx-auto xl:w-full xl:max-w-none xl:justify-center">
           {/* Left Book Trigger: Main Promotional */}
           <Button
             variant="ghost"
-            className="group cursor-pointer hover:bg-transparent relative w-[400px] h-[283px] xl:w-[747px] xl:h-[529px] shrink-0 rounded-lg overflow-hidden p-0 border border-[#7192A2] transition-all hover:scale-[1.02] bg-transparent"
+            className="group cursor-pointer hover:bg-transparent relative w-[240px] h-[283px] md:w-[400px] xl:w-[747px] xl:h-[529px] shrink-0 rounded-lg overflow-hidden p-0 border-2 xl:border border-[#7192A2] transition-all hover:scale-[1.01] xl:hover:scale-[1.02] active:scale-[0.99] bg-transparent"
             id="book-trigger-main"
             aria-label="Open Imperador Apartamentos Book"
             onClick={() => setOpenMainBook(true)}
@@ -89,7 +89,9 @@ export default function BooksTriggers({
                   }}
                 />
               </picture>
-              <div className="absolute bottom-6 right-6 w-11 h-11 rounded-full bg-white/80 border border-[#7192A2] flex items-center justify-center transition-all pointer-events-none">
+              {/* Mobile: gradient overlay for better arrow visibility */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent xl:hidden pointer-events-none" />
+              <div className="absolute bottom-4 xl:bottom-6 right-4 xl:right-6 w-10 h-10 xl:w-11 xl:h-11 rounded-full bg-white/90 xl:bg-white/80 border border-[#7192A2] flex items-center justify-center transition-all pointer-events-none">
                 <ArrowIcon />
               </div>
             </div>
@@ -98,7 +100,7 @@ export default function BooksTriggers({
           {/* Right Book Trigger: Map/Finishes */}
           <Button
             variant="ghost"
-            className="group cursor-pointer hover:bg-transparent relative w-[200px] h-[283px] xl:w-[374px] xl:h-[529px] shrink-0 rounded-lg overflow-hidden p-0 border border-[#7192A2] transition-all hover:scale-[1.02] bg-transparent"
+            className="group cursor-pointer hover:bg-transparent relative w-[180px] h-[283px] md:w-[200px] xl:w-[374px] xl:h-[529px] shrink-0 rounded-lg overflow-hidden p-0 border-2 xl:border border-[#7192A2] transition-all hover:scale-[1.01] xl:hover:scale-[1.02] active:scale-[0.99] bg-transparent"
             id="book-trigger-finishes"
             aria-label="Open Finishes Map Book"
             onClick={() => setOpenFinishesBook(true)}
@@ -133,7 +135,9 @@ export default function BooksTriggers({
                   </>
                 )}
               </picture>
-              <div className="absolute bottom-6 right-6 w-11 h-11 rounded-full bg-white/80 border border-[#7192A2] flex items-center justify-center transition-all pointer-events-none">
+              {/* Mobile: gradient overlay for better arrow visibility */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 via-transparent to-transparent xl:hidden pointer-events-none" />
+              <div className="absolute bottom-4 xl:bottom-6 right-4 xl:right-6 w-10 h-10 xl:w-11 xl:h-11 rounded-full bg-white/90 xl:bg-white/80 border border-[#7192A2] flex items-center justify-center transition-all pointer-events-none">
                 <ArrowIcon />
               </div>
             </div>

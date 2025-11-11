@@ -1268,7 +1268,7 @@ export default function InteractiveBuilding({
                   </div>
 
                   {/* VER MAIS Button */}
-                  <div className="flex justify-center pt-4 sm:pt-6 lg:pt-8">
+                  <div className="flex justify-center pt-2 ">
                     <Button
                       className="w-[140px] sm:w-[160px] h-[26px] sm:h-[28px] uppercase bg-transparent border border-[#7192A2] cursor-pointer rounded-[6px] text-white tracking-wider hover:bg-[#7192A2] transition-colors font-montserrat text-sm md:text-base flex items-center justify-center"
                       onClick={() => {
