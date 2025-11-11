@@ -4,14 +4,11 @@ interface PDFViewerClientProps {
 }
 
 export default function PDFViewerClient({ pdfUrl, className }: PDFViewerClientProps) {
-  // Paths are already properly encoded in Books.astro, so use as-is
-  // If path is not encoded (for backwards compatibility), encode it
-  const encodedUrl = pdfUrl.includes('%') ? pdfUrl : encodeURI(pdfUrl);
-  
+  // No encoding needed - PDF paths have no spaces and are served directly from public folder
   return (
     <div className={`w-full h-full ${className || ''}`}>
       <iframe
-        src={encodedUrl}
+        src={pdfUrl}
         className="w-full h-full border-0"
         title="PDF Viewer"
       />

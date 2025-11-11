@@ -34,18 +34,12 @@ const finishesBookCoverPTDesktop = await getImageUrl(finishesBookPTImg, 574, 729
 const finishesBookCoverENMobile = await getImageUrl(finishesBookENImg, 400, 483);
 const finishesBookCoverENDesktop = await getImageUrl(finishesBookENImg, 574, 729);
 
-// PDF paths for the books - properly encode paths with spaces for Vercel
-// Helper function to properly encode URL paths with spaces
-const encodePath = (path: string): string => {
-  // Split path into segments and encode each segment separately
-  const segments = path.split('/').filter(Boolean);
-  const encoded = segments.map(segment => encodeURIComponent(segment)).join('/');
-  return '/' + encoded;
-};
 
-const mainBookPdfPath = encodePath("/book/Livro Imperador/LIVRO IMPERADOR_PT.pdf");
-const finishesBookPTPdfPath = encodePath("/book/Mapa_de_Acabamento/Mapa_de_AcabamentosPT.pdf");
-const finishesBookENPdfPath = encodePath("/book/Mapa_de_Acabamento/EN/Mapa_de_AcabamentosEN.pdf");
+
+// PDF paths - no encoding needed since filenames have no spaces
+const mainBookPdfPath = "/book/LivroImperador/LIVROIMPERADORPT.pdf";
+const finishesBookPTPdfPath = "/book/MapadeAcabamento/MapadeAcabamentosPT.pdf";
+const finishesBookENPdfPath = "/book/MapadeAcabamento/EN/MapadeAcabamentosEN.pdf";
 ---
 
 <section class="w-full flex h-[calc(100vw+100px)] max-h-screen items-center justify-center py-16 md:py-24">

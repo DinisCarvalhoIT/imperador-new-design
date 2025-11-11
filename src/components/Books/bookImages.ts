@@ -1,6 +1,6 @@
-import mainBookCover from "../../../public/book/Livro Imperador/LIVRO IMPERADOR.png";
-import finishesBookPTCover from "../../../public/book/Mapa_de_Acabamento/MapaAcabamentos_PT_01.png";
-import finishesBookENCover from "../../../public/book/Mapa_de_Acabamento/EN/MapaAcabamentos_EN_01.png";
+import mainBookCover from "../../../public/book/LivroImperador/LivroImperador.png";
+import finishesBookPTCover from "../../../public/book/MapadeAcabamento/MapaAcabamentosPT01.png";
+import finishesBookENCover from "../../../public/book/MapadeAcabamento/EN/MapaAcabamentosEN01.png";
 
 // Export organized image arrays
 export const mainBookImages = [mainBookCover];
