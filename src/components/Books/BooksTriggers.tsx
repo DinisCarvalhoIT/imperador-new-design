@@ -113,7 +113,7 @@ export default function BooksTriggers({
                     />
                     <img
                       src={finishesBookCoverPTMobile}
-                      alt="Mapa de Acabamentos Book"
+                      alt="Mapa_de_Acabamentos Book"
                       className="w-full h-full object-cover"
                       loading="eager"
                     />
@@ -126,7 +126,7 @@ export default function BooksTriggers({
                     />
                     <img
                       src={finishesBookCoverENMobile}
-                      alt="Mapa de Acabamentos Book"
+                      alt="Mapa_de_Acabamentos Book"
                       className="w-full h-full object-cover"
                       loading="eager"
                     />
