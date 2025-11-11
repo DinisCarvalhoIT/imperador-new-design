@@ -58,9 +58,10 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
     schedule_visit: string;
     close: string;
   };
+  lang?: string;
 }
 
-export function AppSidebar({ translations, ...props }: AppSidebarProps) {
+export function AppSidebar({ translations, lang, ...props }: AppSidebarProps) {
   const { setOpenMobile } = useSidebar();
   const [isTipologiasOpen, setIsTipologiasOpen] = useState(false);
 
@@ -128,7 +129,14 @@ export function AppSidebar({ translations, ...props }: AppSidebarProps) {
                             <button
                               key={tipo}
                               className="w-full h-10 px-4 rounded-lg font-playfairDisplay text-white font-medium text-lg transition-all duration-200 tracking-wide cursor-pointer"
-                              onClick={() => {}}
+                              onClick={() => {
+                                const route =
+                                  lang === "pt"
+                                    ? `/pt/${tipo.toLowerCase()}`
+                                    : `/${tipo.toLowerCase()}`;
+                                window.location.href = route;
+                                setOpenMobile(false);
+                              }}
                             >
                               {tipo}
                             </button>

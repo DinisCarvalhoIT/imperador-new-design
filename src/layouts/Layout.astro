@@ -37,7 +37,7 @@ const sidebarTranslations = {
     <title>Astro Basics</title>
   </head>
   <body class="bg-[#0B1D26]">
-    <MySideBar client:load translations={sidebarTranslations} />
+    <MySideBar client:load translations={sidebarTranslations} lang={lang} />
     <Header />
     <slot />
     <Footer />

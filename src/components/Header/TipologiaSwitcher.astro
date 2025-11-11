@@ -6,9 +6,9 @@ const lang = getLangFromUrl(Astro.url);
 
 // Define tipologia options with their respective page paths
 const tipologias = [
-  { label: "T1", path: `/${lang}/tipologia/t1` },
-  { label: "T2", path: `/${lang}/tipologia/t2` },
-  { label: "T3", path: `/${lang}/tipologia/t3` },
+  { label: "T1", path: lang === "pt" ? "/pt/t1" : "/t1" },
+  { label: "T2", path: lang === "pt" ? "/pt/t2" : "/t2" },
+  { label: "T3", path: lang === "pt" ? "/pt/t3" : "/t3" },
 ];
 
 // Generate unique ID for this instance

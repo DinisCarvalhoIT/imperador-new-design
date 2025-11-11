@@ -43,14 +43,16 @@ const t = useTranslations(lang);
       />
     </div>
     <div>
-      <Image
-        src={logoImg}
-        alt={t("header.logo_alt")}
-        class="w-[200px] h-[115px] lg:w-[280px] lg:h-[137px] transition-all duration-300"
-        width={280}
-        height={187}
-        loading="lazy"
-      />
+      <a href={lang === "en" ? "/" : `/${lang}/`} class="inline-block">
+        <Image
+          src={logoImg}
+          alt={t("header.logo_alt")}
+          class="w-[200px] h-[115px] lg:w-[280px] lg:h-[137px] transition-all duration-300"
+          width={280}
+          height={187}
+          loading="lazy"
+        />
+      </a>
     </div>
     <div
       class="flex items-start justify-end xl:justify-center pt-8 justify-self-end xl:justify-self-center w-full pr-5"
@@ -63,6 +65,7 @@ const t = useTranslations(lang);
         </div>
         <div
           class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer relative group pb-1"
+          data-scroll-to="gallery"
         >
           GALERIA
           <span
@@ -71,6 +74,7 @@ const t = useTranslations(lang);
         </div>
         <div
           class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer relative group pb-1"
+          data-scroll-to="location"
         >
           LOCALIZAÇÃO
           <span
@@ -87,13 +91,15 @@ const t = useTranslations(lang);
     class="grid grid-cols-2 items-center w-full px-10 absolute inset-0 opacity-0 pointer-events-none pb-4"
   >
     <div class="flex items-center justify-start gap-x-2">
-      <Image
-        src={logoImg}
-        alt={t("header.logo_alt")}
-        width={200}
-        height={82}
-        loading="lazy"
-      />
+      <a href={lang === "en" ? "/" : `/${lang}/`} class="inline-block">
+        <Image
+          src={logoImg}
+          alt={t("header.logo_alt")}
+          width={200}
+          height={82}
+          loading="lazy"
+        />
+      </a>
     </div>
 
     <div class="flex items-center justify-end">
@@ -114,6 +120,7 @@ const t = useTranslations(lang);
           </div>
           <div
             class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer relative group pb-1"
+            data-scroll-to="gallery"
           >
             GALERIA
             <span
@@ -122,6 +129,7 @@ const t = useTranslations(lang);
           </div>
           <div
             class="hidden xl:flex items-center justify-start gap-x-2 text-white font-montserrat font-medium cursor-pointer relative group pb-1"
+            data-scroll-to="location"
           >
             LOCALIZAÇÃO
             <span
@@ -140,3 +148,27 @@ const t = useTranslations(lang);
     transition: opacity 0.3s ease;
   }
 </style>
+
+<script>
+  // Handle smooth scrolling to sections
+  document.addEventListener("DOMContentLoaded", () => {
+    const scrollElements = document.querySelectorAll("[data-scroll-to]");
+
+    scrollElements.forEach((element) => {
+      element.addEventListener("click", (e) => {
+        const targetId = element.getAttribute("data-scroll-to");
+
+        if (targetId) {
+          const targetSection = document.getElementById(targetId);
+
+          if (targetSection) {
+            targetSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        }
+      });
+    });
+  });
+</script>

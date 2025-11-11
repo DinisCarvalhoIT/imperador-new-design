@@ -13,13 +13,14 @@ interface MySideBarProps {
     schedule_visit: string;
     close: string;
   };
+  lang?: string;
 }
 
-export default function MySideBar({ translations }: MySideBarProps) {
+export default function MySideBar({ translations, lang }: MySideBarProps) {
   return (
     <div className="xl:hidden block fixed inset-0 z-50 pointer-events-none">
       <SidebarProvider className="" defaultOpen={false}>
-        <AppSidebar translations={translations} />
+        <AppSidebar translations={translations} lang={lang} />
         <SidebarTrigger className="pointer-events-auto text-white hover:bg-white z-50 cursor-pointer fixed sm:top-7 top-[15px] sm:right-27 right-20" />
       </SidebarProvider>
     </div>

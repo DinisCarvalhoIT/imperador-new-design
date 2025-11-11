@@ -124,7 +124,7 @@ export default function FloorPlansCarousel({
                     : "opacity-60 pb-3"
                 }`}
               >
-                <span className="md:hidden">
+                <span className="md:hidden font-libreCaslonDisplay">
                   {t(data.mobileTitleKey as keyof (typeof ui)[typeof lang])}
                 </span>
                 <span className="hidden md:inline">
@@ -182,7 +182,7 @@ export default function FloorPlansCarousel({
                   <div className="flex flex-col items-center justify-center gap-y-4 sm:gap-y-6 md:gap-y-7 h-full w-full order-2 lg:order-0">
                     <div className="flex flex-col items-center justify-center gap-y-1">
                       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#E1B260] font-normal font-playfairDisplay text-center">
-                        <span className="lg:hidden">
+                        <span className="lg:hidden font-libreCaslonDisplay">
                           {t(
                             data.mobileTitleKey as keyof (typeof ui)[typeof lang]
                           )}
