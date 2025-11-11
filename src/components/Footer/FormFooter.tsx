@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Loader2 } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ui } from "../../i18n/ui";
+import { toast } from "sonner";
 
 type Props = {
   lang: keyof typeof ui;
@@ -44,8 +46,26 @@ export default function FormFooter({ lang }: Props) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    try {
+      const response = await fetch("/api/request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if (response.ok) {
+        toast.success(t["contact.toast.success"]);
+        form.reset();
+      } else {
+        toast.error(t["contact.toast.error"]);
+      }
+    } catch (error) {
+      toast.error(t["contact.toast.error"]);
+      console.error("Error submitting form:", error);
+    }
   }
   return (
     <Form {...form}>
@@ -110,8 +130,13 @@ export default function FormFooter({ lang }: Props) {
           <Button
             className="text-white text-base bg-[#7192A2] hover:bg-[#7192A2]/80 hover:border-2 w-full font-montserrat font-semibold cursor-pointer"
             type="submit"
+            disabled={form.formState.isSubmitting}
           >
-            {t["footer.form.submit_button"]}
+            {form.formState.isSubmitting ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              t["footer.form.submit_button"]
+            )}
           </Button>
         </div>
       </form>
