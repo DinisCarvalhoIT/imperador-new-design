@@ -15,7 +15,10 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<footer class="w-full flex flex-col items-center justify-center bg-[#031721]">
+<footer
+  class="w-full flex flex-col items-center justify-center bg-[#031721]"
+  id="contacts"
+>
   <div
     class="grid grid-cols-1 lg:grid-cols-3 items-center justify-items-center w-[95%] md:w-[95%] py-10 gap-x-5 gap-y-8"
   >

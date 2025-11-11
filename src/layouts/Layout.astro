@@ -1,10 +1,22 @@
 ---
 import "../styles/global.css";
-import { getLangFromUrl } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Header from "@/components/Header/Header.astro";
 import Footer from "@/components/Footer/Footer.astro";
 import MySideBar from "@/components/Header/mySideBar.tsx";
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sidebarTranslations = {
+  menu: t("sidebar.menu"),
+  home: t("sidebar.home"),
+  typologies: t("sidebar.typologies"),
+  gallery: t("sidebar.gallery"),
+  location: t("sidebar.location"),
+  contacts: t("sidebar.contacts"),
+  schedule_visit: t("sidebar.schedule_visit"),
+  close: t("sidebar.close"),
+};
 ---
 
 <!doctype html>
@@ -25,7 +37,7 @@ const lang = getLangFromUrl(Astro.url);
     <title>Astro Basics</title>
   </head>
   <body class="bg-[#0B1D26]">
-    <MySideBar client:load />
+    <MySideBar client:load translations={sidebarTranslations} />
     <Header />
     <slot />
     <Footer />
