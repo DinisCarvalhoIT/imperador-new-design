@@ -2,8 +2,38 @@
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import InteractiveBuilding from "./InteractiveBuilding";
+
+// Import all apartment model images
+import t1ModeloA from "../../../public/detailsApartments/T1_modeloA.png";
+import t1ModeloB from "../../../public/detailsApartments/T1_modeloB.png";
+import t1ModeloC from "../../../public/detailsApartments/T1_modeloC.png";
+import t2ModeloA from "../../../public/detailsApartments/T2_modeloA.png";
+import t2ModeloB from "../../../public/detailsApartments/T2_modeloB.png";
+import t3ModeloA from "../../../public/detailsApartments/T3_modeloA.png";
+import t3ModeloB from "../../../public/detailsApartments/T3_modeloB.png";
+
+// Process images with getImage - optimize and convert to webp
+const processImage = async (image: ImageMetadata) => {
+  const processed = await getImage({
+    src: image,
+    format: "webp",
+    quality: 90,
+  });
+  return processed.src;
+};
+
+// Process all images
+const apartmentImageUrls = {
+  "T1-0": await processImage(t1ModeloA),
+  "T1-1": await processImage(t1ModeloB),
+  "T1-2": await processImage(t1ModeloC),
+  "T2-0": await processImage(t2ModeloA),
+  "T2-1": await processImage(t2ModeloB),
+  "T3-0": await processImage(t3ModeloA),
+  "T3-1": await processImage(t3ModeloB),
+};
 ---
 
 <section class="relative w-full">
@@ -45,7 +75,7 @@ import InteractiveBuilding from "./InteractiveBuilding";
           </div>
         </div>
 
-        <InteractiveBuilding client:load lang={lang} />
+        <InteractiveBuilding client:load lang={lang} apartmentImages={apartmentImageUrls} />
       </div>
     </div>
   </div>

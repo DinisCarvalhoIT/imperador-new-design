@@ -194,11 +194,11 @@ function CarouselPrevious({
       {...props}
     >
       <svg
-        width="7"
-        height="12"
+        className="size-5 shrink-0 -translate-x-px"
         viewBox="0 0 7 12"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid meet"
       >
         <path
           d="M0.418448 5.70577L5.56049 11.0036L6.01611 10.5118L1.35139 5.70577L6.01611 0.899696L5.56049 0.430265L0.418448 5.70577Z"
@@ -263,7 +263,7 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-12 rounded-full",
+        "absolute size-8 rounded-full",
         orientation === "horizontal"
           ? "top-1/2 -right-12 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -274,8 +274,7 @@ function CarouselNext({
       {...props}
     >
       <svg
-        width="7"
-        height="12"
+        className="size-5 shrink-0 translate-x-0.5"
         viewBox="0 0 7 12"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

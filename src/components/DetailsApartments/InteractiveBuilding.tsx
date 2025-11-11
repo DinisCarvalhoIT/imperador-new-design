@@ -188,6 +188,7 @@ interface InteractiveBuildingProps {
   imageWidth?: number;
   imageHeight?: number;
   lang?: keyof typeof ui;
+  apartmentImages?: Record<string, string>;
 }
 
 type HoverState = {
@@ -204,6 +205,7 @@ export default function InteractiveBuilding({
   imageWidth: initialWidth = 1920,
   imageHeight: initialHeight = 1080,
   lang = "en",
+  apartmentImages,
 }: InteractiveBuildingProps) {
   const t = useTranslations(lang);
   const translatePath = useTranslatedPath(lang);
@@ -214,10 +216,15 @@ export default function InteractiveBuilding({
   const [selected, setSelected] = React.useState<SelectedState | null>(null);
   const [open, setOpen] = React.useState(false);
   const [api, setApi] = React.useState<CarouselApi>();
+  const [mobileApi, setMobileApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
+  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
+  const [canScrollNext, setCanScrollNext] = React.useState(false);
   const isCarouselControlled = React.useRef(false);
   const lastOpenAtRef = React.useRef<number>(0);
   const [enableDefaultMobileHighlight, setEnableDefaultMobileHighlight] = React.useState(true);
+  const hasInitializedCarousel = React.useRef(false);
+  const isInitialScroll = React.useRef(false);
 
 
 
@@ -253,6 +260,21 @@ export default function InteractiveBuilding({
     return String.fromCharCode(97 + shapeIndex); // 'a', 'b', 'c'
   }
 
+  // Get image path for apartment model
+  function getApartmentImagePath(type: ApartmentType, modelIndex: number): string {
+    // Use preprocessed images if available, otherwise fallback to original path
+    if (apartmentImages) {
+      const key = `${type}-${modelIndex}`;
+      const processedUrl = apartmentImages[key];
+      if (processedUrl) {
+        return processedUrl;
+      }
+    }
+    // Fallback to original path construction
+    const modelLetter = getModelLetter(modelIndex).toUpperCase();
+    return `/detailsApartments/${type}_modelo${modelLetter}.png`;
+  }
+
   // Format units text for rendering with original font styling
   function formatUnitsForRender(model: ApartmentModel) {
     const unitsText = model.isSingleUnit 
@@ -281,24 +303,71 @@ export default function InteractiveBuilding({
 
   // Sync carousel with selected model when sheet opens or selected changes from outside
   React.useEffect(() => {
-    if (!api || !selected || !open || isCarouselControlled.current) {
-      isCarouselControlled.current = false;
+    if (!selected || !open) {
+      hasInitializedCarousel.current = false;
+      isInitialScroll.current = false;
       return;
     }
+    
     const carouselIndex = findApartmentIndex(
       selected.type,
       selected.shapeIndex
     );
-    api.scrollTo(carouselIndex);
-  }, [api, selected?.type, selected?.shapeIndex, open]);
+    
+    // If carousels are available and not yet initialized, scroll immediately to the correct index
+    // This prevents the carousel from starting at index 0 and then jumping
+    if (api && !hasInitializedCarousel.current) {
+      hasInitializedCarousel.current = true;
+      isInitialScroll.current = true; // Mark that we're doing an initial scroll
+      // Use requestAnimationFrame to ensure carousel is fully ready
+      requestAnimationFrame(() => {
+        if (api) {
+          api.scrollTo(carouselIndex, true); // true = jump immediately without animation
+          setCanScrollPrev(api.canScrollPrev());
+          setCanScrollNext(api.canScrollNext());
+          // Reset flag after a short delay to allow select event to be ignored
+          setTimeout(() => {
+            isInitialScroll.current = false;
+          }, 100);
+        }
+      });
+    }
+    if (mobileApi && !hasInitializedCarousel.current) {
+      hasInitializedCarousel.current = true;
+      isInitialScroll.current = true;
+      requestAnimationFrame(() => {
+        if (mobileApi) {
+          mobileApi.scrollTo(carouselIndex, true);
+          setTimeout(() => {
+            isInitialScroll.current = false;
+          }, 100);
+        }
+      });
+    }
+    
+    // If carousel is being controlled by user (not initial setup), sync normally
+    if (isCarouselControlled.current) {
+      isCarouselControlled.current = false;
+      return;
+    }
+    
+    // For subsequent changes (not initial), scroll with animation
+    if (api && hasInitializedCarousel.current) {
+      api.scrollTo(carouselIndex);
+    }
+    if (mobileApi && hasInitializedCarousel.current) {
+      mobileApi.scrollTo(carouselIndex);
+    }
+  }, [api, mobileApi, selected?.type, selected?.shapeIndex, open]);
 
   // Track carousel current index and update selected area when carousel changes
   React.useEffect(() => {
-    if (!api || !selected) return;
+    if (!selected) return;
 
-    const updateSelected = () => {
+    const updateSelected = (carouselApi: CarouselApi | undefined) => {
+      if (!carouselApi) return;
       isCarouselControlled.current = true;
-      const carouselIndex = api.selectedScrollSnap();
+      const carouselIndex = carouselApi.selectedScrollSnap();
       setCurrent(carouselIndex);
 
       // Get the apartment item at this carousel index
@@ -326,12 +395,42 @@ export default function InteractiveBuilding({
     const initialIndex = findApartmentIndex(selected.type, selected.shapeIndex);
     setCurrent(initialIndex);
 
-    api.on("select", updateSelected);
+    // Listen to both carousels
+    const handleDesktopSelect = () => {
+      if (!api) return;
+      // Skip select events during initial programmatic scroll
+      // We only want to update selected state from user interactions, not from our own scrollTo calls
+      if (isInitialScroll.current) {
+        setCanScrollPrev(api.canScrollPrev());
+        setCanScrollNext(api.canScrollNext());
+        return;
+      }
+      // After initialization, normal behavior - update selected state from carousel changes
+      updateSelected(api);
+      setCanScrollPrev(api.canScrollPrev());
+      setCanScrollNext(api.canScrollNext());
+    };
+    const handleMobileSelect = () => {
+      if (!mobileApi) return;
+      // Skip select events during initial programmatic scroll
+      if (isInitialScroll.current) {
+        return;
+      }
+      updateSelected(mobileApi);
+    };
+
+    if (api) {
+      api.on("select", handleDesktopSelect);
+    }
+    if (mobileApi) {
+      mobileApi.on("select", handleMobileSelect);
+    }
 
     return () => {
-      api.off("select", updateSelected);
+      if (api) api.off("select", handleDesktopSelect);
+      if (mobileApi) mobileApi.off("select", handleMobileSelect);
     };
-  }, [api, selected?.type, selected?.shapeIndex]);
+  }, [api, mobileApi, selected?.type, selected?.shapeIndex]);
 
   return (
     <div ref={containerRef} className="absolute inset-0">
@@ -840,54 +939,67 @@ export default function InteractiveBuilding({
                   x
                 </Button>
               </SheetClose>
-              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-2 md:px-8 py-2 sm:py-3 lg:py-4 min-h-0">
-                {/* Carousel - Floor Plan Images */}
+              <div className="flex-1 bg-[#0B1D26]/90 flex flex-col items-center justify-center relative z-10 px-2 md:px-8 py-4 sm:py-6 lg:py-8 min-h-0">
+                {/* Mobile Carousel - Floor Plan Images */}
                 <Carousel
-                  setApi={setApi}
-                  className="w-full pb-2 sm:pb-4 lg:pb-6 relative pt-6 sm:pt-8 lg:pt-10 shrink min-h-0"
+                  setApi={setMobileApi}
+                  className="w-full pb-4 sm:pb-6 relative pt-4 sm:pt-6 shrink min-h-0 lg:hidden"
                   opts={{
                     align: "center",
                     loop: true,
                   }}
                 >
-                  {/* Mobile Layout: Arrows on sides of floor plan */}
-                  <div className="flex items-center justify-center gap-4 sm:gap-6 w-full relative px-8 sm:px-12 md:px-16 lg:hidden">
-                    <CarouselPrevious className="absolute left-0 translate-y-12 sm:translate-y-16 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" />
+                  <div className="flex items-center justify-center gap-4 sm:gap-6 w-full relative px-8 sm:px-12 md:px-16">
                     <CarouselContent className="ml-0 flex-1 w-full">
                       {ALL_APARTMENTS.map((apartment) => (
                         <CarouselItem
-                          key={`${apartment.type}-${apartment.modelIndex}`}
-                          className="pl-0"
+                          key={`mobile-${apartment.type}-${apartment.modelIndex}`}
+                          className="pl-0 basis-full shrink-0"
                         >
-                          <div className="flex justify-center items-center">
-                            <div className="relative w-full max-w-[400px] sm:max-w-[500px] md:max-w-[550px] aspect-auto">
+                          <div className="flex justify-center items-center w-full">
+                            <div className="relative w-full max-w-[400px] sm:max-w-[500px] md:max-w-[550px]">
                               <img
-                                src={`/detailsApartments/${apartment.type}.svg`}
-                                alt={`${apartment.type} floor plan`}
-                                className="w-full h-full object-contain"
+                                src={getApartmentImagePath(apartment.type, apartment.modelIndex)}
+                                alt={`${apartment.type} Model ${getModelLetter(apartment.modelIndex).toUpperCase()} floor plan`}
+                                className="w-full h-auto object-contain max-h-[410px]"
+                                loading="eager"
+                                decoding="async"
                               />
+                              {/* Mobile Navigation Arrows - Bottom corners of image */}
+                              <CarouselPrevious className="absolute top-auto left-2 sm:left-4 bottom-2 sm:bottom-4 translate-y-0 translate-x-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer bg-transparent border border-[#7192A2] text-white hover:bg-white/40   shrink-0 disabled:opacity-50 disabled:pointer-events-auto z-10" />
+                              <CarouselNext className="absolute top-auto right-2 sm:right-4 bottom-2 sm:bottom-4 translate-y-0 translate-x-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40  shrink-0 disabled:opacity-50 disabled:pointer-events-auto z-10" />
                             </div>
                           </div>
                         </CarouselItem>
                       ))}
                     </CarouselContent>
-                    <CarouselNext className="absolute right-0 translate-y-12 sm:translate-y-16 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" />
                   </div>
+                </Carousel>
 
-                  {/* Desktop Layout: Floor plan images */}
-                  <div className="hidden lg:block">
-                    <CarouselContent className="ml-0">
+                {/* Desktop Carousel - Floor Plan Images */}
+                <Carousel
+                  setApi={setApi}
+                  className="hidden lg:block w-full relative pt-4 pb-2 shrink min-h-0"
+                  opts={{
+                    align: "center",
+                    loop: true,
+                  }}
+                >
+                  <div className="flex items-center justify-center relative">
+                    <CarouselContent className="ml-0 w-full">
                       {ALL_APARTMENTS.map((apartment) => (
                         <CarouselItem
-                          key={`${apartment.type}-${apartment.modelIndex}`}
-                          className="pl-0"
+                          key={`desktop-${apartment.type}-${apartment.modelIndex}`}
+                          className="pl-0 basis-full shrink-0"
                         >
-                          <div className="flex justify-center items-center">
-                            <div className="relative w-full max-w-[450px] xl:max-w-[500px] aspect-auto">
+                          <div className="flex justify-center items-center w-full">
+                            <div className="relative w-full max-w-[450px] xl:max-w-[500px] max-h-[410px] flex items-center justify-center">
                               <img
-                                src={`/detailsApartments/${apartment.type}.svg`}
-                                alt={`${apartment.type} floor plan`}
-                                className="w-full h-full object-contain"
+                                src={getApartmentImagePath(apartment.type, apartment.modelIndex)}
+                                alt={`${apartment.type} Model ${getModelLetter(apartment.modelIndex).toUpperCase()} floor plan`}
+                                className="w-full h-auto max-h-[410px] object-contain"
+                                loading="eager"
+                                decoding="async"
                               />
                             </div>
                           </div>
@@ -895,10 +1007,11 @@ export default function InteractiveBuilding({
                       ))}
                     </CarouselContent>
                   </div>
+                </Carousel>
 
 
                   {/* Text below floor plan for mobile */}
-                  <div className="text-center items-center justify-center self-center flex flex-col gap-0 pt-2 sm:pt-4 lg:hidden">
+                  <div className="text-center items-center justify-center self-center flex flex-col gap-0 pt-6 sm:pt-8 lg:hidden">
                     {ALL_APARTMENTS[current] && (
                       <>
                         <h2 className="text-[#E1B260] mb-0">
@@ -943,24 +1056,43 @@ export default function InteractiveBuilding({
                     )}
                   </div>
 
-                  {/* Title Section with Navigation Arrows - Below Carousel for desktop */}
-                  <div className="hidden lg:flex items-center justify-center gap-6 w-full pt-4 relative px-16 xl:px-20">
-                    <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 disabled:opacity-100 disabled:pointer-events-auto" />
-
+                  {/* Title Section - Below Carousel for desktop */}
+                  <div className="hidden lg:flex items-center justify-center w-full pt-6 pb-4 relative px-16 xl:px-20">
+                    <Button
+                      type="button"
+                      onClick={() => api?.scrollPrev()}
+                      disabled={!canScrollPrev}
+                      className="absolute left-0 top-1/2 cursor-pointer -translate-y-1/2 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 disabled:opacity-50 disabled:pointer-events-auto"
+                      aria-label="Previous slide"
+                    >
+                      <svg
+                        className="size-5 shrink-0 -translate-x-px"
+                        viewBox="0 0 7 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0.418448 5.70577L5.56049 11.0036L6.01611 10.5118L1.35139 5.70577L6.01611 0.899696L5.56049 0.430265L0.418448 5.70577Z"
+                          fill="white"
+                          stroke="white"
+                          strokeWidth="0.6"
+                        />
+                      </svg>
+                    </Button>
                     <div className="text-center items-center justify-center self-center flex flex-col gap-0">
                       {ALL_APARTMENTS[current] && (
                         <>
                           <h2 className="text-[#E1B260] mb-0">
-                            <span className="font-playfairDisplay text-[48px]">
+                            <span className="font-playfairDisplay text-pretty text-[48px]">
                               {ALL_APARTMENTS[current].type.charAt(0)}
                             </span>
-                            <span className="font-libreCaslonDisplay text-[48px]">
+                            <span className="font-libreCaslonDisplay text-pretty text-[48px]">
                               {ALL_APARTMENTS[current].type.charAt(1)}
                             </span><span className="mr-4"></span>
-                            <span className="font-playpenSans text-[38px] leading-[48px]">
+                            <span className="font-playpenSans text-pretty text-[38px] leading-[48px]">
                               -
                             </span><span className="mr-4"></span>
-                            <span className="font-playfairDisplay text-[54px]">
+                            <span className="font-playfairDisplay text-pretty text-[54px]">
                               {t("details_apartments.model")}{" "}
                               {getModelLetter(
                                 ALL_APARTMENTS[current].modelIndex
@@ -991,18 +1123,36 @@ export default function InteractiveBuilding({
                         </>
                       )}
                     </div>
-
-                    <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 disabled:opacity-100 disabled:pointer-events-auto" />
+                    <Button
+                      type="button"
+                      onClick={() => api?.scrollNext()}
+                      disabled={!canScrollNext}
+                      className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 disabled:opacity-50 disabled:pointer-events-auto"
+                      aria-label="Next slide"
+                    >
+                      <svg
+                        className="size-5 shrink-0 translate-x-0.5"
+                        viewBox="0 0 7 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6.01563 5.70577L0.873593 11.0036L0.417969 10.5118L5.08269 5.70577L0.417969 0.899696L0.873593 0.430265L6.01563 5.70577Z"
+                          fill="white"
+                          stroke="white"
+                          strokeWidth="0.6"
+                        />
+                      </svg>
+                    </Button>
                   </div>
-                </Carousel>
 
                 {/* Content Container - All content below carousel */}
-                <div className="shrink-0">
+                <div className="shrink-0 pt-6 sm:pt-8 lg:pt-8">
                   {/* Stats Grid - Mobile: 2x2 layout, Desktop: 3 columns */}
-                  <div className="lg:grid lg:grid-rows-2 lg:pb-6 lg:grid-cols-[1fr_8px_1fr_36px_1fr] lg:items-center lg:justify-center">
+                  <div className="lg:grid lg:grid-rows-2 lg:pb-8 lg:grid-cols-[1fr_8px_1fr_36px_1fr] lg:items-center lg:justify-center">
                     {/* Mobile: Two flex rows with separators */}
-                    <div className="lg:hidden relative pb-4 sm:pb-6">
-                      <div className="flex flex-col gap-4 sm:gap-5 items-center">
+                    <div className="lg:hidden relative pb-6 sm:pb-8">
+                      <div className="flex flex-col gap-6 sm:gap-8 items-center">
                         {/* Row 1: Suites and Parking */}
                         <div className="flex items-center justify-center gap-4 sm:gap-6 w-full">
                           {/* Suites */}
@@ -1104,8 +1254,8 @@ export default function InteractiveBuilding({
                   </div>
 
                   {/* Area Information - Desktop only */}
-                  <div className="hidden lg:block text-center pb-6">
-                    <div className="flex justify-center items-center pb-1 xl:pb-2 h-6 xl:h-8">
+                  <div className="hidden lg:block text-center pt-4 pb-8">
+                    <div className="flex justify-center items-center pb-2 xl:pb-3 h-6 xl:h-8">
                       <span className="text-white text-3xl xl:text-4xl 2xl:text-5xl font-libreCaslonDisplay">
                         + {ALL_APARTMENTS[current].model.area} m²
                       </span>
@@ -1116,7 +1266,7 @@ export default function InteractiveBuilding({
                   </div>
 
                   {/* VER MAIS Button */}
-                  <div className="flex justify-center pt-2 sm:pt-4">
+                  <div className="flex justify-center pt-4 sm:pt-6 lg:pt-8">
                     <Button
                       className="w-[140px] sm:w-[160px] h-[26px] sm:h-[28px] uppercase bg-transparent border border-[#7192A2] cursor-pointer rounded-[6px] text-white tracking-wider hover:bg-[#7192A2] transition-colors font-montserrat text-sm md:text-base flex items-center justify-center"
                       onClick={() => {

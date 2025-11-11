@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Carousel,
@@ -54,6 +54,7 @@ export default function GalleryGrid({ thumbnails, fullSize }: GalleryGridProps) 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [mainApi, setMainApi] = useState<CarouselApi>();
   const [thumbApi, setThumbApi] = useState<CarouselApi>();
+  const initializedRef = useRef(false);
 
   // Sync thumbnails when main carousel changes
   useEffect(() => {
@@ -83,10 +84,26 @@ export default function GalleryGrid({ thumbnails, fullSize }: GalleryGridProps) 
 
   // Initialize carousel when dialog opens
   useEffect(() => {
-    if (open && mainApi) {
+    if (open && mainApi && !initializedRef.current) {
+      initializedRef.current = true;
+      // Reinitialize carousel to ensure proper dimensions on mobile
+      mainApi.reInit();
+      // Small delay to ensure DOM is ready
+      setTimeout(() => {
+        mainApi.scrollTo(selectedIndex, false);
+      }, 100);
+    } else if (!open) {
+      // Reset flag when dialog closes
+      initializedRef.current = false;
+    }
+  }, [open, mainApi]);
+  
+  // Scroll to selected index when it changes (but only if already initialized)
+  useEffect(() => {
+    if (open && mainApi && initializedRef.current) {
       mainApi.scrollTo(selectedIndex, false);
     }
-  }, [open, mainApi, selectedIndex]);
+  }, [selectedIndex, open, mainApi]);
 
   const handleImageClick = (index: number) => {
     setSelectedIndex(index);
@@ -406,19 +423,20 @@ export default function GalleryGrid({ thumbnails, fullSize }: GalleryGridProps) 
                 align: "center",
                 loop: true,
               }}
-              className="w-full h-full max-w-full"
+              className="w-full h-full max-w-full flex items-center justify-center"
             >
               <CarouselContent className="ml-0 h-full flex items-center pt-2 sm:pt-4">
                 {fullSize.map((image, index) => (
                   <CarouselItem
                     key={`main-${index}`}
-                    className="flex items-center justify-center w-full h-full pl-0 basis-full"
+                    className="flex items-center justify-center pl-0 basis-full shrink-0 h-full"
+                    style={{ width: "100%", minWidth: "100%" }}
                   >
-                    <div className="relative w-full h-full flex items-center justify-center max-w-[90vw] max-h-[75vh]">
+                    <div className="relative w-full h-full flex items-center justify-center max-w-[90vw] max-h-[75vh] mx-auto my-auto">
                       <img
                         src={image}
                         alt={`Gallery image ${index + 1}`}
-                        className="max-w-full max-h-full w-auto h-auto object-contain"
+                        className="max-w-full max-h-full w-auto h-auto object-contain mx-auto my-auto"
                         style={{ maxWidth: "90vw", maxHeight: "75vh" }}
                         loading={index <= 1 ? "eager" : "lazy"}
                       />
@@ -428,11 +446,11 @@ export default function GalleryGrid({ thumbnails, fullSize }: GalleryGridProps) 
               </CarouselContent>
               <CarouselPrevious 
                 size="icon"
-                className="absolute cursor-pointer left-1 sm:left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" 
+                className="absolute cursor-pointer left-0 sm:left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" 
               />
               <CarouselNext 
                 size="icon"
-                className="absolute cursor-pointer right-1 sm:right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" 
+                className="absolute cursor-pointer right-0 sm:right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-transparent border border-[#7192A2] text-white hover:bg-white/40 hover:border-white/40 hover:text-white shrink-0 z-10 disabled:opacity-100 disabled:pointer-events-auto" 
               />
             </Carousel>
           </div>
@@ -451,7 +469,7 @@ export default function GalleryGrid({ thumbnails, fullSize }: GalleryGridProps) 
               className="w-full max-w-full"
             >
               <CarouselContent className="ml-0 gap-2 sm:gap-3 justify-start items-center px-2 sm:px-3 md:px-4 py-2 -mr-2 sm:-mr-3 md:-mr-4">
-                {thumbnails.map((image, index) => (
+                {fullSize.map((image, index) => (
                   <CarouselItem
                     key={`thumb-${index}`}
                     className="pl-0 basis-auto"
