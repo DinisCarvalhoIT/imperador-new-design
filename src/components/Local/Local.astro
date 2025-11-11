@@ -168,11 +168,14 @@ const titleSecondLine = titleWords.slice(3).join(" ");
 
       <!-- Address with marker -->
       <div class="flex items-center gap-3">
-        <img
+        <Image
           src="/Local/marker.svg"
-          alt=""
+          alt={t("local.image_alt")}
           class="w-5 h-5 shrink-0"
           aria-hidden="true"
+          width={20}
+          height={20}
+          loading="lazy"
         />
         <span
           class="font-montserrat text-white text-lg leading-[1.4] tracking-[0.02em]"

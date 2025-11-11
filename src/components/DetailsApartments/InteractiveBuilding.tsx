@@ -579,6 +579,7 @@ export default function InteractiveBuilding({
             src="/detailsApartments/dot.svg"
             alt="Separator dot"
             className="h-2 w-auto self-center"
+            loading="lazy"
           />
           {/* T2 */}
           <button
@@ -627,6 +628,7 @@ export default function InteractiveBuilding({
             src="/detailsApartments/dot.svg"
             alt="Separator dot"
             className="h-2 w-auto self-center"
+            loading="lazy"
           />
           {/* T3 */}
           <button
