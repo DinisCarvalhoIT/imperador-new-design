@@ -35,7 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
     const queryParams = new URLSearchParams({
       API_ROUTE_SECRET: apiKey,
     });
-    const url = `http://localhost:3000/api/newLetter/imperador?${queryParams}`;
+    const url = `https://dinis-e-carvalho-api.vercel.app/api/newLetter/imperador?${queryParams}`;
 
     const rawFormData = {
       name: name.trim(),
