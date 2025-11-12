@@ -20,7 +20,12 @@ const t = useTranslations(lang);
     class="grid grid-cols-3 justify-items-center w-full pt-1 relative z-10"
   >
     <div class="flex items-start justify-center xl:gap-x-8 pt-8">
-      <div class="flex items-center justify-center gap-x-2">
+      <a
+        class="flex items-center justify-center gap-x-2"
+        href="https://wa.me/351965611642"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <Image
           src={whatsappIcon}
           alt={t("header.whatsapp_alt")}
@@ -34,7 +39,7 @@ const t = useTranslations(lang);
         >
           + 351 965 611 642
         </p>
-      </div>
+      </a>
       <ContactFormButton
         classNameButtonStyle="bg-[#7192A2] hover:bg-[#7192A2]/70 tracking-wide w-[145px] h-[28px] lg:w-[160px] lg:h-[32px] text-base font-montserrat text-white rounded-xl font-medium"
         buttonText={t("header.schedule_visit")}
