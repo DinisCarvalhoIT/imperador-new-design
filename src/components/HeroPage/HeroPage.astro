@@ -49,18 +49,13 @@ const t = useTranslations(lang);
   </div>
 
   <div
-    class="absolute inset-0 flex sm:hidden flex-col items-center justify-between px-4 text-center py-8"
+    class="absolute inset-0 flex top-42 sm:hidden flex-col items-center justify-center px-4 text-center gap-12"
   >
-    <div class="flex-1 flex items-center justify-center">
-      <div
-        class="px-6 py-4 rounded-full flex flex-col items-center justify-center"
-        style="background: radial-gradient(50% 50% at 50% 50%, rgba(11, 29, 38, 0.4) 0%, rgba(18, 38, 52, 0) 100%);"
-      >
-        <div
-          class="text-white sm:text-lg text-sm font-montserrat tracking-widest font-semibold"
-        >
-          {t("hero.welcome_mobile")}
-        </div>
+    <div
+      class="px-6 py-4 rounded-full flex flex-col items-center justify-center gap-6"
+      style="background: radial-gradient(50% 50% at 50% 50%, rgba(11, 29, 38, 0.4) 0%, rgba(18, 38, 52, 0) 100%);"
+    >
+      <div class="relative flex flex-col items-center justify-center">
         <Image
           src={logoImg}
           alt={t("header.logo_alt")}
@@ -69,17 +64,23 @@ const t = useTranslations(lang);
           loading="lazy"
         />
         <div
-          class="text-white text-3xl font-playfairDisplay font-italic flex flex-col items-center justify-center"
+          class="absolute -top-3 left-1/2 whitespace-nowrap -translate-x-1/2 text-white sm:text-lg text-sm font-montserrat tracking-widest font-semibold"
+         
         >
-          <span>{t("hero.title_mobile_line1")}</span>
-          <span>{t("hero.title_mobile_line2")}</span>
-          <span>{t("hero.title_mobile_line3")}</span>
+          {t("hero.welcome_mobile")}
         </div>
       </div>
+      <div
+        class="text-white text-3xl font-playfairDisplay font-italic flex flex-col items-center justify-center mt-1"
+      >
+        <span>{t("hero.title_mobile_line1")}</span>
+        <span>{t("hero.title_mobile_line2")}</span>
+        <span>{t("hero.title_mobile_line3")}</span>
+      </div>
     </div>
-    <div class="pb-4">
+    <div>
       <ContactFormButton
-        classNameButtonStyle="bg-transparent border border-white hover:bg-white hover:text-black tracking-wide w-[200px] h-[40px] text-md font-montserrat text-white rounded-md font-medium p-0 tracking-widest"
+        classNameButtonStyle="bg-transparent uppercase border border-white hover:bg-white hover:text-black tracking-wide w-[200px] h-[40px] text-md font-montserrat text-white rounded-md font-medium p-0 tracking-widest"
         buttonText={t("header.schedule_visit")}
         lang={lang}
         client:load

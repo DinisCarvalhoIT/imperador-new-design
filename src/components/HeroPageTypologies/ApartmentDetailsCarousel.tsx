@@ -215,7 +215,7 @@ export default function ApartmentDetailsCarousel({
   const currentData = dataCarousel[current];
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-4 md:p-6 lg:p-8 relative">
+    <div className="w-full h-full flex items-center justify-center p-5 md:p-6 lg:p-8 relative">
       {/* Background Rectangle - Behind everything, 1/3 height */}
 
       <div className="w-full max-w-[1400px] h-full flex flex-col lg:flex-row gap-8 lg:gap-12 relative ">
@@ -428,7 +428,7 @@ export default function ApartmentDetailsCarousel({
                   key={index}
                   className="h-full flex items-end justify-end"
                 >
-                  <div className="relative w-full h-full min-h-[400px] md:min-h-[500px] lg:min-h-[600px] flex items-end justify-end">
+                  <div className="relative w-full h-full min-h-[272px] pb-5 md:pb-0 md:min-h-[500px] lg:min-h-[600px] flex items-end justify-end">
                     <img
                       src={data.apartmentImage}
                       alt={t(
