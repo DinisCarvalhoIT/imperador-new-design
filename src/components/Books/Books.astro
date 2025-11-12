@@ -42,7 +42,32 @@ const finishesBookPTPdfPath = "https://bqp1pahfahngdvvh.public.blob.vercel-stora
 const finishesBookENPdfPath = "https://bqp1pahfahngdvvh.public.blob.vercel-storage.com/MapadeAcabamentosEN.pdf";
 ---
 
-<section class="w-full flex h-[calc(100vw+100px)] max-h-screen items-center justify-center py-16 md:py-24">
+<section class="w-full flex flex-col max-h-screen items-center justify-center py-16 md:py-24">
+  {/* Section Header */}
+  <div class="text-center mb-8 md:mb-12 px-4">
+    <div
+      class="font-montserrat text-[#FBD784] uppercase text-[14px] md:text-[16px] lg:text-[18px] tracking-[4px] md:tracking-[6px] mb-4"
+    >
+      {t("books.tagline")}
+    </div>
+    <h2
+      class="font-playfairDisplay text-[36px] md:text-[48px] lg:text-[58px] leading-[44px] md:leading-[56px] lg:leading-[68px] text-white text-center"
+    >
+      {(() => {
+        const title = t("books.title");
+        const parts = title.split(" & ");
+        if (parts.length === 2) {
+          return (
+            <>
+              {parts[0]} <span class="font-libreCaslonDisplay">&nbsp;&</span> {parts[1]}
+            </>
+          );
+        }
+        return title;
+      })()}
+    </h2>
+  </div>
+
   <BooksTriggers 
     client:load 
     lang={lang} 
