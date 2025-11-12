@@ -68,7 +68,7 @@ export default function BooksTriggers({
           {/* Left Book Trigger: Main Promotional */}
           <Button
             variant="ghost"
-            className="group cursor-pointer hover:bg-transparent relative w-[240px] h-[283px] sm:min-w-[400px] sm:max-w-[747px] md:w-[60%] md:h-auto md:aspect-747/529 shrink rounded-lg overflow-hidden p-0 border border-[#7192A2] transition-all hover:scale-[1.02] active:scale-[0.99] bg-transparent"
+            className="group cursor-pointer hover:bg-transparent relative w-[240px] h-[283px] sm:min-w-[400px] sm:max-w-[747px] md:w-[60%] md:h-auto md:aspect-747/529 shrink rounded-sm overflow-hidden p-0 border border-[#7192A2] transition-all hover:scale-[1.02] active:scale-[0.99] bg-transparent"
             id="book-trigger-main"
             aria-label="Open Imperador Apartamentos Book"
             onClick={() => setOpenMainBook(true)}
@@ -89,7 +89,7 @@ export default function BooksTriggers({
                   }}
                 />
               </picture>
-              <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-8 h-8 md:w-11 md:h-11 rounded-sm bg-white/80 border border-[#7192A2] flex items-center justify-center transition-all pointer-events-none">
+              <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-8 h-8 md:w-11 md:h-11 rounded-full bg-white/80 border border-[#7192A2] flex items-center justify-center transition-all pointer-events-none">
                 <ArrowIcon />
               </div>
             </div>
@@ -98,7 +98,7 @@ export default function BooksTriggers({
           {/* Right Book Trigger: Map/Finishes */}
           <Button
             variant="ghost"
-            className="group cursor-pointer hover:bg-transparent relative w-[200px] h-[283px] sm:min-w-[200px] sm:max-w-[374px] sm:w-[35%] sm:h-auto sm:aspect-374/529 shrink rounded-lg overflow-hidden p-0 border border-[#7192A2] transition-all hover:scale-[1.02] active:scale-[0.99] bg-transparent"
+            className="group cursor-pointer hover:bg-transparent relative w-[200px] h-[283px] sm:min-w-[200px] sm:max-w-[374px] sm:w-[35%] sm:h-auto sm:aspect-374/529 shrink rounded-sm overflow-hidden p-0 border border-[#7192A2] transition-all hover:scale-[1.02] active:scale-[0.99] bg-transparent"
             id="book-trigger-finishes"
             aria-label="Open Finishes Map Book"
             onClick={() => setOpenFinishesBook(true)}
@@ -133,7 +133,7 @@ export default function BooksTriggers({
                   </>
                 )}
               </picture>
-              <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-8 h-8 md:w-11 md:h-11 rounded-sm bg-white/80 border border-[#7192A2] flex items-center justify-center transition-all pointer-events-none">
+              <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-8 h-8 md:w-11 md:h-11 rounded-full bg-white/80 border border-[#7192A2] flex items-center justify-center transition-all pointer-events-none">
                 <ArrowIcon />
               </div>
             </div>
@@ -148,7 +148,7 @@ export default function BooksTriggers({
           <DialogOverlay className="bg-black/80 backdrop-blur-sm" />
           <div className="fixed inset-0 z-50 w-full h-full">
             <div className="relative w-full h-full flex items-center justify-center">
-              <DialogClose className="absolute top-16 right-4 z-100 rounded-sm bg-white/90 hover:bg-white p-2 transition-colors">
+              <DialogClose className="absolute top-16 right-4 z-100 rounded-full bg-white/90 hover:bg-white p-2 transition-colors">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -185,7 +185,7 @@ export default function BooksTriggers({
           <DialogOverlay className="bg-black/80 backdrop-blur-sm" />
           <div className="fixed inset-0 z-50 w-full h-full">
             <div className="relative w-full h-full flex items-center justify-center">
-              <DialogClose className="absolute top-16 right-4 z-100 rounded-sm bg-white/90 hover:bg-white p-2 transition-colors">
+              <DialogClose className="absolute top-16 right-4 z-100 rounded-full bg-white/90 hover:bg-white p-2 transition-colors">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
