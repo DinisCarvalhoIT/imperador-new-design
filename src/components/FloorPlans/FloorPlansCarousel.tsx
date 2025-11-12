@@ -41,6 +41,19 @@ export default function FloorPlansCarousel({
   const [current, setCurrent] = useState(currentIndex ?? 0);
   const [isInitialized, setIsInitialized] = useState(false);
 
+  const handleTitleClick = (index: number) => {
+    if (api) {
+      api.scrollTo(index);
+      setCurrent(index);
+      return;
+    }
+
+    setCurrent(index);
+    if (onIndexChange) {
+      onIndexChange(index);
+    }
+  };
+
   const t = (key: keyof (typeof ui)[typeof lang]) => {
     return ui[lang][key];
   };
@@ -61,7 +74,12 @@ export default function FloorPlansCarousel({
 
   // Sync with external currentIndex changes (after initialization)
   useEffect(() => {
-    if (api && isInitialized && currentIndex !== undefined && currentIndex !== current) {
+    if (
+      api &&
+      isInitialized &&
+      currentIndex !== undefined &&
+      currentIndex !== current
+    ) {
       setCurrent(currentIndex);
       api.scrollTo(currentIndex);
     }
@@ -116,7 +134,19 @@ export default function FloorPlansCarousel({
       <div className="w-full sm:w-[95%] md:w-[90%] lg:w-[96%] flex flex-row justify-center items-center md:gap-x-4 gap-x-2">
         {visibleTitles.map((data, idx) => (
           <React.Fragment key={data.index}>
-            <div className="flex flex-col items-center">
+            <div
+              className="flex flex-col items-center cursor-pointer"
+              role="button"
+              tabIndex={0}
+              aria-pressed={data.index === current}
+              onClick={() => handleTitleClick(data.index)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  handleTitleClick(data.index);
+                }
+              }}
+            >
               <div
                 className={`lg:text-3xl md:text-2xl text-xl text-white font-playfairDisplay transition-opacity duration-300 ${
                   data.index === current

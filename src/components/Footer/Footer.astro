@@ -26,13 +26,19 @@ const t = useTranslations(lang);
       <div class="text-white text-3xl font-playfairDisplay font-light pb-3">
         {t("footer.contacts")}
       </div>
-      <div class="flex flex-row text-white gap-x-2 pb-1 text-sm sm:text-base">
+      <a
+        href="https://wa.me/351965611642"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex flex-row text-white gap-x-2 pb-1 text-sm sm:text-base transition-opacity hover:opacity-70"
+        aria-label="WhatsApp"
+      >
         <span class="font-montserrat font-thin">+ 351</span>
         <span class="font-poppins font-light">965 611 642</span>
         <span class="font-montserrat font-thin"
           >( {t("footer.whatsapp_label")} )</span
         >
-      </div>
+      </a>
       <div class="flex flex-row text-white gap-x-2 pb-1 text-sm sm:text-base">
         <span class="font-montserrat font-thin">+ 351</span>
         <span class="font-poppins font-light">291 224 930</span>
