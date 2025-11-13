@@ -72,7 +72,7 @@ export const t1ApartmentDetails: ApartmentDetail[] = [
     mainTitleKey: "apartment_details.t1_model_c",
     subTitleKey: "apartment_details.t1_model_c_subtitle",
     features: [...commonFeatures, {
-      titleKey: "apartment_details.parking3",
+      titleKey: "apartment_details.parking2",
     }],
   },
 ];
