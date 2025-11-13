@@ -1,6 +1,11 @@
 ---
 import { useTranslatedPath, getLangFromUrl } from "@/i18n/utils";
 import { defaultLang } from "@/i18n/ui";
+import { Image } from "astro:assets";
+
+// Import flag SVGs
+import gbFlag from "../../../public/flags/gb.svg";
+import ptFlag from "../../../public/flags/pt.svg";
 
 const languages = {
   en: "gb",
@@ -10,6 +15,11 @@ const languages = {
 const labels = {
   en: "EN",
   pt: "PT",
+};
+
+const flagImages = {
+  gb: gbFlag,
+  pt: ptFlag,
 };
 
 // Derive current language from URL, falling back to the configured default
@@ -129,10 +139,13 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
       class="bg-transparent m-0 font-montserrat text-sm flex items-center gap-x-1 header-item text-white cursor-pointer"
     >
       <div id={"selectedLabel-" + uniqueId} class="z-20 flex items-center">
-        <img
-          src={`/flags/${languages[currentLang]}.svg`}
+        <Image
+          src={flagImages[languages[currentLang] as keyof typeof flagImages]}
           alt={`${labels[currentLang]} flag`}
           class="w-6 h-6 rounded-full object-cover"
+          loading="eager"
+          width={24}
+          height={24}
         />
       </div>
       <svg
@@ -163,10 +176,13 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
             return (
               <a href={translatePath(getCurrentPath(), lang)}>
                 <li class="p-2 flex items-center justify-center cursor-pointer bg-transparent border border-white hover:bg-gray-100/30">
-                  <img
-                    src={`/flags/${flagCode}.svg`}
+                  <Image
+                    src={flagImages[flagCode as keyof typeof flagImages]}
                     alt={`${labels[langKey]} flag`}
                     class="w-6 h-6 rounded-full object-cover"
+                    loading="eager"
+                    width={24}
+                    height={24}
                   />
                 </li>
               </a>

@@ -1,34 +1,57 @@
 ---
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { getImage } from "astro:assets";
 import CommonSpacesCarousel from "./CommonSpacesCarousel";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// Import images
+import rooftopImg from "../../../public/CommonSpaces/rooftop.png";
+import gardenImg from "../../../public/CommonSpaces/garden.png";
+import poolImg from "../../../public/CommonSpaces/pool.png";
+import solariumImg from "../../../public/CommonSpaces/solarium.png";
+
+// Process images with getImage - optimize and convert to webp
+const processImage = async (image: any) => {
+  const processed = await getImage({
+    src: image,
+    format: "webp",
+    quality: 90,
+  });
+  return processed.src;
+};
+
+// Process all images
+const rooftopImageUrl = await processImage(rooftopImg);
+const gardenImageUrl = await processImage(gardenImg);
+const poolImageUrl = await processImage(poolImg);
+const solariumImageUrl = await processImage(solariumImg);
 
 const commonSpaces = [
   {
     id: "rooftop",
     title: t("common_spaces.rooftop.title"),
     description: t("common_spaces.rooftop.description"),
-    image: "/CommonSpaces/rooftop.png",
+    image: rooftopImageUrl,
   },
   {
     id: "garden",
     title: t("common_spaces.garden.title"),
     description: t("common_spaces.garden.description"),
-    image: "/CommonSpaces/garden.png",
+    image: gardenImageUrl,
   },
   {
     id: "pool",
     title: t("common_spaces.pool.title"),
     description: t("common_spaces.pool.description"),
-    image: "/CommonSpaces/pool.png",
+    image: poolImageUrl,
   },
   {
     id: "solarium",
     title: t("common_spaces.solarium.title"),
     description: t("common_spaces.solarium.description"),
-    image: "/CommonSpaces/solarium.png",
+    image: solariumImageUrl,
   },
 ];
 ---

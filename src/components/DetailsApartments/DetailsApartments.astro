@@ -3,6 +3,7 @@ import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 import { Image, getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import InteractiveBuilding from "./InteractiveBuilding";
 
 // Import all apartment model images
@@ -13,6 +14,9 @@ import t2ModeloA from "../../../public/detailsApartments/T2_modeloA.png";
 import t2ModeloB from "../../../public/detailsApartments/T2_modeloB.png";
 import t3ModeloA from "../../../public/detailsApartments/T3_modeloA.png";
 import t3ModeloB from "../../../public/detailsApartments/T3_modeloB.png";
+import detailsBgImage from "../../../public/detailsApartments/details-apartments.png";
+import detailsBgMobileImage from "../../../public/detailsApartments/details-apartments-mobile.png";
+import dotSvg from "../../../public/detailsApartments/dot.svg";
 
 // Process images with getImage - optimize and convert to webp
 const processImage = async (image: ImageMetadata) => {
@@ -34,27 +38,42 @@ const apartmentImageUrls = {
   "T3-0": await processImage(t3ModeloA),
   "T3-1": await processImage(t3ModeloB),
 };
+
+// Process background images
+const processedBgImage = await getImage({
+  src: detailsBgImage,
+  format: "webp",
+  quality: 90,
+});
+const processedBgMobileImage = await getImage({
+  src: detailsBgMobileImage,
+  format: "webp",
+  quality: 90,
+});
+
+// Process dot SVG - for SVGs we can just get the src directly
+const dotSvgUrl = dotSvg.src;
 ---
 
 <section class="relative w-full">
   <div
     class="relative w-full h-full overflow-hidden bg-cover bg-center bg-no-repeat"
-    style="background-image: linear-gradient(rgba(11, 29, 38, 0.94), rgba(11, 29, 38, 0.94)), url('/detailsApartments/details-apartments.png');"
+    style={`background-image: linear-gradient(rgba(11, 29, 38, 0.94), rgba(11, 29, 38, 0.94)), url('${processedBgImage.src}');`}
   >
     <div class="flex justify-center items-center h-full">
       <div class="relative">
         <picture>
           <source
-            srcset="/detailsApartments/details-apartments-mobile.png"
+            srcset={processedBgMobileImage.src}
             media="(max-width: 1023px)"
           />
           <Image
-            src="/detailsApartments/details-apartments.png"
+            src={detailsBgImage}
             alt={t("details_apartments.image_alt")}
             class="max-w-[1680px] w-full h-auto object-contain rounded-lg shadow-2xl"
-            width="1920"
+            width={1920}
             format="webp"
-            height="1080"
+            height={1080}
           />
         </picture>
 
@@ -75,7 +94,7 @@ const apartmentImageUrls = {
           </div>
         </div>
 
-        <InteractiveBuilding client:load lang={lang} apartmentImages={apartmentImageUrls} />
+        <InteractiveBuilding client:load lang={lang} apartmentImages={apartmentImageUrls} dotSvgUrl={dotSvgUrl} />
       </div>
     </div>
   </div>

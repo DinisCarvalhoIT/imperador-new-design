@@ -240,6 +240,7 @@ export default function FloorPlansCarousel({
                       <img
                         src={data.smallFloorPlanImage}
                         alt={data.id}
+                        loading="lazy"
                         width={171}
                         height={89}
                         className={data.smallImageStyle}
@@ -250,6 +251,7 @@ export default function FloorPlansCarousel({
                     <img
                       src={data.smallFloorPlanImage}
                       alt={data.id}
+                      loading="lazy"
                       width={171}
                       height={89}
                       className={" w-[150px] h-[83px] mx-auto"}

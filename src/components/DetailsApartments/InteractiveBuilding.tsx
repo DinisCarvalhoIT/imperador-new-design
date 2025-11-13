@@ -189,6 +189,7 @@ interface InteractiveBuildingProps {
   imageHeight?: number;
   lang?: keyof typeof ui;
   apartmentImages?: Record<string, string>;
+  dotSvgUrl?: string;
 }
 
 type HoverState = {
@@ -206,6 +207,7 @@ export default function InteractiveBuilding({
   imageHeight: initialHeight = 1080,
   lang = "en",
   apartmentImages,
+  dotSvgUrl = "/detailsApartments/dot.svg",
 }: InteractiveBuildingProps) {
   const t = useTranslations(lang);
   const translatePath = useTranslatedPath(lang);
@@ -576,7 +578,7 @@ export default function InteractiveBuilding({
             />
           </button>
           <img
-            src="/detailsApartments/dot.svg"
+            src={dotSvgUrl}
             alt="Separator dot"
             className="h-2 w-auto self-center"
             loading="lazy"
@@ -625,7 +627,7 @@ export default function InteractiveBuilding({
             />
           </button>
           <img
-            src="/detailsApartments/dot.svg"
+            src={dotSvgUrl}
             alt="Separator dot"
             className="h-2 w-auto self-center"
             loading="lazy"
@@ -740,7 +742,7 @@ export default function InteractiveBuilding({
             />
           </button>
 
-          <img src="/detailsApartments/dot.svg" alt="Separator dot" className="h-1.5 w-auto self-center" />
+          <img src={dotSvgUrl} alt="Separator dot" className="h-1.5 w-auto self-center" />
 
           {/* T2 */}
           <button
@@ -785,7 +787,7 @@ export default function InteractiveBuilding({
             />
           </button>
 
-          <img src="/detailsApartments/dot.svg" alt="Separator dot" className="h-1.5 w-auto self-center" />
+          <img src={dotSvgUrl} alt="Separator dot" className="h-1.5 w-auto self-center" />
 
           {/* T3 */}
           <button

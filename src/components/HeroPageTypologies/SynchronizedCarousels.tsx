@@ -26,6 +26,9 @@ type SynchronizedCarouselsProps = {
   apartmentDetailsData: ApartmentDetail[];
   floorPlansData: FloorPlanItem[];
   initialIndex?: number;
+  detailsBackgroundImage?: string;
+  floorPlansBackgroundImage?: string;
+  checkIconUrl?: string;
 };
 
 export default function SynchronizedCarousels({
@@ -33,6 +36,9 @@ export default function SynchronizedCarousels({
   apartmentDetailsData,
   floorPlansData,
   initialIndex,
+  detailsBackgroundImage = "/detailsApartments/details-apartments.png",
+  floorPlansBackgroundImage = "/FloorPlans/Rectangle 34624212.png",
+  checkIconUrl = "/Check.svg",
 }: SynchronizedCarouselsProps) {
   // Initialize from initialIndex prop (which comes from Astro's URL search params)
   const [currentIndex, setCurrentIndex] = useState(initialIndex ?? 0);
@@ -81,7 +87,7 @@ export default function SynchronizedCarousels({
       <section className="w-full min-h-screen flex items-center justify-center relative bg-[#0B1D26]">
         <div className="absolute inset-0 w-full h-full -z-10 opacity-30">
           <img
-            src="/detailsApartments/details-apartments.png"
+            src={detailsBackgroundImage}
             alt="Apartment Details Background"
             className="w-full h-full object-cover"
           />
@@ -91,6 +97,7 @@ export default function SynchronizedCarousels({
           dataCarousel={apartmentDetailsData}
           currentIndex={currentIndex}
           onIndexChange={handleIndexChange}
+          checkIconUrl={checkIconUrl}
         />
       </section>
 
@@ -98,7 +105,7 @@ export default function SynchronizedCarousels({
       <section className="w-full min-h-screen flex items-center justify-center relative">
         <div className="absolute inset-0 w-full h-full -z-10">
           <img
-            src="/FloorPlans/Rectangle 34624212.png"
+            src={floorPlansBackgroundImage}
             alt="Floor Plans"
             className="w-full h-full object-cover"
           />

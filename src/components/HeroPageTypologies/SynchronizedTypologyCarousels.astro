@@ -1,5 +1,6 @@
 ---
 import { getLangFromUrl } from "@/i18n/utils";
+import { getImage } from "astro:assets";
 import SynchronizedCarousels from "./SynchronizedCarousels";
 import { getModelIndexFromUrl } from "@/data/apartmentModels";
 
@@ -35,6 +36,26 @@ interface Props {
 const { apartmentDetailsData, floorPlansData } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const initialIndex = getModelIndexFromUrl(Astro.url.searchParams);
+
+// Import and process background images
+import detailsBgImage from "../../../public/detailsApartments/details-apartments.png";
+import floorPlansBgImage from "../../../public/FloorPlans/Rectangle 34624212.png";
+import checkIcon from "../../../public/Check.svg";
+
+const processedDetailsBg = await getImage({
+  src: detailsBgImage,
+  format: "webp",
+  quality: 90,
+});
+
+const processedFloorPlansBg = await getImage({
+  src: floorPlansBgImage,
+  format: "webp",
+  quality: 90,
+});
+
+// Process check icon SVG
+const checkIconUrl = checkIcon.src;
 ---
 
 <SynchronizedCarousels
@@ -42,6 +63,9 @@ const initialIndex = getModelIndexFromUrl(Astro.url.searchParams);
   apartmentDetailsData={apartmentDetailsData}
   floorPlansData={floorPlansData}
   initialIndex={initialIndex}
+  detailsBackgroundImage={processedDetailsBg.src}
+  floorPlansBackgroundImage={processedFloorPlansBg.src}
+  checkIconUrl={checkIconUrl}
   client:load
 />
 

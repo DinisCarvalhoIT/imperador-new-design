@@ -25,6 +25,7 @@ type ApartmentDetailsCarouselProps = {
   dataCarousel: ApartmentDetail[];
   currentIndex?: number;
   onIndexChange?: (index: number) => void;
+  checkIconUrl?: string;
 };
 
 export default function ApartmentDetailsCarousel({
@@ -32,6 +33,7 @@ export default function ApartmentDetailsCarousel({
   dataCarousel,
   currentIndex,
   onIndexChange,
+  checkIconUrl = "/Check.svg",
 }: ApartmentDetailsCarouselProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(currentIndex ?? 0);
@@ -340,7 +342,7 @@ export default function ApartmentDetailsCarousel({
             {currentData.features.map((feature, index) => (
               <div key={index} className="flex gap-3 lg:gap-4">
                 <img
-                  src="/Check.svg"
+                  src={checkIconUrl}
                   alt="Check"
                   className="w-5 h-5 lg:w-6 lg:h-[20px] shrink-0 self-start mt-3.5"
                   width={24}

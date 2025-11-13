@@ -7,6 +7,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
+// Import carousel arrow SVGs from public directory
+// Use ?url suffix to get the URL string directly (as Vite requires for public assets)
+import prevCarouselIconSrc from "/FloorPlans/prevCarousel.svg?url";
+import nextCarouselIconSrc from "/FloorPlans/nextCarousel.svg?url";
+
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 type CarouselOptions = UseCarouselParameters[0];
@@ -238,10 +243,11 @@ function CarouselPreviousFloorPlans({
       {...props}
     >
       <img
-        src={"/FloorPlans/prevCarousel.svg"}
+        src={prevCarouselIconSrc}
         width={40}
         height={40}
         className="md:w-[40px] md:h-[40px] w-[30px] h-[30px]"
+        alt="Previous"
       />
 
       <span className="sr-only">Previous slide</span>
@@ -317,10 +323,11 @@ function CarouselNextFloorPlans({
       {...props}
     >
       <img
-        src={"/FloorPlans/nextCarousel.svg"}
+        src={nextCarouselIconSrc}
         width={40}
         height={40}
         className="md:w-[40px] md:h-[40px] w-[30px] h-[30px]"
+        alt="Next"
       />
 
       <span className="sr-only">Next slide</span>
@@ -353,7 +360,7 @@ function CarouselPreviousApartmentDetails({
       {...props}
     >
       <img
-        src={"/FloorPlans/prevCarousel.svg"}
+        src={prevCarouselIconSrc}
         width={40}
         height={40}
         className="md:w-[50px] md:h-[50px] w-6 h-6"
@@ -389,7 +396,7 @@ function CarouselNextApartmentDetails({
       {...props}
     >
       <img
-        src={"/FloorPlans/nextCarousel.svg"}
+        src={nextCarouselIconSrc}
         width={40}
         height={40}
         className="md:w-[50px] md:h-[50px] w-6 h-6"
