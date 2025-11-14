@@ -14,7 +14,8 @@ export type FloorPlanItem = {
   smallImageCollumnTable: boolean;
   smallImageStyle: string;
   smallFloorPlanImage: string;
-  tableImage: string;
+  tableImagePT: string;
+  tableImageEN: string;
   tableImageStyle: string;
   mainTitleKey: string;
   mobileTitleKey: string;

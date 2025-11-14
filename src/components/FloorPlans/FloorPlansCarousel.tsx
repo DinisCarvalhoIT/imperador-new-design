@@ -16,7 +16,8 @@ export type DataCarousel = {
   smallImageCollumnTable: boolean;
   smallImageStyle: string;
   smallFloorPlanImage: string;
-  tableImage: string;
+  tableImagePT: string;
+  tableImageEN: string;
   tableImageStyle: string;
   mainTitleKey: string;
   mobileTitleKey: string;
@@ -56,6 +57,23 @@ export default function FloorPlansCarousel({
 
   const t = (key: keyof (typeof ui)[typeof lang]) => {
     return ui[lang][key];
+  };
+
+  // Helper function to wrap numbers with font-libreCaslonDisplay
+  const wrapNumbersWithFont = (text: string) => {
+    // Split text by numbers (including digits in alphanumeric strings like "T1")
+    const parts = text.split(/(\d+)/);
+    return parts.map((part, index) => {
+      // Check if part is a number (digit sequence)
+      if (/^\d+$/.test(part)) {
+        return (
+          <span key={index} className="font-libreCaslonDisplay">
+            {part}
+          </span>
+        );
+      }
+      return <span key={index}>{part}</span>;
+    });
   };
 
   // Initialize carousel to the correct index when API is ready (only once on mount)
@@ -212,24 +230,30 @@ export default function FloorPlansCarousel({
                   <div className="flex flex-col items-center justify-center gap-y-4 sm:gap-y-6 md:gap-y-7 h-full w-full order-2 lg:order-0">
                     <div className="flex flex-col items-center justify-center gap-y-1">
                       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#E1B260] font-normal font-playfairDisplay text-center">
-                        <span className="lg:hidden font-libreCaslonDisplay">
-                          {t(
-                            data.mobileTitleKey as keyof (typeof ui)[typeof lang]
+                        <span className="lg:hidden">
+                          {wrapNumbersWithFont(
+                            t(
+                              data.mobileTitleKey as keyof (typeof ui)[typeof lang]
+                            )
                           )}
                         </span>
                         <span className="hidden lg:inline">
-                          {t(
-                            data.mainTitleKey as keyof (typeof ui)[typeof lang]
+                          {wrapNumbersWithFont(
+                            t(
+                              data.mainTitleKey as keyof (typeof ui)[typeof lang]
+                            )
                           )}
                         </span>
                       </h1>
                       <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#024C67] font-playfairDisplay text-center">
-                        {t(data.subTitleKey as keyof (typeof ui)[typeof lang])}
+                        {wrapNumbersWithFont(
+                          t(data.subTitleKey as keyof (typeof ui)[typeof lang])
+                        )}
                       </p>
                     </div>
                     <div className={data.tableImageStyle}>
                       <img
-                        src={data.tableImage}
+                        src={lang === "pt" ? data.tableImagePT : data.tableImageEN}
                         alt={data.id}
                         width={382}
                         height={414}

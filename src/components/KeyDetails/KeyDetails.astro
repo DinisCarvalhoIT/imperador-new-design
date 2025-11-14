@@ -4,7 +4,7 @@ import keyDetailsImage from "../../../public/KeyDetails/Rectangle.png";
 import logoImperador from "../../../public/HomePage/logoImperador.svg";
 import beachIcon from "../../../public/KeyDetails/beach.svg";
 import building from "../../../public/KeyDetails/building.svg";
-import coffee from "../../../public/KeyDetails/coffe.svg";
+import coffee from "../../../public/KeyDetails/coffee.svg";
 import gym from "../../../public/KeyDetails/gym.svg";
 import pharmacy from "../../../public/KeyDetails/pharmacy.svg";
 import bus from "../../../public/KeyDetails/bus.svg";
@@ -83,16 +83,16 @@ const dataKeyDetails = [
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full">
       {
         dataKeyDetails.map((item) => (
-          <div class="flex flex-col items-center text-center gap-3 md:gap-4 p-4 md:p-6">
+          <div class="flex flex-col items-center text-center gap-5 md:gap-6 p-4 md:p-6">
             <Image
               src={item.svgPath}
               alt={item.title}
               class="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16"
             />
-            <h3 class="text-lg md:text-xl font-semibold text-[#B8C6CD] font-montserrat">
+            <h3 class="text-xl md:text-2xl font-mediumm text-[#B8C6CD] font-montserrat leading-[0.03em]">
               {item.title}
             </h3>
-            <div class="text-sm md:text-base text-white font-montserrat">
+            <div class="text-sm md:text-base text-white font-montserrat text-leading-[0.05em]">
               <p>{item.description}</p>
               {item.secondDescription && <p>{item.secondDescription}</p>}
             </div>
