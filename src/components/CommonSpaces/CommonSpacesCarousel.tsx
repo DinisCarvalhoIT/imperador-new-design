@@ -174,21 +174,21 @@ export default function CommonSpacesCarousel({
                   />
 
                   {/* Content */}
-                  <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+                  <div className="absolute bottom-0 left-0 right-0 px-[33px] pb-6 sm:px-8 sm:pb-8">
                     {/* Label */}
-                    <div className="mb-2">
-                      <div className="font-montserrat text-[#FBD784] uppercase text-[10px] leading-[12px] tracking-[0.15em]">
+                    <div className="mb-3 sm:mb-4">
+                      <div className="font-montserrat text-[#FBD784] uppercase text-xs sm:text-sm leading-[1.2] tracking-[0.15em]">
                         {t("common_spaces.title")}
                       </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-playfairDisplay text-white text-[26px] leading-[68px] font-normal mb-2">
+                    <h3 className="font-playfairDisplay text-white text-3xl sm:text-4xl md:text-4xl lg:text-5xl leading-[1.2] font-normal mb-3 sm:mb-4">
                       {space.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="font-montserrat text-[#B0C4CC] text-[11px] leading-[140%] mb-4 ">
+                    <p className="font-montserrat text-[#B0C4CC] text-sm sm:text-base leading-normal mb-0">
                       {space.description}
                     </p>
                   </div>
@@ -235,10 +235,10 @@ export default function CommonSpacesCarousel({
       {/* Desktop - Original Layout */}
       <div className="hidden lg:grid grid-cols-2 gap-0">
         {/* Left Column - Text Content */}
-        <div className="relative pl-[120px] xl:pl-[195px] pr-16 xl:pr-24 py-16 min-w-0">
+        <div className="relative pl-[120px] xl:pl-[195px] pr-16 xl:pr-24 py-16 xl:py-20 min-w-0">
           {/* Section Title - Outside border line */}
-          <div className="mb-12">
-            <div className="font-montserrat text-[#E7C873] uppercase text-[18px] tracking-[6px]">
+          <div className="mb-12 xl:mb-16">
+            <div className="font-montserrat text-[#E7C873] uppercase text-base xl:text-lg  tracking-[6px] leading-[1.2]">
               {t("common_spaces.title")}
             </div>
           </div>
@@ -259,7 +259,7 @@ export default function CommonSpacesCarousel({
               />
             </div>
 
-            <div className="space-y-10">
+            <div className="space-y-12 xl:space-y-16">
               {spaces.map((space, index) => (
                 <div
                   key={space.id}
@@ -269,14 +269,14 @@ export default function CommonSpacesCarousel({
                   {/* Content */}
                   <div>
                     <h3
-                      className={`font-playfairDisplay text-[48px] xl:text-[56px] leading-[56px] xl:leading-[68px] mb-4 transition-colors duration-300 ${getTitleColor(
+                      className={`font-playfairDisplay text-3xl sm:text-4xl md:text-4xl lg:text-5xl leading-[1.2] mb-5 xl:mb-6 transition-colors duration-300 ${getTitleColor(
                         index
                       )}`}
                     >
                       {space.title}
                     </h3>
                     <p
-                      className={`font-montserrat text-[16px] xl:text-[18px] leading-[140%] max-w-[627px] transition-colors duration-300 ${getDescriptionColor(
+                      className={`font-montserrat text-sm sm:text-base leading-[1.6] max-w-[627px] transition-colors duration-300 ${getDescriptionColor(
                         index
                       )}`}
                     >

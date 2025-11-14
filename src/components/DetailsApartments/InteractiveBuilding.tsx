@@ -550,7 +550,7 @@ export default function InteractiveBuilding({
               viewBox="0 0 91 57"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="h-15 w-auto transition-all duration-500 ease-out"
+              className="h-8 sm:h-10 md:h-10 lg:h-12 w-auto transition-all duration-500 ease-out"
             >
               <path
                 d="M1.1677 1.23204L0.0172992 17.8369L0 18.0487H1.5353L1.5526 17.8671C2.49108 6.72232 5.73901 2.77105 13.9604 2.77105H19.8595V55.3739H14.0037V56.9129H32.3754V55.3739H26.7619L26.6797 2.77105H32.6609C40.8218 2.77105 44.0481 6.72231 44.9866 17.8715L45.0039 18.053H46.5392L45.3715 1.23204H1.1677Z"
@@ -599,7 +599,7 @@ export default function InteractiveBuilding({
               viewBox="0 0 93 57"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="h-15 w-auto transition-all duration-500 ease-out"
+              className="h-8 sm:h-10 md:h-10 lg:h-12 w-auto transition-all duration-500 ease-out"
             >
               <path
                 d="M1.1677 0.566345L0.0172992 17.1755L0 17.3873H1.53963L1.55693 17.2058C2.49108 6.05661 5.73901 2.10535 13.9648 2.10535H19.8638V54.7082H14.008V56.2472H32.3798V54.7082H26.7662L26.684 2.10535H32.6652C40.8304 2.10535 44.0524 6.05661 44.9909 17.2058L45.0082 17.3873H46.5435L45.3758 0.566345H1.1677Z"
@@ -648,7 +648,7 @@ export default function InteractiveBuilding({
               viewBox="0 0 93 57"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="h-15 w-auto transition-all duration-500 ease-out"
+              className="h-8 sm:h-10 md:h-10 lg:h-12 w-auto transition-all duration-500 ease-out"
             >
               <path
                 d="M1.1677 0.566284L0.0172992 17.1755L0 17.3873H1.53963L1.55693 17.2057C2.49108 6.05655 5.73901 2.10529 13.9648 2.10529H19.8638V54.7082H14.008V56.2472H32.3798V54.7082H26.7662L26.684 2.10529H32.6652C40.8304 2.10529 44.0524 6.05655 44.9909 17.2057L45.0082 17.3873H46.5435L45.3758 0.566284H1.1677Z"
@@ -679,7 +679,7 @@ export default function InteractiveBuilding({
       </div>
 
       {/* Mobile selector: T1 · T2 · T3 with halo background */}
-      <div className="flex lg:hidden absolute left-0 right-0 top-36 items-center justify-center z-15">
+      <div className="flex lg:hidden absolute left-0 right-0 top-[170px] sm:top-[173px] md:top-[171px] items-center justify-center z-15">
         <div className="relative flex items-center gap-4 text-white">
           {/* Radial halo behind */}
           <svg
@@ -1015,34 +1015,34 @@ export default function InteractiveBuilding({
 
 
                   {/* Text below floor plan for mobile */}
-                  <div className="text-center items-center justify-center self-center flex flex-col gap-0 pt-2 sm:pt-3 lg:hidden shrink-0">
+                  <div className="text-center items-center justify-center self-center flex flex-col gap-0 pt-4 sm:pt-5 lg:hidden shrink-0 px-4">
                     {ALL_APARTMENTS[current] && (
                       <>
                         <h2 className="text-[#E1B260] mb-0">
-                          <span className="font-playfairDisplay text-[22px] md:text-[48px]">
+                          <span className="font-playfairDisplay text-2xl sm:text-3xl md:text-4xl">
                             {ALL_APARTMENTS[current].type.charAt(0)}
                           </span>
-                          <span className="font-libreCaslonDisplay text-[22px] md:text-[48px]">
+                          <span className="font-libreCaslonDisplay text-2xl sm:text-3xl md:text-4xl">
                             {ALL_APARTMENTS[current].type.charAt(1)}
-                          </span><span className="mr-2 md:mr-4"></span>
-                          <span className="font-playpenSans text-[18px] md:text-[38px] leading-[22px] md:leading-[48px]">
+                          </span><span className="mr-2 sm:mr-3 md:mr-4"></span>
+                          <span className="font-playpenSans text-xl sm:text-2xl md:text-3xl leading-[1.2]">
                             -
-                          </span><span className="mr-2 md:mr-4"></span>
-                          <span className="font-playfairDisplay md:text-[54px] text-[22px]">
+                          </span><span className="mr-2 sm:mr-3 md:mr-4"></span>
+                          <span className="font-playfairDisplay text-2xl sm:text-3xl md:text-4xl">
                             {t("details_apartments.model")}{" "}
                             {getModelLetter(
                               ALL_APARTMENTS[current].modelIndex
                             ).toUpperCase()}
                           </span>
                         </h2>
-                        <p className="text-[#B0C4CC] -mt-1 md:-mt-2">
-                          <span className="font-libreCaslonDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
+                        <p className="text-[#B0C4CC] mt-2 sm:mt-3">
+                          <span className="font-libreCaslonDisplay leading-[1.3] text-lg sm:text-xl md:text-2xl">
                             {formatUnitsForRender(ALL_APARTMENTS[current].model).number}{" "}
                           </span>{" "}
-                          <span className="font-playfairDisplay leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]">
+                          <span className="font-playfairDisplay leading-[1.3] text-lg sm:text-xl md:text-2xl">
                             {formatUnitsForRender(ALL_APARTMENTS[current].model).word}{" "}
                           </span>
-                          <span className="font-playpenSans md:text-[32px] text-[19px] md:leading-[52px] leading-[30px]">
+                          <span className="font-playpenSans text-lg sm:text-xl md:text-2xl leading-[1.3]">
                           | {" "}
                           </span>{" "}
                           {formatFloorsForRender(ALL_APARTMENTS[current].model).map((part: { text: string; isNumber: boolean }, i: number, arr: { text: string; isNumber: boolean }[]) => (
@@ -1050,7 +1050,7 @@ export default function InteractiveBuilding({
                               key={i}
                               className={`${
                                 part.isNumber ? "font-libreCaslonDisplay" : "font-playfairDisplay"
-                              } leading-[30px] md:leading-[52px] text-[19px] md:text-[42px]`}
+                              } leading-[1.3] text-lg sm:text-xl md:text-2xl`}
                             >
                               {part.text}{i < arr.length - 1 ? " " : ""}
                             </span>
@@ -1061,7 +1061,7 @@ export default function InteractiveBuilding({
                   </div>
 
                   {/* Title Section - Below Carousel for desktop */}
-                  <div className="hidden lg:flex items-center justify-center w-full pt-2 pb-2 relative px-16 xl:px-20 shrink-0">
+                  <div className="hidden lg:flex items-center justify-center w-full pt-4 pb-4 relative px-12 xl:px-16 2xl:px-20 shrink-0">
                     <Button
                       type="button"
                       onClick={() => api?.scrollPrev()}
@@ -1083,34 +1083,34 @@ export default function InteractiveBuilding({
                         />
                       </svg>
                     </Button>
-                    <div className="text-center items-center justify-center self-center flex flex-col gap-0">
+                    <div className="text-center items-center justify-center self-center flex flex-col gap-0 px-4">
                       {ALL_APARTMENTS[current] && (
                         <>
                           <h2 className="text-[#E1B260] mb-0">
-                            <span className="font-playfairDisplay text-pretty text-[48px]">
+                            <span className="font-playfairDisplay text-pretty text-4xl xl:text-5xl leading-[1.2]">
                               {ALL_APARTMENTS[current].type.charAt(0)}
                             </span>
-                            <span className="font-libreCaslonDisplay text-pretty text-[48px]">
+                            <span className="font-libreCaslonDisplay text-pretty text-4xl xl:text-5xl leading-[1.2]">
                               {ALL_APARTMENTS[current].type.charAt(1)}
-                            </span><span className="mr-4"></span>
-                            <span className="font-playpenSans text-pretty text-[38px] leading-[48px]">
+                            </span><span className="mr-3 xl:mr-4"></span>
+                            <span className="font-playpenSans text-pretty text-3xl xl:text-4xl leading-[1.2]">
                               -
-                            </span><span className="mr-4"></span>
-                            <span className="font-playfairDisplay text-pretty text-[54px]">
+                            </span><span className="mr-3 xl:mr-4"></span>
+                            <span className="font-playfairDisplay text-pretty text-4xl xl:text-5xl 2xl:text-[54px] leading-[1.2]">
                               {t("details_apartments.model")}{" "}
                               {getModelLetter(
                                 ALL_APARTMENTS[current].modelIndex
                               ).toUpperCase()}
                             </span>
                           </h2>
-                          <p className="text-[#B0C4CC] -mt-2">
-                            <span className="font-libreCaslonDisplay leading-[52px] text-[42px]">
+                          <p className="text-[#B0C4CC] mt-2 xl:mt-3">
+                            <span className="font-libreCaslonDisplay leading-[1.3] text-3xl xl:text-4xl">
                               {formatUnitsForRender(ALL_APARTMENTS[current].model).number}{" "}
                             </span>{" "}
-                            <span className="font-playfairDisplay leading-[52px] text-[42px]">
+                            <span className="font-playfairDisplay leading-[1.3] text-3xl xl:text-4xl">
                               {formatUnitsForRender(ALL_APARTMENTS[current].model).word}{" "}
                             </span>
-                            <span className="font-playpenSans text-[32px] leading-[52px]">
+                            <span className="font-playpenSans text-2xl xl:text-3xl leading-[1.3]">
                             - {" "}
                             </span>{" "}
                             {formatFloorsForRender(ALL_APARTMENTS[current].model).map((part: { text: string; isNumber: boolean }, i: number, arr: { text: string; isNumber: boolean }[]) => (
@@ -1118,7 +1118,7 @@ export default function InteractiveBuilding({
                                 key={i}
                                 className={`${
                                   part.isNumber ? "font-libreCaslonDisplay" : "font-playfairDisplay"
-                                } leading-[52px] text-[42px]`}
+                                } leading-[1.3] text-3xl xl:text-4xl`}
                               >
                                 {part.text}{i < arr.length - 1 ? " " : ""}
                               </span>
@@ -1151,63 +1151,63 @@ export default function InteractiveBuilding({
                   </div>
 
                 {/* Content Container - All content below carousel */}
-                <div className="shrink-0 pt-2 sm:pt-3 lg:pt-2">
+                <div className="shrink-0 pt-4 sm:pt-5 lg:pt-4">
                   {/* Stats Grid - Mobile: 2x2 layout, Desktop: 3 columns */}
                   <div className="lg:grid lg:grid-rows-2 lg:pb-4 lg:grid-cols-[1fr_8px_1fr_36px_1fr] lg:items-center lg:justify-center">
                     {/* Mobile: Two flex rows with separators */}
                     <div className="lg:hidden relative pb-3 sm:pb-4">
                       <div className="flex flex-col gap-4 sm:gap-5 items-center">
                         {/* Row 1: Suites and Parking */}
-                        <div className="flex items-center justify-center gap-4 sm:gap-6 w-full">
+                        <div className="flex items-center justify-center gap-4 sm:gap-6 w-full px-2">
                           {/* Suites */}
                           <div className="flex flex-col justify-center items-center flex-[0.8]">
-                            <span className="text-white md:text-[48px] text-[40px] font-libreCaslonDisplay leading-none ">
+                            <span className="text-white text-3xl sm:text-4xl md:text-5xl font-libreCaslonDisplay leading-[1.1]">
                               {ALL_APARTMENTS[current].model.suites}
                             </span>
-                            <div className="text-white font-playfairDisplay text-[26px] sm:text-[28px] leading-[20px] mt-1 sm:mt-2 text-center">
+                            <div className="text-white font-playfairDisplay text-lg sm:text-xl md:text-2xl leading-[1.2] mt-2 sm:mt-3 text-center">
                               {t("details_apartments.suite")}
                             </div>
                           </div>
                           
                           {/* Separator */}
                           <div
-                            className="w-px h-[60px] sm:h-[70px] bg-[#E1B260] opacity-60"
+                            className="w-px h-16 sm:h-20 bg-[#E1B260] opacity-60"
                           />  
                           
                           {/* Parking */}
                           <div className="flex flex-col justify-center items-center flex-[1.2]">
-                            <span className="text-white md:text-[48px] text-[40px] font-libreCaslonDisplay leading-none">
+                            <span className="text-white text-3xl sm:text-4xl md:text-5xl font-libreCaslonDisplay leading-[1.1]">
                               {ALL_APARTMENTS[current].model.parking}
                             </span>
-                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-sm sm:text-base leading-[20px] sm:leading-[22px] mt-1 sm:mt-2 text-center">
+                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-xs sm:text-sm md:text-base leading-[1.3] mt-2 sm:mt-3 text-center px-1">
                               {t("details_apartments.parking_spaces")}
                             </div>
                           </div>
                         </div>
 
                         {/* Row 2: Bathrooms and Area */}
-                        <div className="flex items-center justify-center gap-4 sm:gap-6 w-full">
+                        <div className="flex items-center justify-center gap-4 sm:gap-6 w-full px-2">
                           {/* Bathrooms */}
                           <div className="flex flex-col justify-center items-center flex-[0.8]">
-                            <span className="text-white md:text-[48px] text-[40px] font-libreCaslonDisplay leading-none">
+                            <span className="text-white text-3xl sm:text-4xl md:text-5xl font-libreCaslonDisplay leading-[1.1]">
                               {ALL_APARTMENTS[current].model.bathrooms}
                             </span>
-                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-sm sm:text-base leading-[20px] sm:leading-[22px] mt-1 sm:mt-2 text-center">
+                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-xs sm:text-sm md:text-base leading-[1.3] mt-2 sm:mt-3 text-center px-1">
                               {t("details_apartments.bathrooms")}
                             </div>
                           </div>
                           
                           {/* Separator */}
                           <div
-                            className="w-px h-[60px] sm:h-[70px] bg-[#E1B260] opacity-60"
+                            className="w-px h-16 sm:h-20 bg-[#E1B260] opacity-60"
                           />
                           
                           {/* Area */}
                           <div className="flex flex-col justify-center items-center flex-[1.2]">
-                            <span className="text-white md:text-[48px] text-[40px] font-libreCaslonDisplay leading-none whitespace-nowrap">
+                            <span className="text-white text-3xl sm:text-4xl md:text-5xl font-libreCaslonDisplay leading-[1.1] whitespace-nowrap">
                               + {ALL_APARTMENTS[current].model.area} m²
                             </span>
-                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-sm sm:text-base leading-[20px] sm:leading-[22px] mt-1 sm:mt-2 text-center">
+                            <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty text-xs sm:text-sm md:text-base leading-[1.3] mt-2 sm:mt-3 text-center px-1">
                               {t("details_apartments.gross_construction_area")}
                             </div>
                           </div>
@@ -1218,7 +1218,7 @@ export default function InteractiveBuilding({
                     {/* Desktop: Original 3-column layout */}
                     {/* Row 1: Numbers */}
                     <div className="hidden lg:flex justify-center items-center">
-                      <span className="text-white text-[48px] xl:text-[53px] font-libreCaslonDisplay leading-none">
+                      <span className="text-white text-4xl xl:text-5xl font-libreCaslonDisplay leading-[1.1]">
                         {ALL_APARTMENTS[current].model.suites}
                       </span>
                     </div>
@@ -1228,7 +1228,7 @@ export default function InteractiveBuilding({
                       style={{ width: "1px", height: "100px", borderLeft: "0.2px solid #E1B260", opacity: 0.6 }}
                     />
                     <div className="hidden lg:flex justify-center items-center">
-                      <span className="text-white text-[48px] xl:text-[53px] font-libreCaslonDisplay leading-none">
+                      <span className="text-white text-4xl xl:text-5xl font-libreCaslonDisplay leading-[1.1]">
                         {ALL_APARTMENTS[current].model.bathrooms}
                       </span>
                     </div>
@@ -1238,33 +1238,33 @@ export default function InteractiveBuilding({
                       style={{ width: "1px", height: "100px", borderLeft: "0.2px solid #E1B260", opacity: 0.6 }}
                     />
                     <div className="hidden lg:flex justify-center items-center">
-                      <span className="text-white text-[48px] xl:text-[53px] font-libreCaslonDisplay leading-none">
+                      <span className="text-white text-4xl xl:text-5xl font-libreCaslonDisplay leading-[1.1]">
                         {ALL_APARTMENTS[current].model.parking}
                       </span>
                     </div>
 
                     {/* Row 2: Labels */}
-                    <div className="hidden lg:block text-white font-playfairDisplay text-[28px] xl:text-[30px] leading-[20px] xl:leading-[22px] text-center">
+                    <div className="hidden lg:block text-white font-playfairDisplay text-xl xl:text-2xl leading-[1.2] text-center mt-2">
                       {t("details_apartments.suite")}
                     </div>
                     {/* placeholder for sep column (occupied by row-span-2) */}
-                    <div className="hidden lg:block text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[100px] mx-auto text-sm xl:text-base leading-[20px] xl:leading-[22px] text-center">
+                    <div className="hidden lg:block text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[100px] mx-auto text-sm xl:text-base leading-[1.3] text-center mt-2">
                       {t("details_apartments.bathrooms")}
                     </div>
                     {/* placeholder for sep column (occupied by row-span-2) */}
-                    <div className="hidden lg:block text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[160px] mx-auto text-sm xl:text-base leading-[20px] xl:leading-[22px] text-center">
+                    <div className="hidden lg:block text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty max-w-[160px] mx-auto text-sm xl:text-base leading-[1.3] text-center mt-2">
                       {t("details_apartments.parking_spaces")}
                     </div>
                   </div>
 
                   {/* Area Information - Desktop only */}
-                  <div className="hidden lg:block text-center pt-4 pb-8">
-                    <div className="flex justify-center items-center pb-2 xl:pb-3 h-6 xl:h-8">
-                      <span className="text-white text-3xl xl:text-4xl 2xl:text-5xl font-libreCaslonDisplay">
+                  <div className="hidden lg:block text-center pt-6 pb-8 xl:pb-10">
+                    <div className="flex justify-center items-center pb-3 xl:pb-4">
+                      <span className="text-white text-3xl xl:text-4xl 2xl:text-5xl font-libreCaslonDisplay leading-[1.1]">
                         + {ALL_APARTMENTS[current].model.area} m²
                       </span>
                     </div>
-                    <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty mx-auto text-sm xl:text-base leading-[20px] xl:leading-[22px]">
+                    <div className="text-[#B0C4CC] font-montserrat tracking-[0.02em] text-pretty mx-auto text-sm xl:text-base leading-[1.3] px-4">
                       {t("details_apartments.gross_construction_area")}
                     </div>
                   </div>

@@ -217,7 +217,7 @@ export default function ApartmentDetailsCarousel({
   const currentData = dataCarousel[current];
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-5 md:p-6 lg:p-8 relative">
+    <div className="w-full h-full flex items-center justify-center p-4 md:p-6 lg:p-6 relative">
       {/* Background Rectangle - Behind everything, 1/3 height */}
 
       <div className="w-full max-w-[1400px] h-full flex flex-col lg:flex-row gap-8 lg:gap-12 relative ">
@@ -225,7 +225,7 @@ export default function ApartmentDetailsCarousel({
         <div
           className="absolute left-1/2 -translate-x-1/2 -top-8 z-0 lg:hidden rounded-2xl"
           style={{
-            width: "157px",
+            width: "217px",
             height: "0px",
             border: "0.8px solid #7192A2",
           }}
@@ -242,9 +242,9 @@ export default function ApartmentDetailsCarousel({
         />
 
         {/* Left Side - Content */}
-        <div className="flex-1 flex z-1 flex-col justify-center space-y-6 lg:space-y-8 text-white px-4 lg:px-8">
+        <div className="flex-1 flex z-1 flex-col justify-center space-y-6 lg:space-y-8 px-4 lg:px-8 text-white">
           {/* Tagline */}
-          <div className="font-montserrat text-[10px] sm:text-xs md:text-sm lg:text-base uppercase text-[#FBD784] tracking-[3px] lg:tracking-[5px]">
+          <div className="font-montserrat text-[12px] text-pretty sm:text-xs md:text-sm lg:text-base uppercase text-[#FBD784] tracking-[3px] lg:tracking-[5px]">
             {t("apartment_details.tagline")}
           </div>
 
@@ -261,7 +261,7 @@ export default function ApartmentDetailsCarousel({
                   return (
                     <span
                       key={idx}
-                      className="font-playpenSans text-[16px] lg:text-[36px] mx-2"
+                      className="font-playpenSans text-[16px] lg:text-[36px] mx-[5px]"
                       style={{ verticalAlign: "middle" }}
                     >
                       -
@@ -294,7 +294,7 @@ export default function ApartmentDetailsCarousel({
           </h1>
 
           {/* Subtitle */}
-          <p className="text-[#B0C4CC] leading-[24px] md:leading-[40px] text-[15px] md:text-[32px]">
+          <p className="text-[#B0C4CC] leading-[24px] md:leading-[40px] text-[21px] md:text-[32px]">
             {(() => {
               const subtitleText = t(
                 currentData.subTitleKey as keyof (typeof ui)[typeof lang]
@@ -306,15 +306,15 @@ export default function ApartmentDetailsCarousel({
                   {formatted.unitsNumber &&
                     formatted.unitsNumber.length > 0 && (
                       <>
-                        <span className="font-libreCaslonDisplay leading-[24px] md:leading-[40px] text-[15px] md:text-[32px]">
+                        <span className="font-libreCaslonDisplay leading-[24px] md:leading-[40px] text-[21px] md:text-[32px]">
                           {formatted.unitsNumber}{" "}
                         </span>
                         {formatted.unitsWord && (
-                          <span className="font-playfairDisplay leading-[24px] md:leading-[40px] text-[15px] md:text-[32px]">
+                          <span className="font-playfairDisplay leading-[24px] md:leading-[40px] text-[21px] md:text-[32px]">
                             {formatted.unitsWord}{" "}
                           </span>
                         )}
-                        <span className="font-playpenSans text-[15px] md:text-[24px] leading-[24px] md:leading-[40px]">
+                        <span className="font-playpenSans text-[21px] md:text-[24px] leading-[24px] md:leading-[40px]">
                           -{" "}
                         </span>
                       </>
@@ -326,7 +326,7 @@ export default function ApartmentDetailsCarousel({
                         part.isNumber
                           ? "font-libreCaslonDisplay"
                           : "font-playfairDisplay"
-                      } leading-[24px] md:leading-[40px] text-[15px] md:text-[32px]`}
+                      } leading-[24px] md:leading-[40px] text-[21px] md:text-[32px]`}
                     >
                       {part.text}
                       {i < arr.length - 1 ? " " : ""}
@@ -389,7 +389,7 @@ export default function ApartmentDetailsCarousel({
                     })()}
                   </div>
                   {feature.descriptionKey && (
-                    <div className="font-montserrat text-pretty text-sm sm:text-base md:text-lg lg:text-[15px] leading-[140%] text-[#B0C4CC] font-normal mt-1">
+                    <div className="font-montserrat text-pretty text-sm sm:text-base md:text-lg lg:text-[21px] leading-[140%] text-[#B0C4CC] font-normal mt-1">
                       {(() => {
                         const descriptionText = t(
                           feature.descriptionKey as keyof (typeof ui)[typeof lang]
