@@ -95,37 +95,6 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
       }
     });
 
-    const updateScrollState = () => {
-      const dropdownList = document.getElementById("dropdownList-" + uniqueId);
-      if (!dropdownList) return;
-
-      const items = dropdownList.querySelectorAll("li");
-      const isScrolled = window.scrollY > 50;
-
-      if (isScrolled) {
-        // scrolled → blue background, remove borders
-        dropdownList.classList.remove("bg-transparent");
-        dropdownList.classList.add("bg-[#0b1d26db]");
-        items.forEach((li) => {
-          li.classList.remove("border-white");
-          li.classList.remove("border");
-        });
-      } else {
-        // top → transparent background, white borders
-        dropdownList.classList.remove("bg-[#0b1d26db]");
-        dropdownList.classList.add("bg-transparent");
-        items.forEach((li) => {
-          li.classList.add("border");
-          li.classList.add("border-white");
-        });
-      }
-    };
-
-    // Initialize on load
-    updateScrollState();
-
-    // Update on scroll
-    window.addEventListener("scroll", updateScrollState, { passive: true });
   }); // End of DOMContentLoaded
 </script>
 <form class="z-30" data-unique-id={uniqueId}>
@@ -139,7 +108,7 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
         <Image
           src={flagImages[languages[currentLang] as keyof typeof flagImages]}
           alt={`${labels[currentLang]} flag`}
-          class="w-6 h-6 rounded-full object-cover"
+          class="w-6 h-6 rounded-full border-2 border-white object-cover"
           loading="eager"
           width={24}
           height={24}
@@ -165,26 +134,30 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
     <div>
       <ul
         id={"dropdownList-" + uniqueId}
-        class="absolute left-0 rounded-none w-full mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium lg:text-xl text-sm bg-transparent"
+        class="absolute left-0 rounded-none w-full mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium lg:text-xl text-sm bg-[#0b1d26db]"
       >
         {
-          Object.entries(languages).filter(([lang]) => lang !== currentLang as keyof typeof languages).map(([lang, flagCode]) => {
-            const langKey = lang as keyof typeof labels;
-            return (
-              <a href={translatePath(getCurrentPath(), lang)}>
-                <li class="p-2 flex items-center justify-center cursor-pointer bg-transparent border rounded-none border-white transition-all duration-200 hover:bg-[#2f577a]/10 hover:shadow-sm">
-                  <Image
-                    src={flagImages[flagCode as keyof typeof flagImages]}
-                    alt={`${labels[langKey]} flag`}
-                    class="w-6 h-6 rounded-full object-cover"
-                    loading="eager"
-                    width={24}
-                    height={24}
-                  />
-                </li>
-              </a>
-            );
-          })
+          Object.entries(languages)
+            .filter(
+              ([lang]) => lang !== (currentLang as keyof typeof languages)
+            )
+            .map(([lang, flagCode]) => {
+              const langKey = lang as keyof typeof labels;
+              return (
+                <a href={translatePath(getCurrentPath(), lang)}>
+                  <li class="p-2 flex items-center justify-center cursor-pointer bg-[#0b1d26db]   rounded-none  transition-all duration-200 hover:bg-[#0b1d26db]/90 hover:shadow-sm">
+                    <Image
+                      src={flagImages[flagCode as keyof typeof flagImages]}
+                      alt={`${labels[langKey]} flag`}
+                      class="w-6 h-6 rounded-full border-2 border-white object-cover"
+                      loading="eager"
+                      width={24}
+                      height={24}
+                    />
+                  </li>
+                </a>
+              );
+            })
         }
       </ul>
     </div>

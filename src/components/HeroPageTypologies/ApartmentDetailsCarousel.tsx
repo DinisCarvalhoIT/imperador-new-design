@@ -344,7 +344,7 @@ export default function ApartmentDetailsCarousel({
                 <img
                   src={checkIconUrl}
                   alt="Check"
-                  className="w-5 h-5 lg:w-6 lg:h-[20px] shrink-0 self-start mt-3.5"
+                  className="w-5 h-5 lg:w-6 lg:h-[20px] shrink-0 self-start mt-2"
                   width={24}
                   height={20}
                 />
@@ -389,7 +389,7 @@ export default function ApartmentDetailsCarousel({
                     })()}
                   </div>
                   {feature.descriptionKey && (
-                    <div className="font-montserrat text-pretty text-sm sm:text-base md:text-lg lg:text-[21px] leading-[140%] text-[#B0C4CC] font-normal mt-1">
+                    <div className="font-montserrat text-pretty text-[14px] md:text-[16px] leading-[140%] text-[#B0C4CC] font-normal mt-1">
                       {(() => {
                         const descriptionText = t(
                           feature.descriptionKey as keyof (typeof ui)[typeof lang]

@@ -31,57 +31,82 @@ const {
 } = Astro.props;
 ---
 
-<section class="w-full bg-transparent absolute -bottom-8 hidden md:block">
+<section class="w-full bg-transparent absolute -bottom-8 hidden lg:block">
   <div
-    class="grid items-center justify-items-center text-white lg:w-[75%] w-[90%] mx-auto"
-    style="grid-template-columns: 1fr auto 1fr auto 1fr;"
+    class="grid items-center justify-items-center text-white lg:w-full xl:w-[75%] w-[90%] mx-auto"
+    style="grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; grid-template-rows: auto auto;"
   >
-    <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >{number1}</span
-      ><span class="font-montserrat text-center">{label1}</span><span
-        class="font-montserrat text-center invisible">&nbsp;</span
-      >
+    <!-- First row: Numbers -->
+    <span class="font-libreCaslonDisplay tracking-[0.03em] text-5xl md:text-6xl lg:text-7xl text-center" style="grid-row: 1; grid-column: 1;">{number1}</span>
+    <VectorPointer style="grid-row: 1 / 3; grid-column: 2; display: flex; align-items: center;" />
+    <span class="font-libreCaslonDisplay tracking-[0.03em] text-5xl md:text-6xl lg:text-7xl text-center" style="grid-row: 1; grid-column: 3;">{number2}</span>
+    <VectorPointer style="grid-row: 1 / 3; grid-column: 4; display: flex; align-items: center;" />
+    <span class="font-libreCaslonDisplay tracking-[0.03em] text-5xl md:text-6xl lg:text-7xl text-center" style="grid-row: 1; grid-column: 5;">{number3}</span>
+    <VectorPointer style="grid-row: 1 / 3; grid-column: 6; display: flex; align-items: center;" />
+    <span class="font-libreCaslonDisplay tracking-[0.03em] text-5xl md:text-6xl lg:text-7xl text-center" style="grid-row: 1; grid-column: 7;">{number4}</span>
+    
+    <!-- Second row: Labels -->
+    <div class="flex flex-col items-center justify-center text-center" style="grid-row: 2; grid-column: 1;">
+      <span class="font-playfairDisplay text-[32px] tracking-[0.03em] leading-[22px] text-[#B0C4CC]">{label1}</span>
     </div>
-    <VectorPointer />
-    <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >{number2}</span
-      ><span class="font-montserrat text-center">{label2_1}</span>
-      <span class="font-montserrat text-center">{label2_2}</span>
+    <div class="flex flex-col items-center justify-center text-center " style="grid-row: 2; grid-column: 3;">
+      <span class="font-montserrat tracking-[0.02em] leading-[22px]  text-[#B0C4CC]">{label2_1}</span>
+      <span class="font-montserrat text-[#B0C4CC]">{label2_2}</span>
     </div>
-    <VectorPointer />
-    <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-3"
-        >{number3}</span
-      ><span class="font-montserrat text-center">{label3_1}</span>
-      <span class="font-montserrat text-center">{label3_2}</span>
+    <div class="flex flex-col items-center justify-center text-center" style="grid-row: 2; grid-column: 5;">
+      <span class="font-montserrat tracking-[0.02em] leading-[22px] text-[#B0C4CC]">{label3_1}</span>
+      <span class="font-montserrat text-[#B0C4CC]">{label3_2}</span>
+    </div>
+    <div class="flex flex-col items-center justify-center text-center max-w-[180px]" style="grid-row: 2; grid-column: 7;">
+      <span class="font-montserrat tracking-[0.02em] leading-[22px] text-[#B0C4CC]">{label4_1}</span>
+      <span class="font-montserrat text-[#B0C4CC]">{label4_2}</span>
     </div>
   </div>
 </section>
 
-<section class="w-full md:hidden block relative z-10 bottom-10">
-  <div
-    class="flex flex-col items-center justify-center w-[90%] mx-auto text-white gap-y-3 pt-4"
-  >
-    <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >{number1}</span
-      ><span class="font-montserrat text-center">{label1}</span>
-    </div>
-    <VectorPointer />
-    <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >{number2}</span
-      ><span class="font-montserrat text-center">{label2_1}</span>
-      <span class="font-montserrat text-center">{label2_2}</span>
-    </div>
-    <VectorPointer />
-    <div class="font-boldn flex flex-col items-center justify-center">
-      <span class="font-playfairDisplay text-5xl md:text-6xl lg:text-7xl pb-1"
-        >{number3}</span
-      ><span class="font-montserrat text-center">{label3_1}</span>
-      <span class="font-montserrat text-center">{label3_2}</span>
+<section class="w-full lg:hidden block relative z-10 bottom-10">
+  <div class="max-w-[400px] mx-auto text-white pt-4">
+    <div class="grid grid-cols-2 grid-rows-2 gap-0" style="margin-left: -24px;">
+      <!-- Top Left -->
+      <div class="flex flex-col items-center justify-center pt-6 pb-4 relative">
+        <span class="font-libreCaslonDisplay tracking-[0.03em] text-5xl md:text-6xl pb-1"
+          >{number1}</span
+        >
+        <span class="font-playfairDisplay text-[20px] tracking-[0.02em] leading-[22px] text-[#B0C4CC] text-center">{label1}</span>
+      </div>
+      
+      <!-- Top Right -->
+      <div class="flex flex-col items-center justify-center pt-6 pb-4 relative">
+        <span class="font-libreCaslonDisplay tracking-[0.03em] text-5xl md:text-6xl pb-1"
+          >{number3}</span
+        >
+        <span class="font-montserrat text-[12px] tracking-[0.02em] leading-[14px] text-[#B0C4CC] text-center">{label3_1}</span>
+        <span class="font-montserrat text-[12px] mt-0.5 leading-[14px] text-[#B0C4CC] text-center">{label3_2}</span>
+        
+        <!-- Vertical Line for Top Row -->
+        <div class="absolute top-1/2 -left-4 h-[74px] w-0 border-l border-[#E1B260]" style="transform: translateY(-50%) scaleX(0.4);"></div>
+      </div>
+      
+      <!-- Bottom Left -->
+      <div class="flex flex-col items-center justify-center pt-6 pb-4  relative">
+        <span class="font-libreCaslonDisplay tracking-[0.03em] text-5xl md:text-6xl pb-1"
+          >{number2}</span
+        >
+        <span class="font-montserrat text-[12px] tracking-[0.02em] leading-[14px] text-[#B0C4CC] text-center">{label2_1}</span>
+        <span class="font-montserrat text-[12px] leading-[14px] text-[#B0C4CC] text-center">{label2_2}</span>
+      </div>
+      
+      <!-- Bottom Right -->
+      <div class="flex flex-col items-center justify-center pt-6 pb-4  relative">
+        <span class="font-libreCaslonDisplay tracking-[0.03em] text-5xl md:text-6xl pb-1"
+          >{number4}</span
+        >
+        <span class="font-montserrat text-[12px] leading-[18px] tracking-[0.02em] text-pretty text-[#B0C4CC] text-center">{label4_1}</span>
+        <span class="font-montserrat text-[12px] leading-[14px] tracking-[0.02em]  text-[#B0C4CC] text-center">{label4_2}</span>
+        
+        <!-- Vertical Line for Bottom Row -->
+        <div class="absolute top-1/2 -left-4 h-[74px] w-0 border-l border-[#E1B260]" style="transform: translateY(-50%) scaleX(0.4);"></div>
+      </div>
     </div>
   </div>
 </section>
