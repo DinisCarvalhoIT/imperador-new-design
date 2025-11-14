@@ -168,14 +168,14 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
     <div>
       <ul
         id={"dropdownList-" + uniqueId}
-        class="absolute left-2 bg-transparent rounded-lg w-full mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium lg:text-xl text-sm"
+        class="absolute left-0 bg-[#0b1d26db] rounded-lg w-full mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium lg:text-xl text-sm"
       >
         {
-          Object.entries(languages).map(([lang, flagCode]) => {
+          Object.entries(languages).filter(([lang]) => lang !== currentLang as keyof typeof languages).map(([lang, flagCode]) => {
             const langKey = lang as keyof typeof labels;
             return (
               <a href={translatePath(getCurrentPath(), lang)}>
-                <li class="p-2 flex items-center justify-center cursor-pointer bg-transparent border border-white hover:bg-gray-100/30">
+                <li class="p-2 flex items-center justify-center cursor-pointer  transition-all duration-200 hover:bg-[#2f577a]/10 hover:shadow-sm">
                   <Image
                     src={flagImages[flagCode as keyof typeof flagImages]}
                     alt={`${labels[langKey]} flag`}

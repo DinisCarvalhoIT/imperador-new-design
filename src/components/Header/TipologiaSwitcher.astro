@@ -38,15 +38,26 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
     }
 
     dropdownButton.addEventListener("click", () => {
-      dropdownList.classList.toggle("hidden");
-      dropdownList.classList.toggle("opacity-0");
-      dropdownList.classList.toggle("transform");
-      dropdownList.classList.toggle("scale-95");
-      dropdownIcon.classList.toggle("rotate-180");
+      const isHidden = dropdownList.classList.contains("hidden");
+      if (isHidden) {
+        dropdownList.classList.remove("hidden");
+        dropdownList.classList.remove("opacity-0");
+        dropdownList.classList.remove("scale-95");
+        dropdownList.classList.add("opacity-100");
+        dropdownList.classList.add("scale-100");
+        dropdownIcon.classList.add("rotate-180");
+      } else {
+        dropdownList.classList.add("hidden");
+        dropdownList.classList.add("opacity-0");
+        dropdownList.classList.add("scale-95");
+        dropdownList.classList.remove("opacity-100");
+        dropdownList.classList.remove("scale-100");
+        dropdownIcon.classList.remove("rotate-180");
+      }
     });
 
     document.addEventListener("click", (event) => {
-      if (!dropdownButton.contains(event.target)) {
+      if (!dropdownButton.contains(event.target) && !dropdownList.contains(event.target)) {
         dropdownList.classList.add("hidden");
         dropdownList.classList.add("opacity-0");
         dropdownList.classList.add("transform");
@@ -69,33 +80,6 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
 
         // Let the default link navigation happen
         return true;
-      }
-    });
-
-    document.addEventListener("scroll", () => {
-      const header = document.getElementById("header-container");
-      const dropdownList = document.getElementById("tipologiaList-" + uniqueId);
-
-      if (!dropdownList) return;
-
-      const items = dropdownList.querySelectorAll("li");
-
-      if (header?.dataset.scrolled === "true") {
-        // scrolled → black borders
-        items.forEach((li) => {
-          li.classList.remove("bg-black");
-          li.classList.remove("border-white");
-          li.classList.add("border-black");
-          li.classList.add("bg-white");
-        });
-      } else {
-        // top → white borders
-        items.forEach((li) => {
-          li.classList.remove("bg-white");
-          li.classList.remove("border-black");
-          li.classList.add("border-white");
-          li.classList.add("bg-black");
-        });
       }
     });
   }); // End of DOMContentLoaded
@@ -131,13 +115,13 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
   <div>
     <ul
       id={"tipologiaList-" + uniqueId}
-      class="absolute left-0 bg-transparent rounded-lg w-[120px] mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium text-sm"
+      class="absolute left-0 bg-[#0b1d26db] rounded-lg w-[120px] mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium text-sm space-y-2 p-2 shadow-lg"
     >
       {
         tipologias.map((tipologia) => {
           return (
             <a href={tipologia.path}>
-              <li class="p-2 flex items-center justify-center cursor-pointer bg-transparent border border-white hover:bg-gray-100/30 text-white font-montserrat">
+              <li class="w-full h-10 px-4 rounded-lg flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-[#2f577a]/10 hover:shadow-sm text-white font-playfairDisplay font-medium text-lg tracking-wide">
                 {tipologia.label}
               </li>
             </a>
