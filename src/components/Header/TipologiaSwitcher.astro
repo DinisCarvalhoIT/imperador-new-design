@@ -82,6 +82,38 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
         return true;
       }
     });
+
+    const updateScrollState = () => {
+      const dropdownList = document.getElementById("tipologiaList-" + uniqueId);
+      if (!dropdownList) return;
+
+      const items = dropdownList.querySelectorAll("li");
+      const isScrolled = window.scrollY > 50;
+
+      if (isScrolled) {
+        // scrolled → blue background, remove borders
+        dropdownList.classList.remove("bg-transparent");
+        dropdownList.classList.add("bg-[#0b1d26db]");
+        items.forEach((li) => {
+          li.classList.remove("border-white");
+          li.classList.remove("border");
+        });
+      } else {
+        // top → transparent background, white borders
+        dropdownList.classList.remove("bg-[#0b1d26db]");
+        dropdownList.classList.add("bg-transparent");
+        items.forEach((li) => {
+          li.classList.add("border");
+          li.classList.add("border-white");
+        });
+      }
+    };
+
+    // Initialize on load
+    updateScrollState();
+
+    // Update on scroll
+    window.addEventListener("scroll", updateScrollState, { passive: true });
   }); // End of DOMContentLoaded
 </script>
 
@@ -115,13 +147,13 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
   <div>
     <ul
       id={"tipologiaList-" + uniqueId}
-      class="absolute left-0 bg-[#0b1d26db] rounded-lg w-[120px] mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium text-sm space-y-2 p-2 shadow-lg"
+      class="absolute left-0 bg-transparent rounded-none w-[120px] mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium text-sm space-y-2 p-2 shadow-lg"
     >
       {
         tipologias.map((tipologia) => {
           return (
             <a href={tipologia.path}>
-              <li class="w-full h-10 px-4 rounded-lg flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-[#2f577a]/10 hover:shadow-sm text-white font-playfairDisplay font-medium text-lg tracking-wide">
+              <li class="w-full h-10 px-4 rounded-none flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-[#2f577a]/10 hover:shadow-sm text-white font-playfairDisplay font-medium text-lg tracking-wide border border-white">
                 {tipologia.label}
               </li>
             </a>

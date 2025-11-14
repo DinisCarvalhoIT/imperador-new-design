@@ -55,14 +55,6 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
     const dropdownList = document.getElementById("dropdownList-" + uniqueId);
     const dropdownIcon = document.getElementById("dropdownIcon-" + uniqueId);
     const selectedLabel = document.getElementById("selectedLabel-" + uniqueId);
-
-    console.log("Found elements:", {
-      dropdownButton: !!dropdownButton,
-      dropdownList: !!dropdownList,
-      dropdownIcon: !!dropdownIcon,
-      selectedLabel: !!selectedLabel,
-    });
-
     if (!dropdownButton || !dropdownList || !selectedLabel || !dropdownIcon) {
       console.error("Dropdown elements not found for uniqueId:", uniqueId);
       return;
@@ -103,32 +95,37 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
       }
     });
 
-    document.addEventListener("scroll", () => {
-      const header = document.getElementById("header-container");
+    const updateScrollState = () => {
       const dropdownList = document.getElementById("dropdownList-" + uniqueId);
-
       if (!dropdownList) return;
 
       const items = dropdownList.querySelectorAll("li");
+      const isScrolled = window.scrollY > 50;
 
-      if (header?.dataset.scrolled === "true") {
-        // scrolled → black borders
+      if (isScrolled) {
+        // scrolled → blue background, remove borders
+        dropdownList.classList.remove("bg-transparent");
+        dropdownList.classList.add("bg-[#0b1d26db]");
         items.forEach((li) => {
-          li.classList.remove("bg-black");
           li.classList.remove("border-white");
-          li.classList.add("border-black");
-          li.classList.add("bg-white");
+          li.classList.remove("border");
         });
       } else {
-        // top → white borders
+        // top → transparent background, white borders
+        dropdownList.classList.remove("bg-[#0b1d26db]");
+        dropdownList.classList.add("bg-transparent");
         items.forEach((li) => {
-          li.classList.remove("bg-white");
-          li.classList.remove("border-black");
+          li.classList.add("border");
           li.classList.add("border-white");
-          li.classList.add("bg-black");
         });
       }
-    });
+    };
+
+    // Initialize on load
+    updateScrollState();
+
+    // Update on scroll
+    window.addEventListener("scroll", updateScrollState, { passive: true });
   }); // End of DOMContentLoaded
 </script>
 <form class="z-30" data-unique-id={uniqueId}>
@@ -168,14 +165,14 @@ const uniqueId = Math.random().toString(36).substr(2, 9);
     <div>
       <ul
         id={"dropdownList-" + uniqueId}
-        class="absolute left-0 bg-[#0b1d26db] rounded-lg w-full mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium lg:text-xl text-sm"
+        class="absolute left-0 rounded-none w-full mt-1 hidden z-20 transition-all duration-300 opacity-0 transform scale-95 font-medium lg:text-xl text-sm bg-transparent"
       >
         {
           Object.entries(languages).filter(([lang]) => lang !== currentLang as keyof typeof languages).map(([lang, flagCode]) => {
             const langKey = lang as keyof typeof labels;
             return (
               <a href={translatePath(getCurrentPath(), lang)}>
-                <li class="p-2 flex items-center justify-center cursor-pointer  transition-all duration-200 hover:bg-[#2f577a]/10 hover:shadow-sm">
+                <li class="p-2 flex items-center justify-center cursor-pointer bg-transparent border rounded-none border-white transition-all duration-200 hover:bg-[#2f577a]/10 hover:shadow-sm">
                   <Image
                     src={flagImages[flagCode as keyof typeof flagImages]}
                     alt={`${labels[langKey]} flag`}
