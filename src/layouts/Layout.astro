@@ -5,7 +5,7 @@ import Header from "@/components/Header/Header.astro";
 import Footer from "@/components/Footer/Footer.astro";
 import MySideBar from "@/components/Header/mySideBar.tsx";
 import { Toaster } from "@/components/ui/sonner";
-
+import Analytics from '@vercel/analytics/astro'
 interface Props {
   title?: string;
   description?: string;
@@ -300,6 +300,7 @@ const ogImage = customOgImage
     <Header />
     <slot />
     <Footer />
+    <Analytics />
     <Toaster client:load />
   </body>
 </html>
