@@ -2,7 +2,11 @@
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import { getImage } from "astro:assets";
 import BooksTriggers from "./BooksTriggers";
-import { mainBookImages, finishesBookPTImages, finishesBookENImages } from "./bookImages";
+import {
+  mainBookImages,
+  finishesBookPTImages,
+  finishesBookENImages,
+} from "./bookImages";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -29,48 +33,70 @@ const getImageUrl = async (image: any, width: number, height: number) => {
 // Second book: Mobile 200x283 -> 400x483, Desktop 374x529 -> 574x729
 const mainBookCoverMobile = await getImageUrl(mainBookImg, 600, 483);
 const mainBookCoverDesktop = await getImageUrl(mainBookImg, 947, 729);
-const finishesBookCoverPTMobile = await getImageUrl(finishesBookPTImg, 400, 483);
-const finishesBookCoverPTDesktop = await getImageUrl(finishesBookPTImg, 574, 729);
-const finishesBookCoverENMobile = await getImageUrl(finishesBookENImg, 400, 483);
-const finishesBookCoverENDesktop = await getImageUrl(finishesBookENImg, 574, 729);
-
-
+const finishesBookCoverPTMobile = await getImageUrl(
+  finishesBookPTImg,
+  400,
+  483
+);
+const finishesBookCoverPTDesktop = await getImageUrl(
+  finishesBookPTImg,
+  574,
+  729
+);
+const finishesBookCoverENMobile = await getImageUrl(
+  finishesBookENImg,
+  400,
+  483
+);
+const finishesBookCoverENDesktop = await getImageUrl(
+  finishesBookENImg,
+  574,
+  729
+);
 
 // PDF paths - no encoding needed since filenames have no spaces
-const mainBookPdfPath = "https://bqp1pahfahngdvvh.public.blob.vercel-storage.com/LIVROIMPERADORPT.pdf";
-const finishesBookPTPdfPath = "https://bqp1pahfahngdvvh.public.blob.vercel-storage.com/MapadeAcabamentosPT.pdf";
-const finishesBookENPdfPath = "https://bqp1pahfahngdvvh.public.blob.vercel-storage.com/MapadeAcabamentosEN.pdf";
+const mainBookPdfPath =
+  "https://bqp1pahfahngdvvh.public.blob.vercel-storage.com/LIVROIMPERADORPT.pdf";
+const finishesBookPTPdfPath =
+  "https://bqp1pahfahngdvvh.public.blob.vercel-storage.com/MapadeAcabamentosPT.pdf";
+const finishesBookENPdfPath =
+  "https://bqp1pahfahngdvvh.public.blob.vercel-storage.com/MapadeAcabamentosEN.pdf";
 ---
 
-<section class="w-full flex flex-col max-h-screen items-center justify-center py-3 md:py-16">
+<section
+  class="w-full flex flex-col max-h-screen items-center justify-center py-3 md:py-16"
+>
   {/* Section Header */}
-  <div class="text-center mb-8 md:mb-12 px-4">
+  <div class="text-center mb-8 md:mb-12 px-4 pt-10">
     <div
-      class="font-montserrat text-[#FBD784] uppercase text-[14px] md:text-[16px] lg:text-[18px] tracking-[0.15em]  mb-1"
+      class="font-montserrat text-[#FBD784] uppercase text-[14px] md:text-[16px] lg:text-[18px] tracking-[0.15em] mb-1"
     >
       {t("books.tagline")}
     </div>
     <h2
       class="font-playfairDisplay text-[32px] md:text-[48px] lg:text-[58px] leading-[44px] md:leading-[56px] lg:leading-[68px] text-white text-center"
     >
-      {(() => {
-        const title = t("books.title");
-        const parts = title.split(" & ");
-        if (parts.length === 2) {
-          return (
-            <>
-              {parts[0]} <span class="font-libreCaslonDisplay">&nbsp;&</span> {parts[1]}
-            </>
-          );
-        }
-        return title;
-      })()}
+      {
+        (() => {
+          const title = t("books.title");
+          const parts = title.split(" & ");
+          if (parts.length === 2) {
+            return (
+              <>
+                {parts[0]} <span class="font-libreCaslonDisplay">&nbsp;&</span>{" "}
+                {parts[1]}
+              </>
+            );
+          }
+          return title;
+        })()
+      }
     </h2>
   </div>
 
-  <BooksTriggers 
-    client:load 
-    lang={lang} 
+  <BooksTriggers
+    client:load
+    lang={lang}
     mainBookCoverMobile={mainBookCoverMobile}
     mainBookCoverDesktop={mainBookCoverDesktop}
     finishesBookCoverPTMobile={finishesBookCoverPTMobile}
