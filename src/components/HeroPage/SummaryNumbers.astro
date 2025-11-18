@@ -45,7 +45,7 @@ const t = useTranslations(lang);
   </div>
 </section>
 
-<section class="w-full sm:hidden block relative -mt-28 z-10">
+<section class="w-full sm:hidden block relative z-10 summary-mobile-margin">
   <div
     class="flex flex-col items-center justify-center w-[90%] mx-auto text-white gap-y-3 pt-4"
   >
@@ -81,3 +81,41 @@ const t = useTranslations(lang);
     </div>
   </div>
 </section>
+
+<style>
+  /* Default margin for small heights */
+  .summary-mobile-margin {
+    margin-top: -1rem; /* -mt-20 equivalent */
+  }
+
+  /* Adjust margin based on screen height */
+  @media (min-height: 600px) {
+    .summary-mobile-margin {
+      margin-top: -3rem; /* -mt-16 */
+    }
+  }
+
+  @media (min-height: 700px) {
+    .summary-mobile-margin {
+      margin-top: -5rem; /* -mt-20 */
+    }
+  }
+
+  @media (min-height: 800px) {
+    .summary-mobile-margin {
+      margin-top: -8rem; /* -mt-24 */
+    }
+  }
+
+  @media (min-height: 900px) {
+    .summary-mobile-margin {
+      margin-top: -8rem; /* -mt-28 */
+    }
+  }
+
+  @media (min-height: 1000px) {
+    .summary-mobile-margin {
+      margin-top: -8rem; /* -mt-32 */
+    }
+  }
+</style>
