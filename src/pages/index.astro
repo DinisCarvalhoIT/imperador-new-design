@@ -11,7 +11,7 @@ import Gallery from "@/components/Gallery/Gallery.astro";
 import Books from "@/components/Books/Books.astro";
 import Signiture from "@/components/Signiture/Signiture.astro";
 import Local from "@/components/Local/Local.astro";
-import Sponsors from "@/components/Sponsors/Sponsors.astro";
+import SponsorsMarquee from "@/components/Sponsors/SponsorsMarquee.tsx";
 ---
 
 <Layout>
@@ -24,7 +24,7 @@ import Sponsors from "@/components/Sponsors/Sponsors.astro";
   <KeyDetails />
   <Gallery />
   <Local />
-  <Sponsors />
+  <SponsorsMarquee client:only="react" />
   <Books />
   <Signiture />
 </Layout>
