@@ -84,11 +84,21 @@ const dataKeyDetails = [
       {
         dataKeyDetails.map((item) => (
           <div class="flex flex-col items-center text-center gap-5 md:gap-6 p-4 md:p-6">
-            <Image
-              src={item.svgPath}
-              alt={item.title}
-              class="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16"
-            />
+            {item.svgPath === bus ? (
+              <div class="h-12 md:h-14 lg:h-16 flex items-center justify-center">
+                <Image
+                  src={item.svgPath}
+                  alt={item.title}
+                  class="h-[40px] md:h-[45px] lg:h-[50px] w-auto"
+                />
+              </div>
+            ) : (
+              <Image
+                src={item.svgPath}
+                alt={item.title}
+                class="h-12 md:h-14 lg:h-16 w-auto"
+              />
+            )}
             <h3 class="text-xl md:text-2xl font-mediumm text-[#B8C6CD] font-montserrat leading-[0.03em]">
               {item.title}
             </h3>

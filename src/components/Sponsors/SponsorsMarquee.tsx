@@ -35,7 +35,11 @@ export default function SponsorsMarquee() {
           {sponsors.map((sponsor, index) => (
             <a href={sponsor.url} target="_blank" rel="noopener noreferrer">
               <MarqueeItem
-                className="w-[80px] h-[40px] sm:w-[100px] sm:h-[49px] md:w-[120px] md:h-[54px] lg:w-[130px] lg:h-[60px] mx-8 sm:mx-12 md:mx-16 lg:mx-20"
+                className={
+                  sponsor.name === "Sapa"
+                    ? "w-[60px] h-[30px] sm:w-[75px] sm:h-[37px] md:w-[90px] md:h-[41px] lg:w-[98px] lg:h-[45px] mx-8 sm:mx-12 md:mx-16 lg:mx-20 translate-y-0.5"
+                    : "w-[80px] h-[40px] sm:w-[100px] sm:h-[49px] md:w-[120px] md:h-[54px] lg:w-[130px] lg:h-[60px] mx-8 sm:mx-12 md:mx-16 lg:mx-20"
+                }
                 key={index}
               >
                 <img
