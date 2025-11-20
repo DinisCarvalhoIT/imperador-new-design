@@ -116,7 +116,7 @@ export const ui = {
       "Domotics Legrand Living Now",
     "apartment_details.nzeb": "nZEB A+ Building",
     "apartment_details.nzeb_description":
-      "Air Conditioned by conquest, Photovoltaic Panels and Heat Pump.",
+      "Duct air conditioning, Photovoltaic Panels and Heat Pump.",
     "apartment_details.parking2": "2 Parking Spaces & Storage",
     "apartment_details.parking3": "3 Parking Spaces & Storage",
     "keydetails.logo_alt": "Imperador Logo",
