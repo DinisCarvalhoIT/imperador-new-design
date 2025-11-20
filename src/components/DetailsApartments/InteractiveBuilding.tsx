@@ -164,20 +164,36 @@ const BASE_SHAPES_MOBILE: Record<ApartmentType, Rect[]> = {
     { x: 666, y: 597, width: 286, height: 28 },
   ],
 };
+const BASE_SHAPES_TABLET: Record<ApartmentType, Rect[]> = {
+  // Tablet coordinates approximated for the tablet image composition (1000x1000 space)
+  T1: [
+    { x: 337, y: 746, width: 329, height: 54 },
+    { x: 253, y: 253, width: 247, height: 493 },
+    { x: 500, y: 253, width: 247, height: 493 },
+  ],
+  T2: [
+    { x: 52, y: 253, width: 201, height: 493 },
+    { x: 747, y: 253, width: 203, height: 493 },
+  ],
+  T3: [
+    { x: 52, y: 746, width: 285, height: 54 },
+    { x: 666, y: 746, width: 284, height: 54 },
+  ],
+};
 const BASE_SHAPES: Record<ApartmentType, Rect[]> = {
   // Coordinates in a 1000x1000 viewBox space so the SVG scales with the image
   T1: [
-    { x: 419, y: 758, width: 239, height: 78 }, // T1 model a
-    { x: 360, y: 198, width: 184, height: 560 }, // T1 model b
-    { x: 544, y: 198, width: 179, height: 560 }, // T1 model c
+    { x: 419, y: 758, width: 239, height: 64 }, // T1 model a
+    { x: 362, y: 211, width: 182, height: 548 }, // T1 model b
+    { x: 544, y: 211, width: 179, height: 548 }, // T1 model c
   ],
   T2: [
-    { x: 220, y: 198, width: 140, height: 560 }, // T2 model a
-    { x: 723, y: 198, width: 140, height: 560 }, // T2 model b
+    { x: 215, y: 211, width: 147, height: 548 }, // T2 model a
+    { x: 723, y: 211, width: 147, height: 548 }, // T2 model b
   ],
   T3: [
-    { x: 220, y: 758, width: 199, height: 78 }, // T3 model a
-    { x: 658, y: 758, width: 205, height: 78 }, // T3 model b
+    { x: 215, y: 758, width: 204, height: 64 }, // T3 model a
+    { x: 658, y: 758, width: 212, height: 64 }, // T3 model b
   ],
 };
 
@@ -249,12 +265,15 @@ export default function InteractiveBuilding({
     hovered ?? (selected ? { type: selected.type, shapeIndex: selected.shapeIndex } : null);
   const activeMobile: HoverState | null =
     baseActive ?? (enableDefaultMobileHighlight ? { type: "T1", shapeIndex: null } : null);
+  const activeTablet: HoverState | null = baseActive;
   const activeDesktop: HoverState | null = baseActive;
   const interactingMobile = Boolean(activeMobile);
+  const interactingTablet = Boolean(activeTablet);
   const interactingDesktop = Boolean(activeDesktop);
   
 
   const SHAPES_MOBILE = BASE_SHAPES_MOBILE;
+  const SHAPES_TABLET = BASE_SHAPES_TABLET;
   const SHAPES_DESKTOP = BASE_SHAPES;
 
   // Get model letter from shape index (0 = a, 1 = b, 2 = c)
@@ -443,7 +462,7 @@ export default function InteractiveBuilding({
       <svg
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         preserveAspectRatio="none"
-        className="pointer-events-none absolute inset-0 w-full h-full z-5 lg:hidden"
+        className="pointer-events-none absolute inset-0 w-full h-full z-5 sm:hidden"
         aria-hidden
       >
         <defs>
@@ -480,6 +499,52 @@ export default function InteractiveBuilding({
             <g mask="url(#activeHoleMaskMobile)">
               <rect x={0} y={0} width={VIEW_W} height={topHeight} fill="url(#gradTopMobile)" style={{ transition: "height 300ms ease-out" }} />
               <rect x={0} y={VIEW_H - bottomHeight} width={VIEW_W} height={bottomHeight} fill="url(#gradBottomMobile)" style={{ transition: "height 300ms ease-out, y 300ms ease-out" }} />
+            </g>
+          );
+        })()}
+      </svg>
+
+      {/* Top/Bottom gradients with mask that excludes active shapes - Tablet */}
+      <svg
+        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute inset-0 w-full h-full z-5 hidden sm:block lg:hidden"
+        aria-hidden
+      >
+        <defs>
+          <linearGradient id="gradTopTablet" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stopColor="#0F3A4B" />
+            <stop offset="1%" stopColor="#0F3A4B" />
+            <stop offset="100%" stopColor="#0F3A4B" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="gradBottomTablet" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stopColor="#0B1D26" stopOpacity="0" />
+            <stop offset="100%" stopColor="#06384A" />
+          </linearGradient>
+
+          <mask id="activeHoleMaskTablet" maskUnits="userSpaceOnUse">
+            <rect x="0" y="0" width={VIEW_W} height={VIEW_H} fill="white" />
+            {activeTablet &&
+              (activeTablet.shapeIndex === null
+                ? SHAPES_TABLET[activeTablet.type].map((r, i) => (
+                    <rect key={`maskT-${activeTablet.type}-${i}`} x={r.x} y={r.y} width={r.width} height={r.height} fill="black" />
+                  ))
+                : (() => {
+                    const r = SHAPES_TABLET[activeTablet.type][activeTablet.shapeIndex];
+                    return (
+                      <rect key={`maskT-${activeTablet.type}-${activeTablet.shapeIndex}`} x={r.x} y={r.y} width={r.width} height={r.height} fill="black" />
+                    );
+                  })())}
+          </mask>
+        </defs>
+
+        {(() => {
+          const topHeight = interactingTablet ? VIEW_H * 0.5 : VIEW_H * 0.26;
+          const bottomHeight = interactingTablet ? VIEW_H * 0.5 : VIEW_H * 0.19;
+          return (
+            <g mask="url(#activeHoleMaskTablet)">
+              <rect x={0} y={0} width={VIEW_W} height={topHeight} fill="url(#gradTopTablet)" style={{ transition: "height 300ms ease-out" }} />
+              <rect x={0} y={VIEW_H - bottomHeight} width={VIEW_W} height={bottomHeight} fill="url(#gradBottomTablet)" style={{ transition: "height 300ms ease-out, y 300ms ease-out" }} />
             </g>
           );
         })()}
@@ -679,7 +744,7 @@ export default function InteractiveBuilding({
       </div>
 
       {/* Mobile selector: T1 · T2 · T3 with halo background */}
-      <div className="flex lg:hidden absolute left-0 right-0 top-[170px] sm:top-[173px] md:top-[171px] items-center justify-center z-15">
+      <div className="flex lg:hidden absolute left-0 right-0 items-center justify-center z-15 top-[calc(22vh)] sm:top-[125px] md:top-[142px]">
         <div className="relative flex items-center gap-4 text-white">
           {/* Radial halo behind */}
           <svg
@@ -838,7 +903,7 @@ export default function InteractiveBuilding({
       <svg
         viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
         preserveAspectRatio="none"
-        className="absolute inset-0 w-full h-full z-10 lg:hidden"
+        className="absolute inset-0 w-full h-full z-10 sm:hidden"
         aria-label={t("details_apartments.map_alt")}
       >
         {(["T1", "T2", "T3"] as ApartmentType[]).map((type) => (
@@ -860,6 +925,46 @@ export default function InteractiveBuilding({
                   fill={"transparent"}
                   stroke={highlighted ? GOLD : "rgba(241,180,74,0.6)"}
                   strokeWidth={highlighted ? 2 : 0}
+                  className="transition-all duration-300 ease-out"
+                  style={{ cursor: "pointer" }}
+                  onMouseEnter={() => {
+                    setHovered({ type, shapeIndex: i });
+                  }}
+                  onMouseLeave={() => setHovered(null)}
+                  onPointerUp={() => openFor(type, i)}
+                />
+              );
+            })}
+          </g>
+        ))}
+      </svg>
+
+      {/* Scalable SVG overlay - Tablet */}
+      <svg
+        viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+        preserveAspectRatio="none"
+        className="absolute inset-0 w-full h-full z-10 hidden sm:block lg:hidden"
+        aria-label={t("details_apartments.map_alt")}
+      >
+        {(["T1", "T2", "T3"] as ApartmentType[]).map((type) => (
+          <g key={`t-${type}`}>
+            {SHAPES_TABLET[type].map((r, i) => {
+              const isTypeActive = activeTablet?.type === type;
+              const isAllShapesActive =
+                isTypeActive && activeTablet?.shapeIndex === null;
+              const isThisShapeActive = isTypeActive && activeTablet?.shapeIndex === i;
+              const highlighted = isAllShapesActive || isThisShapeActive;
+
+              return (
+                <rect
+                  key={`t-${type}-${i}`}
+                  x={r.x}
+                  y={r.y}
+                  width={r.width}
+                  height={r.height}
+                  fill={"transparent"}
+                  stroke={highlighted ? GOLD : "rgba(241,180,74,0.6)"}
+                  strokeWidth={highlighted ? 4 : 0}
                   className="transition-all duration-300 ease-out"
                   style={{ cursor: "pointer" }}
                   onMouseEnter={() => {
