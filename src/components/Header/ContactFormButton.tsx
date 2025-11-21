@@ -45,10 +45,12 @@ export default function ContactFormButton({
   lang,
   classNameButtonStyle,
   buttonText,
+  variant,
 }: {
   lang: "en" | "pt";
   classNameButtonStyle: string;
   buttonText: string;
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | "contact" | "prices-availability";
 }) {
   const formSchema = getFormSchema(lang);
   const t = (key: keyof typeof ui.en) => ui[lang][key] || ui.en[key];
@@ -90,7 +92,7 @@ export default function ContactFormButton({
     <>
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogTrigger asChild>
-          <Button className={classNameButtonStyle}>{buttonText}</Button>
+          <Button variant={variant} className={classNameButtonStyle}>{buttonText}</Button>
         </DialogTrigger>
         <DialogContent className="bg-[#0B1D26]/94 w-[95vw] max-w-[600px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[900px] border-[#7192A2] text-[#6d847f] overflow-y-auto p-4 sm:p-6 md:p-8 lg:p-12 max-h-[90vh]">
           <DialogHeader>

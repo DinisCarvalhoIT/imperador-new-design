@@ -8,6 +8,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { ui } from "@/i18n/ui";
+import WhatsAppButton from "../DetailsApartments/WhatsAppButton";
 
 export type ApartmentDetail = {
   id: string;
@@ -413,6 +414,7 @@ export default function ApartmentDetailsCarousel({
               </div>
             ))}
           </div>
+          <WhatsAppButton text={t("details_apartments.prices_availability")} />
         </div>
 
         {/* Right Side - Carousel */}

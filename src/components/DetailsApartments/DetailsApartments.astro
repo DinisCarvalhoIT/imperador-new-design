@@ -5,6 +5,7 @@ const t = useTranslations(lang);
 import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import InteractiveBuilding from "./InteractiveBuilding";
+import WhatsAppButton from "./WhatsAppButton";
 
 // Import all apartment model images
 import t1ModeloA from "../../../public/detailsApartments/T1_modeloA.png";
@@ -111,6 +112,11 @@ const dotSvgUrl = dotSvg.src;
           </div>
         </div>
         <InteractiveBuilding client:load lang={lang} apartmentImages={apartmentImageUrls} dotSvgUrl={dotSvgUrl} />
+        
+        <!-- WhatsApp Button - Bottom Middle -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 pb-6 sm:pb-8 lg:pb-10">
+          <WhatsAppButton text={t("details_apartments.prices_availability")} client:load />
+        </div>
       </div>
     </div>
   </div>
