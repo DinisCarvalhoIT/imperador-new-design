@@ -13,6 +13,8 @@ interface CommonSpace {
   title: string;
   description: string;
   image: string;
+  images?: string[];
+  imageMobile?: string;
 }
 
 interface CommonSpacesCarouselProps {
@@ -43,7 +45,7 @@ export default function CommonSpacesCarousel({
   // Sync desktop carousel when activeIndex changes
   useEffect(() => {
     if (!api) return;
-    
+
     // If change came from mobile, sync desktop carousel
     if (isMobileChangeRef.current) {
       api.scrollTo(activeIndex);
@@ -136,12 +138,13 @@ export default function CommonSpacesCarousel({
     return "text-[rgba(113,146,162,0.21)]";
   };
 
-  const t = (key: keyof typeof ui[typeof lang]) => ui[lang][key] || ui.en[key];
+  const t = (key: keyof (typeof ui)[typeof lang]) =>
+    ui[lang][key] || ui.en[key];
 
   return (
     <div className="relative w-full">
       {/* Mobile/Tablet - Horizontal Card Carousel */}
-      <div className="lg:hidden relative w-full overflow-hidden">
+      <div className="xl:hidden relative w-full overflow-hidden">
         <Carousel
           setApi={setMobileApi}
           opts={{
@@ -155,13 +158,31 @@ export default function CommonSpacesCarousel({
             {spaces.map((space, index) => (
               <CarouselItem key={space.id} className="pl-0 basis-full shrink-0">
                 <div className="relative w-full h-[640px] overflow-hidden">
-                  {/* Image */}
+                  {/* Image(s) */}
                   <div className="absolute inset-0">
-                    <img
-                      src={space.image}
-                      alt={space.title}
-                      className="w-full h-full object-cover"
-                    />
+                    {space.images && space.images.length > 0 ? (
+                      <div className="flex flex-col w-full h-full">
+                        <img
+                          src={space.imageMobile}
+                          alt={`${space.title} `}
+                          className="w-full flex-1 object-cover sm:hidden"
+                        />
+                        {space.images.slice(1).map((img, idx) => (
+                          <img
+                            key={idx}
+                            src={img}
+                            alt={`${space.title} ${idx + 1}`}
+                            className="w-full flex-1 object-cover"
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <img
+                        src={space.image}
+                        alt={space.title}
+                        className="w-full h-full object-cover "
+                      />
+                    )}
                   </div>
 
                   {/* Gradient Overlay */}
@@ -233,7 +254,7 @@ export default function CommonSpacesCarousel({
       </div>
 
       {/* Desktop - Original Layout */}
-      <div className="hidden lg:grid grid-cols-2 gap-0">
+      <div className="hidden xl:grid grid-cols-2 gap-0">
         {/* Left Column - Text Content */}
         <div className="relative pl-[120px] xl:pl-[195px] pr-16 xl:pr-24 py-16 xl:py-20 min-w-0">
           {/* Section Title - Outside border line */}
@@ -304,14 +325,27 @@ export default function CommonSpacesCarousel({
               {spaces.map((space, _) => (
                 <CarouselItem
                   key={space.id}
-                  className="max-h-[960px] pl-0 basis-full flex items-center justify-center h-full"
+                  className="h-[960px] pl-0 basis-full flex items-center justify-center"
                 >
                   <div className="relative w-full h-full">
-                    <img
-                      src={space.image}
-                      alt={space.title}
-                      className="w-full h-full  object-cover"
-                    />
+                    {space.images && space.images.length > 0 ? (
+                      <div className="flex flex-col w-full h-full">
+                        {space.images.map((img, idx) => (
+                          <img
+                            key={idx}
+                            src={img}
+                            alt={`${space.title} ${idx + 1}`}
+                            className="w-full flex-1 object-cover"
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <img
+                        src={space.image}
+                        alt={space.title}
+                        className="w-full h-full  object-cover"
+                      />
+                    )}
                   </div>
                 </CarouselItem>
               ))}

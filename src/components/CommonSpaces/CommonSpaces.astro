@@ -8,9 +8,12 @@ const t = useTranslations(lang);
 
 // Import images
 import rooftopImg from "../../../public/CommonSpaces/rooftop.png";
-import gardenImg from "../../../public/CommonSpaces/garden.png";
-import poolImg from "../../../public/CommonSpaces/pool.png";
-import solariumImg from "../../../public/CommonSpaces/solarium.png";
+import gardenImg from "../../../public/CommonSpaces/Imperador_Exterior_08.jpg";
+import poolImg from "../../../public/CommonSpaces/Imperador_Exterior_11.jpg";
+import solariumImg from "../../../public/CommonSpaces/Imperador_Exterior_07.jpg";
+import terrface1 from "../../../public/CommonSpaces/Imperador_Terrace_01.jpg";
+import terrface2 from "../../../public/CommonSpaces/Imperador_Terrace_03.jpg";
+import terraceMobile from "../../../public/CommonSpaces/Rectangle 34624222.png";
 
 // Process images with getImage - optimize and convert to webp
 const processImage = async (image: any) => {
@@ -18,6 +21,8 @@ const processImage = async (image: any) => {
     src: image,
     format: "webp",
     quality: 90,
+    width: 900,
+    height: 900,
   });
   return processed.src;
 };
@@ -27,6 +32,9 @@ const rooftopImageUrl = await processImage(rooftopImg);
 const gardenImageUrl = await processImage(gardenImg);
 const poolImageUrl = await processImage(poolImg);
 const solariumImageUrl = await processImage(solariumImg);
+const terrface1Url = await processImage(terrface1);
+const terrface2Url = await processImage(terrface2);
+const terraceMobileUrl = await processImage(terraceMobile);
 
 const commonSpaces = [
   {
@@ -34,6 +42,8 @@ const commonSpaces = [
     title: t("common_spaces.rooftop.title"),
     description: t("common_spaces.rooftop.description"),
     image: rooftopImageUrl,
+    images: [terrface1Url, terrface2Url],
+    imageMobile: terraceMobileUrl,
   },
   {
     id: "garden",
@@ -56,16 +66,11 @@ const commonSpaces = [
 ];
 ---
 
-<section
-  class="relative w-full bg-[#0B1D26]  "
-  id="common-spaces"
->
+<section class="relative w-full bg-[#0B1D26]" id="common-spaces">
   <div class="w-full mx-auto">
     {/* Section Title - Aligned with space titles */}
-   
 
     {/* Carousel Component */}
     <CommonSpacesCarousel client:load spaces={commonSpaces} lang={lang} />
   </div>
 </section>
-
