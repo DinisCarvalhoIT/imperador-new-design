@@ -144,7 +144,7 @@ export default function CommonSpacesCarousel({
   return (
     <div className="relative w-full">
       {/* Mobile/Tablet - Horizontal Card Carousel */}
-      <div className="xl:hidden relative w-full overflow-hidden">
+      <div className="lg:hidden relative w-full overflow-hidden">
         <Carousel
           setApi={setMobileApi}
           opts={{
@@ -254,7 +254,7 @@ export default function CommonSpacesCarousel({
       </div>
 
       {/* Desktop - Original Layout */}
-      <div className="hidden xl:grid grid-cols-2 gap-0">
+      <div className="hidden lg:grid grid-cols-2 gap-0">
         {/* Left Column - Text Content */}
         <div className="relative pl-[120px] xl:pl-[195px] pr-16 xl:pr-24 py-16 xl:py-20 min-w-0">
           {/* Section Title - Outside border line */}
