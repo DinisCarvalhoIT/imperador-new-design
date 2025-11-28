@@ -151,49 +151,49 @@ function findApartmentIndex(type: ApartmentType, shapeIndex: number): number {
 const BASE_SHAPES_MOBILE: Record<ApartmentType, Rect[]> = {
   // Mobile coordinates approximated for the mobile image composition (1000x1000 space)
   T1: [
-    { x: 336, y: 597, width: 330, height: 28 },
-    { x: 256, y: 352, width: 244, height: 245 },
-    { x: 500, y: 352, width: 244, height: 245 },
+    { x: 374, y: 656, width: 294, height: 28 },
+    { x: 241, y: 387, width: 227, height: 269 },
+    { x: 528, y: 387, width: 225, height: 269 },
   ],
   T2: [
-    { x: 54, y: 352, width: 201, height: 245 },
-    { x: 745, y: 352, width: 206, height: 245 },
+    { x: 32, y: 387, width: 208, height: 269 },
+    { x: 754, y: 387, width: 208, height: 269 },
   ],
   T3: [
-    { x: 54, y: 597, width: 282, height: 28 },
-    { x: 666, y: 597, width: 286, height: 28 },
+    { x: 32, y: 656, width: 293, height: 28 },
+    { x: 669, y: 656, width: 293, height: 28 },
   ],
 };
 const BASE_SHAPES_TABLET: Record<ApartmentType, Rect[]> = {
   // Tablet coordinates approximated for the tablet image composition (1000x1000 space)
   T1: [
-    { x: 337, y: 746, width: 329, height: 54 },
-    { x: 253, y: 253, width: 247, height: 493 },
-    { x: 500, y: 253, width: 247, height: 493 },
+    { x: 368, y: 761, width: 301, height: 51 },
+    { x: 245, y: 274, width: 227, height: 487 },
+    { x: 529, y: 274, width: 226, height: 487 },
   ],
   T2: [
-    { x: 52, y: 253, width: 201, height: 493 },
-    { x: 747, y: 253, width: 203, height: 493 },
+    { x: 37, y: 274, width: 208, height: 487 },
+    { x: 756, y: 274, width: 210, height: 487 },
   ],
   T3: [
-    { x: 52, y: 746, width: 285, height: 54 },
-    { x: 666, y: 746, width: 284, height: 54 },
+    { x: 37, y: 761, width: 297, height: 51 },
+    { x: 670, y: 761, width: 296, height: 51 },
   ],
 };
 const BASE_SHAPES: Record<ApartmentType, Rect[]> = {
   // Coordinates in a 1000x1000 viewBox space so the SVG scales with the image
   T1: [
-    { x: 419, y: 758, width: 239, height: 64 }, // T1 model a
-    { x: 362, y: 211, width: 182, height: 548 }, // T1 model b
-    { x: 544, y: 211, width: 179, height: 548 }, // T1 model c
+    { x: 422, y: 706, width: 201, height: 51 }, // T1 model a
+    { x: 337, y: 184, width: 154, height: 522 }, // T1 model b
+    { x: 527, y: 184, width: 153, height: 522 }, // T1 model c
   ],
   T2: [
-    { x: 215, y: 211, width: 147, height: 548 }, // T2 model a
-    { x: 723, y: 211, width: 147, height: 548 }, // T2 model b
+    { x: 196, y: 184, width: 141, height: 522 }, // T2 model a
+    { x: 680, y: 184, width: 141, height: 522 }, // T2 model b
   ],
   T3: [
-    { x: 215, y: 758, width: 204, height: 64 }, // T3 model a
-    { x: 658, y: 758, width: 212, height: 64 }, // T3 model b
+    { x: 196, y: 706, width: 198, height: 51 }, // T3 model a
+    { x: 623, y: 706, width: 198, height: 51 }, // T3 model b
   ],
 };
 

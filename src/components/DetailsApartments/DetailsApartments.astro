@@ -15,9 +15,9 @@ import t2ModeloA from "../../../public/detailsApartments/T2_modeloA.png";
 import t2ModeloB from "../../../public/detailsApartments/T2_modeloB.png";
 import t3ModeloA from "../../../public/detailsApartments/T3_modeloA.png";
 import t3ModeloB from "../../../public/detailsApartments/T3_modeloB.png";
-import detailsBgImage from "../../../public/detailsApartments/details-apartments.jpg";
-import detailsBgMobileImage from "../../../public/detailsApartments/details-apartments-mobile.jpg";
-import detailsBgTabletImage from "../../../public/detailsApartments/details-apartments-tablet.jpg";
+import detailsBgImage from "../../../public/detailsApartments/Imperador_Exterior.jpg";
+import detailsBgMobileImage from "../../../public/detailsApartments/Imperador_Exterior_mobile.jpg";
+import detailsBgTabletImage from "../../../public/detailsApartments/Imperador_Exterior_tablet.jpg";
 import dotSvg from "../../../public/detailsApartments/dot.svg";
 
 // Process images with getImage - optimize and convert to webp
@@ -114,7 +114,7 @@ const dotSvgUrl = dotSvg.src;
         <InteractiveBuilding client:load lang={lang} apartmentImages={apartmentImageUrls} dotSvgUrl={dotSvgUrl} />
         
         <!-- WhatsApp Button - Bottom Middle -->
-        <div class="absolute md:bottom-[4%] bottom-[5%]  left-1/2 -translate-x-1/2 z-20 pb-6 sm:pb-8 lg:pb-10">
+        <div class="absolute md:bottom-[4%] bottom-[5%] left-1/2 -translate-x-1/2 z-20 pb-6 sm:pb-8 lg:pb-10">
           <WhatsAppButton text={t("details_apartments.prices_availability")} client:load />
         </div>
       </div>
