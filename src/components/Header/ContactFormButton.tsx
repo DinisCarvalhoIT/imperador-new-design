@@ -94,29 +94,29 @@ export default function ContactFormButton({
         <DialogTrigger asChild>
           <Button variant={variant} className={classNameButtonStyle}>{buttonText}</Button>
         </DialogTrigger>
-        <DialogContent className="bg-[#0B1D26]/94 w-[95vw] max-w-[600px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[900px] border-[#7192A2] text-[#6d847f] overflow-y-auto p-4 sm:p-6 md:p-8 lg:p-12 max-h-[90vh]">
+        <DialogContent className="bg-[#0B1D26]/94 w-[95vw] max-w-[400px] sm:max-w-[500px] md:max-w-[600px] lg:max-w-[900px] border-[#7192A2] text-[#6d847f] overflow-y-auto px-8 py-8 sm:p-8 md:p-12 lg:p-12 max-h-[90vh]">
           <DialogHeader>
-            <DialogDescription className="text-center text-xs sm:text-sm md:text-[15px] text-[#E7C873] tracking-widest font-montserrat font-light">
+            <DialogDescription className="text-center text-xs sm:text-sm text-[#E7C873]  pt-8 font-montserrat font-light">
               {t("contact.dialog_description")}
             </DialogDescription>
-            <DialogTitle className="flex justify-center">
-              <span className="text-lg sm:text-2xl md:text-3xl lg:text-[54px] text-center text-white font-playfairDisplay font-thin leading-tight">
+            <DialogTitle className="flex justify-center pb-4 sm:pb-5">
+              <span className="text-3xl sm:text-5xl xl:text-[34px] text-center text-white font-playfairDisplay font-thin pt-1 leading-tight">
                 {t("contact.dialog_title")}
               </span>
             </DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="">
-              <div className="grid sm:grid-cols-2 grid-cols-1 gap-x-2 sm:gap-x-3 gap-y-3 sm:gap-y-4 items-start pb-2 sm:pb-3 w-full max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] mx-auto">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-3 sm:gap-0">
+              <div className="flex flex-col sm:grid sm:grid-cols-2 gap-3 sm:gap-x-3 sm:gap-y-2 items-start w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] mx-auto">
                 <FormField
                   control={form.control}
                   name="name"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="w-full">
                       <FormControl>
                         <Input
                           placeholder={t("contact.name_placeholder")}
-                          className="bg-white/84 border border-[#a3a3a0] h-[40px] sm:h-[44px] md:h-[48px] text-sm sm:text-base text-black font-montserrat tracking-widest font-light"
+                          className="bg-white/84 border border-[#a3a3a0] h-[40px] sm:h-[44px] md:h-[48px] text-sm sm:text-base text-black font-montserrat  font-light"
                           {...field}
                         />
                       </FormControl>
@@ -128,12 +128,12 @@ export default function ContactFormButton({
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="w-full">
                       <FormControl>
                         <Input
                           type="email"
                           placeholder={t("contact.email_placeholder")}
-                          className="bg-white/84 border border-[#a3a3a0] h-[40px] sm:h-[44px] md:h-[48px] text-sm sm:text-base text-black font-montserrat tracking-widest font-light"
+                          className="bg-white/84 border border-[#a3a3a0] h-[40px] sm:h-[44px] md:h-[48px] text-sm sm:text-base text-black font-montserrat  font-light"
                           {...field}
                         />
                       </FormControl>
@@ -143,7 +143,7 @@ export default function ContactFormButton({
                 />
               </div>
 
-              <div className="pt-2 sm:pt-3 w-full max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] mx-auto">
+              <div className="sm:pt-3 w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] mx-auto">
                 <FormField
                   control={form.control}
                   name="message"
@@ -152,7 +152,7 @@ export default function ContactFormButton({
                       <FormControl>
                         <Textarea
                           placeholder={t("contact.message_placeholder")}
-                          className="bg-white/84 border border-[#a3a3a0] h-[100px] sm:h-[120px] md:h-[128px] text-sm sm:text-base text-black font-montserrat tracking-widest font-light resize-none"
+                          className="bg-white/84 border border-[#a3a3a0] h-[120px] sm:h-[120px] md:h-[128px] text-sm sm:text-base text-black font-montserrat  font-light resize-none"
                           {...field}
                         />
                       </FormControl>
@@ -161,9 +161,9 @@ export default function ContactFormButton({
                   )}
                 />
               </div>
-              <div className="flex justify-center mt-4 sm:mt-6">
+              <div className="flex justify-center sm:mt-3">
                 <Button
-                  className="text-white text-sm sm:text-base md:text-lg lg:text-xl bg-[#7192A2] hover:bg-[#7192A2]/80 hover:border-2 w-full max-w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] h-[44px] sm:h-[48px] md:h-[52px] font-montserrat font-semibold cursor-pointer"
+                  className="text-white text-sm sm:text-base md:text-lg tracking-[0.2em] lg:text-sm bg-[#7192A2] hover:bg-[#7192A2]/80 hover:border-2 w-full sm:max-w-[90%] md:max-w-[80%] lg:max-w-[70%] h-[48px] sm:h-[48px] md:h-[52px] font-montserrat cursor-pointer"
                   type="submit"
                   disabled={form.formState.isSubmitting}
                 >
@@ -179,7 +179,7 @@ export default function ContactFormButton({
                 alt={t("contact.logo_alt")}
                 width={200}
                 height={200}
-                className="w-[120px] h-[56px] sm:w-[140px] sm:h-[65px] md:w-[160px] md:h-[75px] lg:w-[171px] lg:h-[80px] mx-auto mt-6 sm:mt-8 md:mt-10"
+                className="w-[100px] h-[47px] sm:w-[140px] sm:h-[65px] md:w-[160px] md:h-[75px] lg:w-[171px] lg:h-[80px] mx-auto mt-5 sm:mt-8 md:mt-10"
               />
             </form>
           </Form>
