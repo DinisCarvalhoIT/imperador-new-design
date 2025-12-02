@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { track } from "@vercel/analytics/server";
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
@@ -69,7 +70,9 @@ export const POST: APIRoute = async ({ request }) => {
           { status: 500, headers: { "Content-Type": "application/json" } }
         );
       }
-
+      await track("Newsletter Subscribed", {
+        origin: "Imperador"
+       });
       console.log("Successfully submitted newsletter request");
 
       return new Response(
