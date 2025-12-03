@@ -20,6 +20,7 @@ export type DataCarousel = {
   tableImageEN: string;
   tableImageStyle: string;
   mainTitleKey: string;
+  mobileSelectorKey: string;
   mobileTitleKey: string;
   subTitleKey: string;
 };
@@ -173,7 +174,7 @@ export default function FloorPlansCarousel({
                 }`}
               >
                 <span className="md:hidden font-libreCaslonDisplay">
-                  {t(data.mobileTitleKey as keyof (typeof ui)[typeof lang])}
+                  {t(data.mobileSelectorKey as keyof (typeof ui)[typeof lang])}
                 </span>
                 <span className="hidden md:inline">
                   {t(data.mainTitleKey as keyof (typeof ui)[typeof lang])}
@@ -207,7 +208,24 @@ export default function FloorPlansCarousel({
             >
               <Card className="w-full max-w-[1250px] h-[940px] sm:h-[1080px] md:h-[1290px] lg:h-[670px] bg-white/86 flex items-center justify-center">
                 <CardContent className="grid grid-cols-1 lg:grid-cols-2 h-full w-full items-center justify-items-center p-2 sm:p-4 md:p-6 gap-4 lg:gap-0">
-                  <div className="relative flex flex-col items-center justify-center h-full w-full order-1 lg:order-0">
+                  {/* Title and Subtitle - Mobile: order-1 (top), Desktop: order-0 (left column) */}
+                  <div className="flex flex-col items-center justify-center gap-y-1 order-1 lg:order-0 lg:hidden">
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl text-[#E1B260] font-normal font-playfairDisplay text-center">
+                      {wrapNumbersWithFont(
+                        t(
+                          data.mobileTitleKey as keyof (typeof ui)[typeof lang]
+                        )
+                      )}
+                    </h1>
+                    <p className="text-sm sm:text-base md:text-lg text-[#024C67] font-playfairDisplay text-center">
+                      {wrapNumbersWithFont(
+                        t(data.subTitleKey as keyof (typeof ui)[typeof lang]).replace(/-/g, "|")
+                      )}
+                    </p>
+                  </div>
+                  
+                  {/* Floorplan Image - Mobile: order-2 (second), Desktop: order-0 (left column) */}
+                  <div className="relative flex flex-col items-center justify-center h-full w-full order-2 lg:order-0">
                     <div className="w-full max-w-[300px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[350px] xl:max-w-[500px] h-full max-h-[300px] sm:max-h-[400px] md:max-h-[500px] lg:max-h-[577px] flex items-center justify-center">
                       <img
                         src={data.floorPlanImage}
@@ -227,25 +245,19 @@ export default function FloorPlansCarousel({
                       />
                     )}
                   </div>
-                  <div className="flex flex-col items-center justify-center gap-y-4 sm:gap-y-6 md:gap-y-7 h-full w-full order-2 lg:order-0">
-                    <div className="flex flex-col items-center justify-center gap-y-1">
-                      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-[#E1B260] font-normal font-playfairDisplay text-center">
-                        <span className="lg:hidden">
-                          {wrapNumbersWithFont(
-                            t(
-                              data.mobileTitleKey as keyof (typeof ui)[typeof lang]
-                            )
-                          )}
-                        </span>
-                        <span className="hidden lg:inline">
-                          {wrapNumbersWithFont(
-                            t(
-                              data.mainTitleKey as keyof (typeof ui)[typeof lang]
-                            )
-                          )}
-                        </span>
+                  
+                  {/* Title, Subtitle, Table, and Small Floorplan - Mobile: order-3 (third), Desktop: order-0 (right column) */}
+                  <div className="flex flex-col items-center justify-center gap-y-4 sm:gap-y-6 md:gap-y-7 h-full w-full order-3 lg:order-0">
+                    {/* Title and Subtitle - Desktop only */}
+                    <div className="hidden lg:flex flex-col items-center justify-center gap-y-1">
+                      <h1 className="text-5xl xl:text-6xl text-[#E1B260] font-normal font-playfairDisplay text-center">
+                        {wrapNumbersWithFont(
+                          t(
+                            data.mainTitleKey as keyof (typeof ui)[typeof lang]
+                          )
+                        )}
                       </h1>
-                      <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#024C67] font-playfairDisplay text-center">
+                      <p className="text-xl xl:text-2xl text-[#024C67] font-playfairDisplay text-center">
                         {wrapNumbersWithFont(
                           t(data.subTitleKey as keyof (typeof ui)[typeof lang])
                         )}
@@ -271,7 +283,9 @@ export default function FloorPlansCarousel({
                       />
                     )}
                   </div>
-                  <div className="flex lg:hidden flex-col items-center justify-center order-3 pt-4">
+                  
+                  {/* Additional Small Floorplan - Mobile only, order-4 (bottom) */}
+                  <div className="flex lg:hidden flex-col items-center justify-center order-4 pt-4">
                     <img
                       src={data.smallFloorPlanImage}
                       alt={data.id}

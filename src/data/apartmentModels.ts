@@ -22,6 +22,7 @@ export interface FloorPlanItem {
   tableImageEN: string;
   tableImageStyle: string;
   mainTitleKey: string;
+  mobileSelectorKey: string;
   mobileTitleKey: string;
   subTitleKey: string;
 }
@@ -91,6 +92,7 @@ export const t1FloorPlans: FloorPlanItem[] = [
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitleKey: "floorplans.t1_model_a",
+    mobileSelectorKey: "floorplans.t1_model_a_mobile_selector",
     mobileTitleKey: "floorplans.t1_model_a_mobile",
     subTitleKey: "floorplans.t1_model_a_subtitle",
   },
@@ -106,6 +108,7 @@ export const t1FloorPlans: FloorPlanItem[] = [
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[270px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitleKey: "floorplans.t1_model_b",
+    mobileSelectorKey: "floorplans.t1_model_b_mobile_selector",
     mobileTitleKey: "floorplans.t1_model_b_mobile",
     subTitleKey: "floorplans.t1_model_b_subtitle",
   },
@@ -121,6 +124,7 @@ export const t1FloorPlans: FloorPlanItem[] = [
     tableImageStyle:
       "w-full max-w-[250px] sm:max-w-[300px] md:max-w-[350px] lg:max-w-[400px] h-full max-h-[250px] sm:max-h-[300px] md:max-h-[400px] lg:max-h-[360px] flex items-center justify-center",
     mainTitleKey: "floorplans.t1_model_c",
+    mobileSelectorKey: "floorplans.t1_model_c_mobile_selector",
     mobileTitleKey: "floorplans.t1_model_c_mobile",
     subTitleKey: "floorplans.t1_model_c_subtitle",
   },
@@ -161,6 +165,7 @@ export const t2FloorPlans: FloorPlanItem[] = [
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[400px] h-full max-h-[330px] sm:max-h-[360px] md:max-h-[450px] lg:max-h-[450px] flex items-center justify-center",
     mainTitleKey: "floorplans.t2_model_a",
+    mobileSelectorKey: "floorplans.t2_model_a_mobile_selector",
     mobileTitleKey: "floorplans.t2_model_a_mobile",
     subTitleKey: "floorplans.t2_model_a_subtitle",
   },
@@ -176,6 +181,7 @@ export const t2FloorPlans: FloorPlanItem[] = [
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[330px] md:max-w-[360px] lg:max-w-[400px] h-full max-h-[330px] sm:max-h-[360px] md:max-h-[450px] lg:max-h-[450px] flex items-center justify-center",
     mainTitleKey: "floorplans.t2_model_b",
+    mobileSelectorKey: "floorplans.t2_model_b_mobile_selector",
     mobileTitleKey: "floorplans.t2_model_b_mobile",
     subTitleKey: "floorplans.t2_model_b_subtitle",
   },
@@ -216,6 +222,7 @@ export const t3FloorPlans: FloorPlanItem[] = [
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[400px] h-full max-h-[370px] sm:max-h-[400px] md:max-h-[480px] lg:max-h-[450px] flex items-center justify-center",
     mainTitleKey: "floorplans.t3_model_a",
+    mobileSelectorKey: "floorplans.t3_model_a_mobile_selector",
     mobileTitleKey: "floorplans.t3_model_a_mobile",
     subTitleKey: "floorplans.t3_model_a_subtitle",
   },
@@ -231,6 +238,7 @@ export const t3FloorPlans: FloorPlanItem[] = [
     tableImageStyle:
       "w-full max-w-[290px] sm:max-w-[360px] md:max-w-[380px] lg:max-w-[400px] h-full max-h-[370px] sm:max-h-[400px] md:max-h-[480px] lg:max-h-[450px] flex items-center justify-center",
     mainTitleKey: "floorplans.t3_model_b",
+    mobileSelectorKey: "floorplans.t3_model_b_mobile_selector",
     mobileTitleKey: "floorplans.t3_model_b_mobile",
     subTitleKey: "floorplans.t3_model_b_subtitle",
   },

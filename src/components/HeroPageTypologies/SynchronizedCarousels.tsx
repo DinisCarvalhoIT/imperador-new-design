@@ -18,6 +18,7 @@ export type FloorPlanItem = {
   tableImageEN: string;
   tableImageStyle: string;
   mainTitleKey: string;
+  mobileSelectorKey: string;
   mobileTitleKey: string;
   subTitleKey: string;
 };

@@ -27,7 +27,8 @@ const ArrowIcon = () => (
     viewBox="0 0 9 8"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="w-12 h-12"
+    className="size-4.5"
+
   >
     <g clipPath="url(#clip0_397_1388)">
       <path
@@ -63,7 +64,10 @@ export default function BooksTriggers({
 
   return (
     <>
-      <ScrollArea className="w-full whitespace-nowrap sm:whitespace-normal" type="always">
+      <ScrollArea
+        className="w-full whitespace-nowrap sm:whitespace-normal"
+        type="always"
+      >
         <div className="flex gap-3 md:gap-7 px-4 sm:px-0 pb-6 sm:pb-2 items-center pt-2 w-max mx-auto sm:w-full sm:max-w-none sm:justify-center sm:flex-nowrap">
           {/* Left Book Trigger: Main Promotional */}
           <Button
@@ -139,7 +143,7 @@ export default function BooksTriggers({
             </div>
           </Button>
         </div>
-        <ScrollBar orientation="horizontal" className="md:hidden"/>
+        <ScrollBar orientation="horizontal" className="md:hidden" />
       </ScrollArea>
 
       {/* Main Book Dialog */}
