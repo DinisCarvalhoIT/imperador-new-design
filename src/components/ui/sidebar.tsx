@@ -265,14 +265,14 @@ const SidebarTrigger = React.forwardRef<
       data-sidebar="trigger"
       variant="ghost"
       size="icon"
-      className={cn("h-10 w-10 [&_svg]:h-10 [&_svg]:w-10", className)}
+      className={cn("h-10 w-10", className)}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
       }}
       {...props}
     >
-      <AlignJustify className="h-10 w-10" />
+      <AlignJustify/>
 
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
